@@ -1,5 +1,6 @@
 import type React from "react";
 import { createContext, useContext } from "react";
+import "modern-normalize/modern-normalize.css";
 
 export interface StyleConfig {
   breakpoints: Record<string, string>;
