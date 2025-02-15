@@ -1,7 +1,6 @@
 {
   "name": "framework",
   "version": "1.0.0",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "storybook dev -p 6006",
@@ -13,6 +12,20 @@
   "author": "",
   "license": "ISC",
   "description": "",
+  "type": "module",
+  "main": "./dist/components.js",
+  "module": "./dist/components.js",
+  "typings": "./dist/components.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/components.js",
+      "require": "./dist/components.js"
+    },
+    "./style.css": {
+      "import": "./dist/style.css",
+      "require": "./dist/style.css"
+    }
+  },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@chromatic-com/storybook": "^3.2.4",
@@ -31,7 +44,8 @@
     "prop-types": "^15.8.1",
     "storybook": "^8.5.5",
     "typescript": "^5.7.3",
-    "vite": "^6.1.0"
+    "vite": "^6.1.0",
+    "vite-plugin-dts": "^4.5.0"
   },
   "dependencies": {
     "react": "^19.0.0",
