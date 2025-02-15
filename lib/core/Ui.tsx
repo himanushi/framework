@@ -35,7 +35,7 @@ type PseudoKeys =
   | "__not";
 
 type PseudoStyles = {
-  [K in PseudoKeys]?: CSS.Properties<string | number>;
+  [K in PseudoKeys]?: Partial<ExtendedCSSProperties>;
 };
 
 type ExtendedCSSProperties = Omit<
@@ -50,7 +50,7 @@ type ExtendedCSSProperties = Omit<
 };
 
 interface UiStyleProps extends Partial<ExtendedCSSProperties>, PseudoStyles {
-  [key: `__${string}`]: CSS.Properties<string | number> | undefined;
+  [key: `__${string}`]: Partial<ExtendedCSSProperties> | undefined;
   htmTranslate?: "yes" | "no";
   className?: string;
 }
@@ -95,26 +95,82 @@ const extractStyles = (
     "htmTranslate",
   ]);
 
+  const extractResponsive = (styles: Record<string, any>) => {
+    const localBase: Record<string, any> = {};
+    const localMedia: Record<string, any> = {};
+    Object.entries(styles).forEach(([k, v]) => {
+      if (typeof v === "object" && v !== null && !Array.isArray(v)) {
+        let hasBreakpoint = false;
+        for (const key in v) {
+          if (breakpoints[key]) {
+            hasBreakpoint = true;
+            break;
+          }
+        }
+        if (hasBreakpoint) {
+          for (const [bpKey, bpValue] of Object.entries(v)) {
+            if (breakpoints[bpKey]) {
+              const mq = `@media (min-width: ${breakpoints[bpKey]})`;
+              if (!localMedia[mq]) {
+                localMedia[mq] = {};
+              }
+              localMedia[mq][k] = resolveValue(k, bpValue, colors);
+            } else {
+              localBase[k] = resolveValue(k, bpValue, colors);
+            }
+          }
+        } else {
+          localBase[k] = resolveValue(k, v, colors);
+        }
+      } else {
+        localBase[k] = resolveValue(k, v, colors);
+      }
+    });
+    return { base: localBase, media: localMedia };
+  };
+
   Object.entries(props).forEach(([key, value]) => {
     if (allowedDOMPropKeys.has(key) || key.startsWith("on")) {
       rest[key] = value;
     } else if (key.startsWith("__")) {
+      // 擬似クラスの場合
       const pseudoKey = `&:${key.slice(2)}`;
-      pseudo[pseudoKey] = value;
-    } else {
       if (
         typeof value === "object" &&
         value !== null &&
         !Array.isArray(value)
       ) {
-        Object.entries(value).forEach(([breakKey, breakValue]) => {
-          if (breakpoints[breakKey]) {
-            const mediaQuery = `@media (min-width: ${breakpoints[breakKey]})`;
-            if (!media[mediaQuery]) {
-              media[mediaQuery] = {};
-            }
-            media[mediaQuery][key] = resolveValue(key, breakValue, colors);
+        const { base: pseudoBase, media: pseudoMedia } =
+          extractResponsive(value);
+        pseudo[pseudoKey] = pseudoBase;
+        Object.entries(pseudoMedia).forEach(([mq, styles]) => {
+          if (!media[mq]) {
+            media[mq] = {};
           }
+          if (!media[mq][pseudoKey]) {
+            media[mq][pseudoKey] = {};
+          }
+          Object.assign(media[mq][pseudoKey], styles);
+        });
+      } else {
+        pseudo[pseudoKey] = value;
+      }
+    } else {
+      // 通常のスタイルの場合
+      if (
+        typeof value === "object" &&
+        value !== null &&
+        !Array.isArray(value)
+      ) {
+        const { base: baseValue, media: mediaValue } = extractResponsive({
+          [key]: value,
+        });
+        (base as Record<string, any>)[key] = baseValue[key];
+        Object.entries(mediaValue).forEach(([mq, styles]) => {
+          if (!media[mq]) {
+            media[mq] = {};
+          }
+          media[mq][key] = styles[key];
         });
       } else {
         if (key === "content" && typeof value === "object") {
