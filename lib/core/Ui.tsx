@@ -61,7 +61,7 @@ type PolymorphicProps<E extends React.ElementType> = {
 } & React.ComponentPropsWithoutRef<E> &
   UiStyleProps;
 
-type UiProps<E extends React.ElementType = "div"> = PolymorphicProps<E>;
+export type UiProps<E extends React.ElementType = "div"> = PolymorphicProps<E>;
 
 const extractStyles = (props: UiStyleProps) => {
   const base: React.CSSProperties = {};

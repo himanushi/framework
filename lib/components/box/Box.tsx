@@ -1,6 +1,6 @@
-import { Ui } from "~/core";
+import { Ui, type UiProps } from "~/core";
 
-export const Box = () => {
+export const Box = (props: UiProps) => {
   return (
     <Ui
       onClick={() => console.log("click!!")}
@@ -9,7 +9,9 @@ export const Box = () => {
       __hover={{
         backgroundColor: "#333333",
       }}
-      as="input"
-    />
+      {...props}
+    >
+      aaaaaa
+    </Ui>
   );
 };
