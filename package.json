@@ -5,6 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "storybook dev -p 6006",
+    "build": "vite build",
     "build-storybook": "storybook build",
     "chromatic": "npx chromatic --project-token=chpt_6ad823660819304"
   },
