@@ -32,7 +32,7 @@ const shortHands = {
   radius: "borderRadius",
 
   shadowS: {
-    boxShadow: "0 2px 8px rgba(32, 37, 50, 8%),0 2px 4px rgba(32, 37, 50, 3%);",
+    boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
   },
 } as const;
 
