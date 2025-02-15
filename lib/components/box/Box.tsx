@@ -5,16 +5,38 @@ import {
 } from "~/utils/resolveShorthandProps";
 
 const shortHands = {
-  itemsCenter: { alignItems: "center" },
-  itemsStart: { alignItems: "flex-start" },
-  itemsEnd: { alignItems: "flex-end" },
-  justifyCenter: { justifyContent: "center" },
-  justifyStart: { justifyContent: "flex-start" },
-  justifyEnd: { justifyContent: "flex-end" },
+  iCenter: { alignItems: "center" },
+  iStart: { alignItems: "flex-start" },
+  iEnd: { alignItems: "flex-end" },
+  jCenter: { justifyContent: "center" },
+  jStart: { justifyContent: "flex-start" },
+  jEnd: { justifyContent: "flex-end" },
+  jBetween: { justifyContent: "space-between" },
+
   p: "padding",
+  pt: "paddingTop",
+  pr: "paddingRight",
+  pb: "paddingBottom",
+  pl: "paddingLeft",
+
+  m: "margin",
+  mt: "marginTop",
+  mr: "marginRight",
+  mb: "marginBottom",
+  ml: "marginLeft",
+
+  w: "width",
+  h: "height",
+  column: { flexDirection: "column" },
+
+  radius: "borderRadius",
+
+  shadowS: {
+    boxShadow: "0 2px 8px rgba(32, 37, 50, 8%),0 2px 4px rgba(32, 37, 50, 3%);",
+  },
 } as const;
 
-const defaultProps = {
+const defaultProps: UiProps = {
   display: "flex",
 };
 
