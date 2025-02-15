@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [
     react(),
     dts({
-      tsconfigPath: "./tsconfig.types.json",
+      tsconfigPath: "./tsconfig.type.json",
       outDir: "./dist",
     }),
   ],
@@ -17,8 +17,8 @@ export default defineConfig({
   build: {
     minify: true,
     lib: {
-      entry: resolve(__dirname, "lib/symphony-components.ts"),
-      name: "symphony-components",
+      entry: resolve(__dirname, "lib/index.ts"),
+      name: "components",
       formats: ["es"],
     },
     rollupOptions: {
