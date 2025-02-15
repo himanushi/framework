@@ -9,35 +9,36 @@ const shortHands = {
   primary: {
     backgroundColor: "blue-500",
     color: "white",
-    __hover: {
+    _hover: {
       backgroundColor: "blue-600",
     },
-    __active: {
+    _active: {
       backgroundColor: "blue-700",
     },
   },
+
   secondary: {
     backgroundColor: "gray-500",
     color: "white",
-    __hover: {
+    _hover: {
       backgroundColor: "gray-600",
     },
-    __active: {
+    _active: {
       backgroundColor: "gray-700",
     },
   },
 } as const satisfies ShortHandType;
 
-const defaultProps: BoxProps = {
+const defaultProps: BoxProps<"button"> = {
   radius: "6px",
   backgroundColor: "gray-100",
   border: "none",
   as: "button",
-  padding: "12px",
-  __hover: {
+  padding: { xs: "12px", md: "20px" },
+  _hover: {
     backgroundColor: "gray-200",
   },
-  __active: {
+  _active: {
     backgroundColor: "gray-300",
   },
 };

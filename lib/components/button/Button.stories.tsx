@@ -18,6 +18,7 @@ export const Primary: Story = {
   args: {
     children: "ああああああ",
     primary: true,
+    onClick: () => console.log("click"),
   },
 };
 
