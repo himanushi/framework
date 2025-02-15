@@ -1,10 +1,12 @@
 import { css, cx } from "@emotion/css";
 import type * as CSS from "csstype";
 import type React from "react";
-import { useStyle } from "./StyleProvider";
+import { type defaultColors, useStyle } from "./StyleProvider";
 
 type BreakpointKeys = "xs" | "sm" | "md" | "lg" | "xl";
 type ResponsiveProp<T> = T | Partial<Record<BreakpointKeys, T>>;
+
+type DefaultColors = typeof defaultColors;
 
 type PseudoKeys =
   | "__hover"
@@ -36,13 +38,13 @@ type PseudoStyles = {
   [K in PseudoKeys]?: CSS.Properties<string | number>;
 };
 
-interface UiStyleProps
-  extends Partial<{
-      [K in keyof CSS.Properties<string | number>]: ResponsiveProp<
-        CSS.Properties<string | number>[K]
-      >;
-    }>,
-    PseudoStyles {
+type ExtendedCSSProperties = {
+  [K in keyof CSS.Properties<string | number>]: K extends `${string}Color`
+    ? ResponsiveProp<CSS.Properties<string | number>[K] | keyof DefaultColors>
+    : ResponsiveProp<CSS.Properties<string | number>[K]>;
+};
+
+interface UiStyleProps extends Partial<ExtendedCSSProperties>, PseudoStyles {
   [key: `__${string}`]: CSS.Properties<string | number> | undefined;
   htmTranslate?: "yes" | "no";
   className?: string;
@@ -56,9 +58,25 @@ type PolymorphicProps<E extends React.ElementType> = {
 
 export type UiProps<E extends React.ElementType = "div"> = PolymorphicProps<E>;
 
+const resolveValue = (
+  key: string,
+  value: any,
+  colors: Record<string, string>,
+) => {
+  if (
+    typeof value === "string" &&
+    key.toLowerCase().includes("color") &&
+    colors[value]
+  ) {
+    return colors[value];
+  }
+  return value;
+};
+
 const extractStyles = (
   props: UiStyleProps,
   breakpoints: Record<string, string>,
+  colors: Record<string, string>,
 ) => {
   const base: React.CSSProperties = {};
   const pseudo: Record<string, any> = {};
@@ -90,14 +108,18 @@ const extractStyles = (
             if (!media[mediaQuery]) {
               media[mediaQuery] = {};
             }
-            media[mediaQuery][key] = breakValue;
+            media[mediaQuery][key] = resolveValue(key, breakValue, colors);
           }
         });
       } else {
         if (key === "content" && typeof value === "object") {
           base[key as keyof React.CSSProperties] = (value as any).default;
         } else {
-          base[key as keyof React.CSSProperties] = value as any;
+          base[key as keyof React.CSSProperties] = resolveValue(
+            key,
+            value,
+            colors,
+          );
         }
       }
     }
@@ -108,10 +130,11 @@ const extractStyles = (
 export const Ui = <E extends React.ElementType = "div">(props: UiProps<E>) => {
   const { as, ref, ...restProps } = props;
   const Component = as || "div";
-  const { breakpoints } = useStyle();
+  const { breakpoints, colors } = useStyle();
   const { base, pseudo, media, rest } = extractStyles(
     restProps as UiStyleProps,
     breakpoints,
+    colors,
   );
   const combinedStyles = { ...base, ...pseudo, ...media };
   const generatedClass = css(combinedStyles);
