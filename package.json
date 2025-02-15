@@ -13,13 +13,13 @@
   "license": "ISC",
   "description": "",
   "type": "module",
-  "main": "./dist/components.js",
-  "module": "./dist/components.js",
-  "typings": "./dist/components.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/components.js",
-      "require": "./dist/components.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
     },
     "./style.css": {
       "import": "./dist/style.css",

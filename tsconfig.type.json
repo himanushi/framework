@@ -16,11 +16,7 @@
     "jsx": "react-jsx",
     "outDir": "dist",
     "declaration": true,
-    "emitDeclarationOnly": true,
-    "baseUrl": ".",
-    "paths": {
-      "~/*": ["./lib/*"]
-    }
+    "emitDeclarationOnly": true
   },
   "include": ["lib/**/*.ts", "lib/**/*.tsx"],
   "exclude": ["**/*.stories.tsx"],
