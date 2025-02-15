@@ -21,27 +21,27 @@ type Story = StoryObj<typeof Box>;
 export const Primary: Story = {
   args: {
     children: "ああああああ",
-    itemsEnd: true,
+    iEnd: true,
   },
 };
 
 export const Secondary: Story = {
   args: {
     children: "ああああああ",
-    itemsEnd: true,
+    iEnd: true,
   },
 };
 
 export const Large: Story = {
   args: {
     children: "ああああああ",
-    itemsEnd: true,
+    iEnd: true,
   },
 };
 
 export const Small: Story = {
   args: {
     children: "ああああああ",
-    itemsEnd: true,
+    iEnd: true,
   },
 };
