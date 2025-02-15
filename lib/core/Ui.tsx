@@ -2,9 +2,39 @@ import React from 'react';
 import { css, cx } from '@emotion/css';
 import * as CSS from 'csstype';
 
+type PseudoKeys =
+  | '__hover'
+  | '__active'
+  | '__focus'
+  | '__visited'
+  | '__link'
+  | '__first-child'
+  | '__last-child'
+  | '__nth-child'
+  | '__nth-last-child'
+  | '__first-of-type'
+  | '__last-of-type'
+  | '__nth-of-type'
+  | '__nth-last-of-type'
+  | '__checked'
+  | '__disabled'
+  | '__enabled'
+  | '__required'
+  | '__optional'
+  | '__read-only'
+  | '__read-write'
+  | '__empty'
+  | '__target'
+  | '__lang'
+  | '__not';
+
 // CSSプロパティ（csstype）の部分を拡張して、疑似クラス用の prop を許容
-interface UiStyleProps extends Partial<CSS.Properties<string | number>> {
-  // 例: __hover, __active, __focus など
+type PseudoStyles = {
+  [K in PseudoKeys]?: CSS.Properties<string | number>;
+};
+
+interface UiStyleProps extends Partial<CSS.Properties<string | number>>, PseudoStyles {
+  // その他の "__" で始まるプロパティも受け入れる
   [key: `__${string}`]: CSS.Properties<string | number> | undefined;
 }
 
