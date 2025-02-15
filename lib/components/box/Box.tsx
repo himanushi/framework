@@ -1,5 +1,6 @@
 import { Ui, type UiProps } from "~/core";
 import {
+  type ShortHandType,
   type WithShorthandProps,
   resolveShorthandProps,
 } from "~/utils/resolveShorthandProps";
@@ -34,7 +35,7 @@ const shortHands = {
   shadowS: {
     boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
   },
-} as const;
+} as const satisfies ShortHandType;
 
 const defaultProps: UiProps = {
   display: "flex",
