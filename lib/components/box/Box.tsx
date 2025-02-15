@@ -11,13 +11,16 @@ const shortHands = {
   justifyCenter: { justifyContent: "center" },
   justifyStart: { justifyContent: "flex-start" },
   justifyEnd: { justifyContent: "flex-end" },
+  p: "padding",
 } as const;
 
 const defaultProps = {
   display: "flex",
 };
 
-export const Box = (props: WithShorthandProps<UiProps, typeof shortHands>) => {
+export type BoxProps = WithShorthandProps<UiProps, typeof shortHands>;
+
+export const Box = (props: BoxProps) => {
   const mergedProps = { ...defaultProps, ...props };
   const newProps = resolveShorthandProps(mergedProps, shortHands);
   return <Ui {...newProps} />;

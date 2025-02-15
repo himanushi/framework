@@ -1,7 +1,8 @@
+import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
 import { Box } from "./Box";
 
-export default {
+const meta: Meta<typeof Box> = {
   title: "Example/Box",
   component: Box,
   parameters: {
@@ -14,29 +15,33 @@ export default {
   args: { onClick: fn() },
 };
 
-export const Primary = {
+export default meta;
+type Story = StoryObj<typeof Box>;
+
+export const Primary: Story = {
   args: {
     children: "ああああああ",
     itemsEnd: true,
   },
 };
 
-export const Secondary = {
+export const Secondary: Story = {
   args: {
-    label: "Button",
+    children: "ああああああ",
+    itemsEnd: true,
   },
 };
 
-export const Large = {
+export const Large: Story = {
   args: {
-    size: "large",
-    label: "Button",
+    children: "ああああああ",
+    itemsEnd: true,
   },
 };
 
-export const Small = {
+export const Small: Story = {
   args: {
-    size: "small",
-    label: "Button",
+    children: "ああああああ",
+    itemsEnd: true,
   },
 };
