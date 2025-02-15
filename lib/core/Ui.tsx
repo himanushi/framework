@@ -28,51 +28,57 @@ type PseudoKeys =
   | '__lang'
   | '__not';
 
-// CSSプロパティ（csstype）の部分を拡張して、疑似クラス用の prop を許容
 type PseudoStyles = {
   [K in PseudoKeys]?: CSS.Properties<string | number>;
 };
 
-interface UiStyleProps extends Partial<CSS.Properties<string | number>>, PseudoStyles {
-  // その他の "__" で始まるプロパティも受け入れる
+interface UiStyleProps
+  extends Omit<Partial<CSS.Properties<string | number>>, 'translate'>,
+    PseudoStyles {
   [key: `__${string}`]: CSS.Properties<string | number> | undefined;
+  translate?: 'yes' | 'no';
+  className?: string;
 }
 
-type UiProps = React.HTMLAttributes<HTMLDivElement> & UiStyleProps;
+type PolymorphicProps<E extends React.ElementType> = {
+  as?: E;
+  ref?: React.Ref<any>;
+} & React.ComponentPropsWithoutRef<E> & UiStyleProps;
 
-// 内部で props を解析し、通常スタイルと疑似スタイルに分けるユーティリティ関数
-const extractStyles = (props: UiProps) => {
+type UiProps<E extends React.ElementType = 'div'> = PolymorphicProps<E>;
+
+const extractStyles = (props: UiStyleProps) => {
   const base: React.CSSProperties = {};
   const pseudo: Record<string, any> = {};
-  const rest: Partial<UiProps> = {};
+  const rest: Partial<UiStyleProps> = {};
 
   Object.entries(props).forEach(([key, value]) => {
     if (key.startsWith('__')) {
-      // 例: "__active" -> "&:active"
       const pseudoKey = `&:${key.slice(2)}`;
       pseudo[pseudoKey] = value;
     } else if (
       key === 'children' ||
       key === 'className' ||
       key === 'style' ||
-      // イベントハンドラーなど HTML 属性はそのまま残す
       key.startsWith('on')
     ) {
-      rest[key as keyof UiProps] = value;
+      rest[key as keyof UiStyleProps] = value;
     } else {
-      // CSS プロパティと判断
       base[key as keyof React.CSSProperties] = value as any;
     }
   });
   return { base, pseudo, rest };
 };
 
-export const Ui: React.FC<UiProps> = (props) => {
-  const { base, pseudo, rest } = extractStyles(props);
-  // ベーススタイルと疑似スタイルを結合
+export const Ui = <E extends React.ElementType = 'div'>(
+  props: UiProps<E>
+) => {
+  const { as, ref, ...restProps } = props;
+  const Component = as || 'div';
+  const { base, pseudo, rest } = extractStyles(
+    restProps as UiStyleProps
+  );
   const combinedStyles = { ...base, ...pseudo };
   const generatedClass = css(combinedStyles);
-
-  // すでに className が指定されていた場合もマージ
-  return <div {...rest} className={cx(generatedClass, rest.className)} />;
+  return <Component ref={ref} {...rest} className={cx(generatedClass, rest.className)} />;
 };
