@@ -8,13 +8,14 @@ export interface StyleConfig {
 }
 
 const defaultBreakpoints: Record<string, string> = {
+  xs: "0px",
   sm: "480px",
   md: "768px",
   lg: "1024px",
   xl: "1280px",
 };
 
-export const defaultColors: Record<string, string> = {
+export const defaultColors = {
   "slate-50": "oklch(0.984 0.003 247.858)",
   "slate-100": "oklch(0.968 0.007 247.896)",
   "slate-200": "oklch(0.929 0.013 255.508)",
@@ -257,7 +258,7 @@ export const defaultColors: Record<string, string> = {
   "rose-800": "oklch(0.455 0.188 13.697)",
   "rose-900": "oklch(0.41 0.159 10.272)",
   "rose-950": "oklch(0.271 0.105 12.094)",
-};
+} as const;
 
 const defaultStyleConfig: StyleConfig = {
   breakpoints: defaultBreakpoints,
