@@ -1,15 +1,9 @@
 import { css, cx } from "@emotion/css";
 import type * as CSS from "csstype";
 import type React from "react";
+import { useStyle } from "./StyleProvider";
 
-const breakpoints: Record<string, string> = {
-  sm: "480px",
-  md: "768px",
-  lg: "1024px",
-  xl: "1280px",
-};
-
-type ResponsiveProp<T> = T | { [key in keyof typeof breakpoints]?: T };
+type ResponsiveProp<T> = T | { [key: string]: T };
 
 type PseudoKeys =
   | "__hover"
@@ -49,8 +43,6 @@ interface UiStyleProps
     }>,
     PseudoStyles {
   [key: `__${string}`]: CSS.Properties<string | number> | undefined;
-  // HTML属性とStyle属性の両方で translate が定義されているため、
-  // HTML側の translate 属性は htmTranslate とする
   htmTranslate?: "yes" | "no";
   className?: string;
 }
@@ -63,12 +55,15 @@ type PolymorphicProps<E extends React.ElementType> = {
 
 export type UiProps<E extends React.ElementType = "div"> = PolymorphicProps<E>;
 
-const extractStyles = (props: UiStyleProps) => {
+const extractStyles = (
+  props: UiStyleProps,
+  breakpoints: Record<string, string>,
+) => {
   const base: React.CSSProperties = {};
   const pseudo: Record<string, any> = {};
   const media: Record<string, any> = {};
-
   const rest: Record<string, any> = {};
+
   const allowedDOMPropKeys = new Set([
     "children",
     "className",
@@ -112,8 +107,10 @@ const extractStyles = (props: UiStyleProps) => {
 export const Ui = <E extends React.ElementType = "div">(props: UiProps<E>) => {
   const { as, ref, ...restProps } = props;
   const Component = as || "div";
+  const { breakpoints } = useStyle();
   const { base, pseudo, media, rest } = extractStyles(
     restProps as UiStyleProps,
+    breakpoints,
   );
   const combinedStyles = { ...base, ...pseudo, ...media };
   const generatedClass = css(combinedStyles);
