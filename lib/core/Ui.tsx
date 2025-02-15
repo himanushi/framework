@@ -58,7 +58,7 @@ interface UiStyleProps extends Partial<ExtendedCSSProperties>, PseudoStyles {
 type PolymorphicProps<E extends React.ElementType> = {
   as?: E;
   ref?: React.Ref<any>;
-} & Omit<React.ComponentPropsWithoutRef<E>, keyof UiStyleProps> &
+} & Omit<React.ComponentPropsWithoutRef<E>, "className" | "htmTranslate"> &
   UiStyleProps;
 
 export type UiProps<E extends React.ElementType = "div"> = PolymorphicProps<E>;
@@ -199,7 +199,7 @@ export const Ui = <E extends React.ElementType = "div">(props: UiProps<E>) => {
   );
   const combinedStyles = { ...base, ...pseudo, ...media };
   const generatedClass = css(combinedStyles);
-  const { htmTranslate, className, ...domProps } = rest;
+  const { htmTranslate, className, style, ...domProps } = rest;
 
   return (
     <Component
@@ -207,6 +207,7 @@ export const Ui = <E extends React.ElementType = "div">(props: UiProps<E>) => {
       {...domProps}
       translate={htmTranslate}
       className={cx(generatedClass, className)}
+      style={style}
     />
   );
 };
