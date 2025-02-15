@@ -8,7 +8,7 @@ export type WithShorthandProps<P, S extends Record<string, any>> = P & {
   [K in keyof S]?: ShorthandProp<S[K]>;
 };
 
-type ShortHandType = Record<string, string | UiProps>;
+export type ShortHandType = Record<string, string | UiProps>;
 
 export const resolveShorthandProps = <E extends React.ElementType = "div">(
   props: UiProps<E>,
@@ -34,5 +34,5 @@ export const resolveShorthandProps = <E extends React.ElementType = "div">(
     }
   });
 
-  return { ...shorthandStyles, ...restProps } as UiProps<E>;
+  return { ...restProps, ...shorthandStyles } as UiProps<E>;
 };

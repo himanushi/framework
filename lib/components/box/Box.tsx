@@ -40,7 +40,7 @@ const defaultProps: UiProps = {
   display: "flex",
 };
 
-export type BoxProps = WithShorthandProps<UiProps, typeof shortHands>;
+export type BoxProps = WithShorthandProps<UiProps<any>, typeof shortHands>;
 
 export const Box = (props: BoxProps) => {
   const mergedProps = { ...defaultProps, ...props };
