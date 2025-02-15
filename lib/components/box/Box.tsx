@@ -17,9 +17,11 @@ const defaultProps = {
 export const Box = (props: UiProps) => {
   const mergedProps = { ...defaultProps, ...props };
   const newProps = resolveShorthandProps(mergedProps, shortHands);
+
   return (
     <Ui
       color="gray-900"
+      height="1000px"
       backgroundColor={{
         xs: "",
         sm: "",
@@ -36,6 +38,15 @@ export const Box = (props: UiProps) => {
       }}
       borderColor="gray-900"
       width={{ lg: "35px" }}
+      __hover={{
+        backgroundColor: {
+          xs: "",
+          sm: "",
+          md: "yellow",
+          lg: "purple",
+          xl: "pink",
+        },
+      }}
       {...newProps}
     />
   );
