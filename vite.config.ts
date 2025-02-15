@@ -1,5 +1,5 @@
-import { resolve } from "path";
-import react from '@vitejs/plugin-react-swc'
+import { resolve } from "node:path";
+import react from "@vitejs/plugin-react-swc";
 import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
 
@@ -18,7 +18,6 @@ export default defineConfig({
     minify: true,
     lib: {
       entry: resolve(__dirname, "lib/index.ts"),
-      name: "components",
       formats: ["es"],
     },
     rollupOptions: {
