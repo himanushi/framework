@@ -2,6 +2,15 @@ import { css, cx } from "@emotion/css";
 import type * as CSS from "csstype";
 import type React from "react";
 
+const breakpoints: Record<string, string> = {
+  sm: "480px",
+  md: "768px",
+  lg: "1024px",
+  xl: "1280px",
+};
+
+type ResponsiveProp<T> = T | { [key in keyof typeof breakpoints]?: T };
+
 type PseudoKeys =
   | "__hover"
   | "__active"
@@ -33,7 +42,11 @@ type PseudoStyles = {
 };
 
 interface UiStyleProps
-  extends Partial<CSS.Properties<string | number>>,
+  extends Partial<{
+      [K in keyof CSS.Properties<string | number>]: ResponsiveProp<
+        CSS.Properties<string | number>[K]
+      >;
+    }>,
     PseudoStyles {
   [key: `__${string}`]: CSS.Properties<string | number> | undefined;
   // HTML属性とStyle属性の両方で translate が定義されているため、
@@ -53,33 +66,56 @@ type UiProps<E extends React.ElementType = "div"> = PolymorphicProps<E>;
 const extractStyles = (props: UiStyleProps) => {
   const base: React.CSSProperties = {};
   const pseudo: Record<string, any> = {};
-  const rest: Partial<UiStyleProps> = {};
+  const media: Record<string, any> = {};
+
+  const rest: Record<string, any> = {};
+  const allowedDOMPropKeys = new Set([
+    "children",
+    "className",
+    "style",
+    "htmTranslate",
+  ]);
 
   Object.entries(props).forEach(([key, value]) => {
-    if (key === "htmTranslate") {
-      rest[key as keyof UiStyleProps] = value;
+    if (allowedDOMPropKeys.has(key) || key.startsWith("on")) {
+      rest[key] = value;
     } else if (key.startsWith("__")) {
       const pseudoKey = `&:${key.slice(2)}`;
       pseudo[pseudoKey] = value;
-    } else if (
-      key === "children" ||
-      key === "className" ||
-      key === "style" ||
-      key.startsWith("on")
-    ) {
-      rest[key as keyof UiStyleProps] = value;
     } else {
-      base[key as keyof React.CSSProperties] = value as any;
+      if (
+        typeof value === "object" &&
+        value !== null &&
+        !Array.isArray(value)
+      ) {
+        Object.entries(value).forEach(([breakKey, breakValue]) => {
+          if (breakpoints[breakKey]) {
+            const mediaQuery = `@media (min-width: ${breakpoints[breakKey]})`;
+            if (!media[mediaQuery]) {
+              media[mediaQuery] = {};
+            }
+            media[mediaQuery][key] = breakValue;
+          }
+        });
+      } else {
+        if (key === "content" && typeof value === "object") {
+          base[key as keyof React.CSSProperties] = (value as any).default;
+        } else {
+          base[key as keyof React.CSSProperties] = value as any;
+        }
+      }
     }
   });
-  return { base, pseudo, rest };
+  return { base, pseudo, media, rest };
 };
 
 export const Ui = <E extends React.ElementType = "div">(props: UiProps<E>) => {
   const { as, ref, ...restProps } = props;
   const Component = as || "div";
-  const { base, pseudo, rest } = extractStyles(restProps as UiStyleProps);
-  const combinedStyles = { ...base, ...pseudo };
+  const { base, pseudo, media, rest } = extractStyles(
+    restProps as UiStyleProps,
+  );
+  const combinedStyles = { ...base, ...pseudo, ...media };
   const generatedClass = css(combinedStyles);
   const { htmTranslate, className, ...domProps } = rest;
 

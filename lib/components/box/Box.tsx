@@ -1,19 +1,15 @@
-import { useRef } from "react";
 import { Ui } from "~/core";
 
 export const Box = () => {
-  const ref = useRef(null);
   return (
     <Ui
-      onClick={() => console.log("clic!!")}
-      ref={ref}
+      onClick={() => console.log("click!!")}
       width="32px"
-      backgroundColor="#555555"
-      __active={{
+      backgroundColor={{ md: "red", lg: "blue", xl: "green" }}
+      __hover={{
         backgroundColor: "#333333",
       }}
-    >
-      aaaa
-    </Ui>
+      as="input"
+    />
   );
 };
