@@ -3,7 +3,8 @@ import type * as CSS from "csstype";
 import type React from "react";
 import { useStyle } from "./StyleProvider";
 
-type ResponsiveProp<T> = T | { [key: string]: T };
+type BreakpointKeys = "xs" | "sm" | "md" | "lg" | "xl";
+type ResponsiveProp<T> = T | Partial<Record<BreakpointKeys, T>>;
 
 type PseudoKeys =
   | "__hover"

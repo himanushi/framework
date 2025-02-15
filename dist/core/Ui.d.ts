@@ -1,8 +1,7 @@
 import { default as React } from 'react';
 import type * as CSS from "csstype";
-type ResponsiveProp<T> = T | {
-    [key: string]: T;
-};
+type BreakpointKeys = "xs" | "sm" | "md" | "lg" | "xl";
+type ResponsiveProp<T> = T | Partial<Record<BreakpointKeys, T>>;
 type PseudoKeys = "__hover" | "__active" | "__focus" | "__visited" | "__link" | "__first-child" | "__last-child" | "__nth-child" | "__nth-last-child" | "__first-of-type" | "__last-of-type" | "__nth-of-type" | "__nth-last-of-type" | "__checked" | "__disabled" | "__enabled" | "__required" | "__optional" | "__read-only" | "__read-write" | "__empty" | "__target" | "__lang" | "__not";
 type PseudoStyles = {
     [K in PseudoKeys]?: CSS.Properties<string | number>;
