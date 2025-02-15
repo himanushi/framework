@@ -1,12 +1,12 @@
 import { css, cx } from "@emotion/css";
 import type * as CSS from "csstype";
 import type React from "react";
-import { type defaultColors, useStyle } from "./StyleProvider";
+import { useStyle } from "./StyleProvider";
 
 type BreakpointKeys = "xs" | "sm" | "md" | "lg" | "xl";
 type ResponsiveProp<T> = T | Partial<Record<BreakpointKeys, T>>;
-
-type DefaultColors = typeof defaultColors;
+type ColorValue = string;
+type ResponsiveColor = ColorValue | Partial<Record<BreakpointKeys, ColorValue>>;
 
 type PseudoKeys =
   | "__hover"
@@ -38,10 +38,15 @@ type PseudoStyles = {
   [K in PseudoKeys]?: CSS.Properties<string | number>;
 };
 
-type ExtendedCSSProperties = {
-  [K in keyof CSS.Properties<string | number>]: K extends `${string}Color`
-    ? ResponsiveProp<CSS.Properties<string | number>[K] | keyof DefaultColors>
-    : ResponsiveProp<CSS.Properties<string | number>[K]>;
+type ExtendedCSSProperties = Omit<
+  {
+    [K in keyof CSS.Properties<string | number>]: K extends `${string}Color`
+      ? ResponsiveColor
+      : ResponsiveProp<CSS.Properties<string | number>[K]>;
+  },
+  "color"
+> & {
+  color?: ResponsiveColor;
 };
 
 interface UiStyleProps extends Partial<ExtendedCSSProperties>, PseudoStyles {
@@ -53,7 +58,7 @@ interface UiStyleProps extends Partial<ExtendedCSSProperties>, PseudoStyles {
 type PolymorphicProps<E extends React.ElementType> = {
   as?: E;
   ref?: React.Ref<any>;
-} & React.ComponentPropsWithoutRef<E> &
+} & Omit<React.ComponentPropsWithoutRef<E>, keyof UiStyleProps> &
   UiStyleProps;
 
 export type UiProps<E extends React.ElementType = "div"> = PolymorphicProps<E>;
