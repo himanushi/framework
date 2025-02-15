@@ -33,10 +33,12 @@ type PseudoStyles = {
 };
 
 interface UiStyleProps
-  extends Omit<Partial<CSS.Properties<string | number>>, "translate">,
+  extends Partial<CSS.Properties<string | number>>,
     PseudoStyles {
   [key: `__${string}`]: CSS.Properties<string | number> | undefined;
-  translate?: "yes" | "no";
+  // HTML属性とStyle属性の両方で translate が定義されているため、
+  // HTML側の translate 属性は htmTranslate とする
+  htmTranslate?: "yes" | "no";
   className?: string;
 }
 
@@ -54,7 +56,9 @@ const extractStyles = (props: UiStyleProps) => {
   const rest: Partial<UiStyleProps> = {};
 
   Object.entries(props).forEach(([key, value]) => {
-    if (key.startsWith("__")) {
+    if (key === "htmTranslate") {
+      rest[key as keyof UiStyleProps] = value;
+    } else if (key.startsWith("__")) {
       const pseudoKey = `&:${key.slice(2)}`;
       pseudo[pseudoKey] = value;
     } else if (
@@ -77,12 +81,14 @@ export const Ui = <E extends React.ElementType = "div">(props: UiProps<E>) => {
   const { base, pseudo, rest } = extractStyles(restProps as UiStyleProps);
   const combinedStyles = { ...base, ...pseudo };
   const generatedClass = css(combinedStyles);
+  const { htmTranslate, className, ...domProps } = rest;
 
   return (
     <Component
       ref={ref}
-      {...rest}
-      className={cx(generatedClass, rest.className)}
+      {...domProps}
+      translate={htmTranslate}
+      className={cx(generatedClass, className)}
     />
   );
 };
