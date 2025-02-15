@@ -31,10 +31,6 @@ const shortHands = {
   column: { flexDirection: "column" },
 
   radius: "borderRadius",
-
-  shadowS: {
-    boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
-  },
 } as const satisfies ShortHandType;
 
 const defaultProps: UiProps = {
