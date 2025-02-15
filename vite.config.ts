@@ -30,6 +30,13 @@ export default defineConfig({
         inlineDynamicImports: false,
         preserveModulesRoot: "lib",
         entryFileNames: ({ name: fileName }) => `${fileName}.js`,
+        assetFileNames: (assetInfo) => {
+          const names = assetInfo.names;
+          if (names?.some((n) => n.endsWith(".css"))) {
+            return "style.css";
+          }
+          return "[name].[ext]";
+        },
       },
       treeshake: {
         preset: "smallest",
