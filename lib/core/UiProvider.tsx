@@ -1,8 +1,6 @@
 import type React from "react";
 import { createContext, useContext } from "react";
 import "modern-normalize/modern-normalize.css";
-import createCache from "@emotion/cache";
-import { CacheProvider } from "@emotion/react";
 
 export interface UiConfig {
   breakpoints: Record<string, string>;
@@ -302,12 +300,6 @@ const defaultAllowedDOMPropKeys = new Set([
   "value",
 ]);
 
-const cache = createCache({
-  key: "framework-css",
-  prepend: true,
-  speedy: false,
-});
-
 const defaultConfig: UiConfig = {
   breakpoints: defaultBreakpoints,
   colors: defaultColors,
@@ -325,11 +317,7 @@ export const UiProvider: React.FC<
     allowedDOMPropKeys: allowedDOMPropKeys || defaultAllowedDOMPropKeys,
   };
 
-  return (
-    <CacheProvider value={cache}>
-      <UiContext.Provider value={value}>{children}</UiContext.Provider>
-    </CacheProvider>
-  );
+  return <UiContext.Provider value={value}>{children}</UiContext.Provider>;
 };
 
 export const useSetting = () => useContext(UiContext);
