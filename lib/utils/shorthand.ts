@@ -2,32 +2,43 @@ import type * as CSS from "csstype";
 import type React from "react";
 import type { BaseUiProps } from "~/core";
 
-type ShorthandProp<T> = T extends string ? string | number : boolean;
+export type ShorthandProp<T> = T extends (value: infer U) => any ? U : boolean;
 
 export type WithShorthandProps<P, S extends Record<string, any>> = P & {
   [K in keyof S]?: ShorthandProp<S[K]>;
 };
 
-export type ShortHandType = Record<string, string | BaseUiProps>;
+type ShorthandResolver<T> = (value: T) => Record<string, string | number>;
+type ShorthandMapping<T> =
+  | ShorthandResolver<T>
+  | Record<string, string | number>
+  | string;
+
+export type ShortHandType = Record<string, ShorthandMapping<any>>;
 
 export const resolveShorthandProps = <E extends React.ElementType = "div">(
   props: BaseUiProps<E>,
-  shortHands: ShortHandType,
+  shortHands: Record<string, ShorthandMapping<any>>,
 ): BaseUiProps<E> => {
-  const shorthandStyles: Partial<CSS.Properties<string | number>> = {};
+  let shorthandStyles: Record<string, any> = {};
   const restProps: Record<string, any> = {};
 
   Object.entries(props).forEach(([key, value]) => {
     if (key in shortHands && value !== undefined) {
       const mapping = shortHands[key];
-      if (typeof mapping === "string") {
+      if (typeof mapping === "function") {
+        // 関数の場合はそのまま呼び出して、置換処理は関数内で実装する
+        shorthandStyles = { ...shorthandStyles, ...mapping(value) };
+      } else if (typeof mapping === "string") {
         if (typeof value !== "boolean") {
           shorthandStyles[mapping as keyof CSS.Properties] = value;
         }
       } else if (typeof mapping === "object") {
+        // static なマッピングの場合は、value が true のときのみ適用する
         if (value === true) {
-          Object.assign(shorthandStyles, mapping);
+          shorthandStyles = { ...shorthandStyles, ...mapping };
         }
+        // value が true 以外の場合は何もしない
       }
     } else {
       restProps[key] = value;

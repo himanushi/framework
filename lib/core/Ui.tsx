@@ -21,6 +21,14 @@ const shortHands = {
   pr: "paddingRight",
   pb: "paddingBottom",
   pl: "paddingLeft",
+  py: (value: string | number) => ({
+    paddingTop: value,
+    paddingBottom: value,
+  }),
+  px: (value: string | number) => ({
+    paddingLeft: value,
+    paddingRight: value,
+  }),
 
   w: "width",
   h: "height",
