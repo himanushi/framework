@@ -9,30 +9,30 @@ type ColorValue = string;
 type ResponsiveColor = ColorValue | Partial<Record<BreakpointKeys, ColorValue>>;
 
 type PseudoKeys =
-  | "_hover"
-  | "_active"
-  | "_focus"
-  | "_visited"
-  | "_link"
-  | "_first-child"
-  | "_last-child"
-  | "_nth-child"
-  | "_nth-last-child"
-  | "_first-of-type"
-  | "_last-of-type"
-  | "_nth-of-type"
-  | "_nth-last-of-type"
-  | "_checked"
-  | "_disabled"
-  | "_enabled"
-  | "_required"
-  | "_optional"
-  | "_read-only"
-  | "_read-write"
-  | "_empty"
-  | "_target"
-  | "_lang"
-  | "_not";
+  | "__hover"
+  | "__active"
+  | "__focus"
+  | "__visited"
+  | "__link"
+  | "__first-child"
+  | "__last-child"
+  | "__nth-child"
+  | "__nth-last-child"
+  | "__first-of-type"
+  | "__last-of-type"
+  | "__nth-of-type"
+  | "__nth-last-of-type"
+  | "__checked"
+  | "__disabled"
+  | "__enabled"
+  | "__required"
+  | "__optional"
+  | "__read-only"
+  | "__read-write"
+  | "__empty"
+  | "__target"
+  | "__lang"
+  | "__not";
 
 type PseudoStyles = {
   [K in PseudoKeys]?: Partial<ExtendedCSSProperties>;
@@ -50,7 +50,7 @@ type ExtendedCSSProperties = Omit<
 };
 
 interface UiStyleProps extends Partial<ExtendedCSSProperties>, PseudoStyles {
-  [key: `_${string}`]: Partial<ExtendedCSSProperties> | undefined;
+  [key: `__${string}`]: Partial<ExtendedCSSProperties> | undefined;
   htmTranslate?: "yes" | "no";
   className?: string;
 }
@@ -93,6 +93,7 @@ const extractStyles = (
     "className",
     "style",
     "htmTranslate",
+    "disabled",
   ]);
 
   const extractResponsive = (styles: Record<string, any>) => {
@@ -132,7 +133,7 @@ const extractStyles = (
   Object.entries(props).forEach(([key, value]) => {
     if (allowedDOMPropKeys.has(key) || key.startsWith("on")) {
       rest[key] = value;
-    } else if (key.startsWith("_")) {
+    } else if (key.startsWith("__")) {
       // 擬似クラスの場合
       const pseudoKey = `&:${key.slice(2)}`;
       if (
