@@ -1,15 +1,13 @@
-import { j as l } from "../_virtual/jsx-runtime.js";
+import { j as t } from "../_virtual/jsx-runtime.js";
 import { createContext as i, useContext as s } from "react";
 /* empty css                                                    */
-import d from "../node_modules/@emotion/cache/dist/emotion-cache.browser.esm.js";
-import { C as u } from "../node_modules/@emotion/react/dist/emotion-element-f0de968e.browser.esm.js";
-const o = {
+const l = {
   xs: "0px",
   sm: "480px",
   md: "768px",
   lg: "1024px",
   xl: "1280px"
-}, c = {
+}, o = {
   "slate-50": "oklch(0.984 0.003 247.858)",
   "slate-100": "oklch(0.968 0.007 247.896)",
   "slate-200": "oklch(0.929 0.013 255.508)",
@@ -252,7 +250,7 @@ const o = {
   "rose-800": "oklch(0.455 0.188 13.697)",
   "rose-900": "oklch(0.41 0.159 10.272)",
   "rose-950": "oklch(0.271 0.105 12.094)"
-}, k = /* @__PURE__ */ new Set([
+}, c = /* @__PURE__ */ new Set([
   "accept",
   "action",
   "alt",
@@ -289,24 +287,20 @@ const o = {
   "title",
   "type",
   "value"
-]), p = d({
-  key: "framework-css",
-  prepend: !0,
-  speedy: !1
-}), m = {
-  breakpoints: o,
-  colors: c,
-  allowedDOMPropKeys: k
-}, h = i(m), w = ({ breakpoints: e, colors: r, allowedDOMPropKeys: a, children: n }) => {
-  const t = {
-    breakpoints: e || o,
-    colors: r || c,
-    allowedDOMPropKeys: a || k
+]), u = {
+  breakpoints: l,
+  colors: o,
+  allowedDOMPropKeys: c
+}, k = i(u), g = ({ breakpoints: h, colors: e, allowedDOMPropKeys: r, children: a }) => {
+  const n = {
+    breakpoints: h || l,
+    colors: e || o,
+    allowedDOMPropKeys: r || c
   };
-  return /* @__PURE__ */ l.jsx(u, { value: p, children: /* @__PURE__ */ l.jsx(h.Provider, { value: t, children: n }) });
-}, x = () => s(h);
+  return /* @__PURE__ */ t.jsx(k.Provider, { value: n, children: a });
+}, m = () => s(k);
 export {
-  w as UiProvider,
-  c as defaultColors,
-  x as useSetting
+  g as UiProvider,
+  o as defaultColors,
+  m as useSetting
 };
