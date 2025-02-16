@@ -25,3 +25,6 @@ build-storybook.log
 
 # test
 storybook-static
+
+# llm
+repomix-output.txt
