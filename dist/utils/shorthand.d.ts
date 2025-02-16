@@ -1,6 +1,7 @@
 import { default as React } from 'react';
-import { BaseUiProps } from '../core';
-export type ShorthandProp<T> = T extends (value: infer U) => any ? U : string | number | boolean | undefined;
+import { BaseUiProps, ResponsiveProp } from '../core';
+type ShorthandFunctionProp<T> = T extends (value: infer U) => any ? U : boolean;
+type ShorthandProp<T> = T extends string ? ResponsiveProp<string | number | undefined> : ShorthandFunctionProp<T>;
 export type WithShorthandProps<P, S extends Record<string, any>> = P & {
     [K in keyof S]?: ShorthandProp<S[K]>;
 };

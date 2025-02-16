@@ -1,7 +1,7 @@
 import { default as React } from 'react';
 import type * as CSS from "csstype";
 type BreakpointKeys = "xs" | "sm" | "md" | "lg" | "xl";
-type ResponsiveProp<T> = T | Partial<Record<BreakpointKeys, T>>;
+export type ResponsiveProp<T> = T | Partial<Record<BreakpointKeys, T>>;
 type ColorValue = string;
 type ResponsiveColor = ColorValue | Partial<Record<BreakpointKeys, ColorValue>>;
 type ExtendedCSSProperties = {
