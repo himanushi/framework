@@ -1,7 +1,7 @@
 import { j as s } from "../../_virtual/jsx-runtime.js";
 import { Ui as n } from "../../core/ui/Ui.js";
 import "../../node_modules/@emotion/css/dist/emotion-css.esm.js";
-import "../../core/ui/UiProvider.js";
+import "../../core/provider/UiProvider.js";
 import { resolveShorthandProps as p } from "../../utils/shorthand.js";
 const e = {
   bold: { fontWeight: "bold" },

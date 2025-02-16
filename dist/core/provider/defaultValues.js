@@ -248,6 +248,7 @@ const l = {
   "rose-900": "oklch(0.41 0.159 10.272)",
   "rose-950": "oklch(0.271 0.105 12.094)"
 }, c = /* @__PURE__ */ new Set([
+  "animate",
   "accept",
   "action",
   "alt",

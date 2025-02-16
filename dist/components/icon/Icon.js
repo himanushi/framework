@@ -1,7 +1,7 @@
 import { j as t } from "../../_virtual/jsx-runtime.js";
 import { css as e } from "../../node_modules/@emotion/css/dist/emotion-css.esm.js";
 import { Ui as i } from "../../core/ui/Ui.js";
-import "../../core/ui/UiProvider.js";
+import "../../core/provider/UiProvider.js";
 import { resolveShorthandProps as n } from "../../utils/shorthand.js";
 const m = {
   size: "fontSize"
