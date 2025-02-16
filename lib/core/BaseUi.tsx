@@ -183,7 +183,7 @@ const flattenStyles = (
 
 // --- Component ---
 
-export const BaseUi = <E extends React.ElementType = "div">(
+export const BaseUi = <E extends React.ElementType = React.ElementType>(
   props: BaseUiProps<E>,
 ) => {
   const { as, ref, className, children, ...restProps } = props;
