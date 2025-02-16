@@ -202,34 +202,10 @@ export const BaseUi = <E extends React.ElementType = React.ElementType>(
   );
 
   const allowedProps = filterAllowedDOMProps(restProps, allowedDOMPropKeys);
-
-  // モーションまたはコンポーネントの指定がある場合
   const Component = $motion ? Motion[(as as "div") ?? "div"] : as || "div";
-
-  const isInlineStyle =
-    Object.keys(media).length === 0 && Object.keys(pseudo).length === 0;
-
-  // インラインスタイル
-  if (isInlineStyle) {
-    const inlineStyle = {
-      ...base,
-      ...(allowedProps.style as React.CSSProperties),
-    };
-    return (
-      <Component
-        ref={ref}
-        {...allowedProps}
-        style={inlineStyle}
-        className={className}
-      >
-        {children}
-      </Component>
-    );
-  }
-
-  // Emotion 使用
   const combinedStyles = { ...base, ...pseudo, ...media };
   const generatedClass = css(combinedStyles);
+
   return (
     <Component
       ref={ref}
