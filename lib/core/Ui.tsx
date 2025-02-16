@@ -8,54 +8,19 @@ type ResponsiveProp<T> = T | Partial<Record<BreakpointKeys, T>>;
 type ColorValue = string;
 type ResponsiveColor = ColorValue | Partial<Record<BreakpointKeys, ColorValue>>;
 
-type PseudoKeys =
-  | "__hover"
-  | "__active"
-  | "__focus"
-  | "__visited"
-  | "__link"
-  | "__first-child"
-  | "__last-child"
-  | "__nth-child"
-  | "__nth-last-child"
-  | "__first-of-type"
-  | "__last-of-type"
-  | "__nth-of-type"
-  | "__nth-last-of-type"
-  | "__checked"
-  | "__disabled"
-  | "__enabled"
-  | "__required"
-  | "__optional"
-  | "__read-only"
-  | "__read-write"
-  | "__empty"
-  | "__target"
-  | "__lang"
-  | "__not";
-
-type PseudoStyles = {
-  [K in PseudoKeys]?: Partial<ExtendedCSSProperties>;
+type ExtendedCSSProperties = {
+  [K in keyof CSS.Properties<string | number>]: K extends `${string}Color`
+    ? ResponsiveColor
+    : ResponsiveProp<CSS.Properties<string | number>[K]>;
 };
 
-type ExtendedCSSProperties = Omit<
-  {
-    [K in keyof CSS.Properties<string | number>]: K extends `${string}Color`
-      ? ResponsiveColor
-      : ResponsiveProp<CSS.Properties<string | number>[K]>;
-  },
-  "color"
-> & {
-  color?: ResponsiveColor;
-};
-
-interface UiStyleProps extends Partial<ExtendedCSSProperties>, PseudoStyles {
-  [key: `__${string}`]: Partial<ExtendedCSSProperties> | undefined;
+export interface UiStyleProps extends Partial<ExtendedCSSProperties> {
+  [key: `__${string}`]: UiStyleProps | undefined;
   htmTranslate?: "yes" | "no";
   className?: string;
 }
 
-type PolymorphicProps<E extends React.ElementType> = {
+export type PolymorphicProps<E extends React.ElementType> = {
   as?: E;
   ref?: React.Ref<any>;
 } & Omit<React.ComponentPropsWithoutRef<E>, "className" | "htmTranslate"> &
@@ -63,6 +28,7 @@ type PolymorphicProps<E extends React.ElementType> = {
 
 export type UiProps<E extends React.ElementType = "div"> = PolymorphicProps<E>;
 
+// カラー値の解決（colors に登録されていれば置換）
 const resolveValue = (
   key: string,
   value: any,
@@ -78,129 +44,101 @@ const resolveValue = (
   return value;
 };
 
-const extractStyles = (
-  props: UiStyleProps,
+// レスポンシブ対応のスタイルを解決する
+const resolveResponsiveStyles = (
+  key: string,
+  value: any,
   breakpoints: Record<string, string>,
   colors: Record<string, string>,
 ) => {
-  const base: React.CSSProperties = {};
-  const pseudo: Record<string, any> = {};
+  // 単一値の場合
+  if (typeof value !== "object" || value === null || Array.isArray(value)) {
+    return { base: { [key]: resolveValue(key, value, colors) }, media: {} };
+  }
+  const base: Record<string, any> = {};
   const media: Record<string, any> = {};
-  const rest: Record<string, any> = {};
-
-  const allowedDOMPropKeys = new Set([
-    "children",
-    "className",
-    "style",
-    "htmTranslate",
-    "disabled",
-  ]);
-
-  const extractResponsive = (styles: Record<string, any>) => {
-    const localBase: Record<string, any> = {};
-    const localMedia: Record<string, any> = {};
-    Object.entries(styles).forEach(([k, v]) => {
-      if (typeof v === "object" && v !== null && !Array.isArray(v)) {
-        let hasBreakpoint = false;
-        for (const key in v) {
-          if (breakpoints[key]) {
-            hasBreakpoint = true;
-            break;
-          }
-        }
-        if (hasBreakpoint) {
-          for (const [bpKey, bpValue] of Object.entries(v)) {
-            if (breakpoints[bpKey]) {
-              const mq = `@media (min-width: ${breakpoints[bpKey]})`;
-              if (!localMedia[mq]) {
-                localMedia[mq] = {};
-              }
-              localMedia[mq][k] = resolveValue(k, bpValue, colors);
-            } else {
-              localBase[k] = resolveValue(k, bpValue, colors);
-            }
-          }
-        } else {
-          localBase[k] = resolveValue(k, v, colors);
-        }
+  const hasBreakpoint = Object.keys(value).some((k) => breakpoints[k]);
+  if (hasBreakpoint) {
+    Object.entries(value).forEach(([subKey, subValue]) => {
+      if (breakpoints[subKey]) {
+        const mq = `@media (min-width: ${breakpoints[subKey]})`;
+        media[mq] = {
+          ...media[mq],
+          [key]: resolveValue(key, subValue, colors),
+        };
       } else {
-        localBase[k] = resolveValue(k, v, colors);
+        base[key] = resolveValue(key, subValue, colors);
       }
     });
-    return { base: localBase, media: localMedia };
-  };
+  } else {
+    base[key] = resolveValue(key, value, colors);
+  }
+  return { base, media };
+};
 
-  Object.entries(props).forEach(([key, value]) => {
-    if (allowedDOMPropKeys.has(key) || key.startsWith("on")) {
-      rest[key] = value;
-    } else if (key.startsWith("__")) {
-      // 擬似クラスの場合
-      const pseudoKey = `&:${key.slice(2)}`;
-      if (
-        typeof value === "object" &&
-        value !== null &&
-        !Array.isArray(value)
-      ) {
-        const { base: pseudoBase, media: pseudoMedia } =
-          extractResponsive(value);
-        pseudo[pseudoKey] = pseudoBase;
-        Object.entries(pseudoMedia).forEach(([mq, styles]) => {
-          if (!media[mq]) {
-            media[mq] = {};
-          }
-          if (!media[mq][pseudoKey]) {
-            media[mq][pseudoKey] = {};
-          }
-          Object.assign(media[mq][pseudoKey], styles);
+// スタイルオブジェクトをフラット化（通常スタイル＋再帰的な擬似クラス対応）
+const flattenStyles = (
+  styles: UiStyleProps,
+  breakpoints: Record<string, string>,
+  colors: Record<string, string>,
+  parentSelector = "&",
+) => {
+  let base: Record<string, any> = {};
+  const media: Record<string, any> = {};
+  let pseudo: Record<string, any> = {};
+
+  Object.entries(styles).forEach(([key, value]) => {
+    // DOM用のプロパティは対象外（ここでは style 扱いしない）
+    if (
+      ["children", "className", "style", "htmTranslate"].includes(key) ||
+      key.startsWith("on")
+    ) {
+      return;
+    }
+    // 擬似クラス（キーが "__" で始まる場合）
+    if (key.startsWith("__")) {
+      const pseudoSelector = `${parentSelector}:${key.slice(2)}`;
+      if (typeof value === "object" && value !== null) {
+        const {
+          base: nestedBase,
+          media: nestedMedia,
+          pseudo: nestedPseudo,
+        } = flattenStyles(value, breakpoints, colors, pseudoSelector);
+        pseudo[pseudoSelector] = { ...nestedBase };
+        pseudo = { ...pseudo, ...nestedPseudo };
+        Object.entries(nestedMedia).forEach(([mq, mqStyles]) => {
+          media[mq] = { ...media[mq], ...mqStyles };
         });
       } else {
-        pseudo[pseudoKey] = value;
+        pseudo[pseudoSelector] = value;
       }
     } else {
-      // 通常のスタイルの場合
-      if (
-        typeof value === "object" &&
-        value !== null &&
-        !Array.isArray(value)
-      ) {
-        const { base: baseValue, media: mediaValue } = extractResponsive({
-          [key]: value,
-        });
-        (base as Record<string, any>)[key] = baseValue[key];
-        Object.entries(mediaValue).forEach(([mq, styles]) => {
-          if (!media[mq]) {
-            media[mq] = {};
-          }
-          media[mq][key] = styles[key];
-        });
-      } else {
-        if (key === "content" && typeof value === "object") {
-          base[key as keyof React.CSSProperties] = (value as any).default;
-        } else {
-          base[key as keyof React.CSSProperties] = resolveValue(
-            key,
-            value,
-            colors,
-          );
-        }
-      }
+      // 通常のスタイルプロパティ
+      const { base: resolvedBase, media: resolvedMedia } =
+        resolveResponsiveStyles(key, value, breakpoints, colors);
+      base = { ...base, ...resolvedBase };
+      Object.entries(resolvedMedia).forEach(([mq, mqStyles]) => {
+        media[mq] = { ...media[mq], ...mqStyles };
+      });
     }
   });
-  return { base, pseudo, media, rest };
+  return { base, media, pseudo };
 };
 
 export const Ui = <E extends React.ElementType = "div">(props: UiProps<E>) => {
   const { as, ref, ...restProps } = props;
   const Component = as || "div";
   const { breakpoints, colors } = useStyle();
-  const { base, pseudo, media, rest } = extractStyles(
+
+  const { base, media, pseudo } = flattenStyles(
     restProps as UiStyleProps,
     breakpoints,
     colors,
   );
   const combinedStyles = { ...base, ...pseudo, ...media };
   const generatedClass = css(combinedStyles);
-  const { htmTranslate, className, style, ...domProps } = rest;
+
+  const { htmTranslate, className, ...domProps } = restProps;
 
   return (
     <Component
@@ -208,7 +146,6 @@ export const Ui = <E extends React.ElementType = "div">(props: UiProps<E>) => {
       {...domProps}
       translate={htmTranslate}
       className={cx(generatedClass, className)}
-      style={style}
     />
   );
 };
