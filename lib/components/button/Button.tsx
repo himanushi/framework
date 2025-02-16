@@ -49,6 +49,11 @@ const defaultProps: ButtonProps = {
   __active: {
     backgroundColor: "gray-300",
   },
+
+  $motion: true,
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  transition: { duration: 5 },
 };
 
 export type ButtonProps = WithShorthandProps<

@@ -1,5 +1,7 @@
 import { css, cx } from "@emotion/css";
 import type * as CSS from "csstype";
+import type { MotionProps } from "motion/react";
+import { motion as Motion } from "motion/react";
 import type React from "react";
 import { useSetting } from "~/core";
 
@@ -53,16 +55,20 @@ type PseudoClass =
   | "__nth-of-type"
   | "__nth-last-of-type"
   | "__target";
+
 export type PolymorphicProps<E extends React.ElementType> = {
   as?: E;
   ref?: React.Ref<any>;
-} & Omit<React.ComponentPropsWithoutRef<E>, "className"> &
+} & Omit<React.ComponentPropsWithoutRef<E>, "className" | "color"> &
   BaseUiStyleProps & {
     [K in PseudoClass]?: BaseUiStyleProps;
   };
 
 export type BaseUiProps<E extends React.ElementType = "div"> =
-  PolymorphicProps<E>;
+  PolymorphicProps<E> &
+    Omit<MotionProps, "children"> & {
+      $motion?: boolean;
+    };
 
 // --- Utility Functions ---
 
@@ -186,7 +192,7 @@ const flattenStyles = (
 export const BaseUi = <E extends React.ElementType = React.ElementType>(
   props: BaseUiProps<E>,
 ) => {
-  const { as, ref, className, children, ...restProps } = props;
+  const { as, ref, className, children, $motion, ...restProps } = props;
   const { breakpoints, colors, allowedDOMPropKeys } = useSetting();
 
   const { base, media, pseudo } = flattenStyles(
@@ -194,17 +200,43 @@ export const BaseUi = <E extends React.ElementType = React.ElementType>(
     breakpoints,
     colors,
   );
-  const combinedStyles = { ...base, ...pseudo, ...media };
-  const generatedClass = css(combinedStyles);
+
   const allowedProps = filterAllowedDOMProps(restProps, allowedDOMPropKeys);
 
-  const Component = as || "div";
+  // モーションまたはコンポーネントの指定がある場合
+  const Component = $motion ? Motion[(as as "div") ?? "div"] : as || "div";
+
+  const isInlineStyle =
+    Object.keys(media).length === 0 && Object.keys(pseudo).length === 0;
+
+  // インラインスタイル
+  if (isInlineStyle) {
+    const inlineStyle = {
+      ...base,
+      ...(allowedProps.style as React.CSSProperties),
+    };
+    return (
+      <Component
+        ref={ref}
+        {...allowedProps}
+        style={inlineStyle}
+        className={className}
+      >
+        {children}
+      </Component>
+    );
+  }
+
+  // Emotion 使用
+  const combinedStyles = { ...base, ...pseudo, ...media };
+  const generatedClass = css(combinedStyles);
   return (
     <Component
       ref={ref}
       {...allowedProps}
       className={cx(generatedClass, className)}
-      children={children}
-    />
+    >
+      {children}
+    </Component>
   );
 };
