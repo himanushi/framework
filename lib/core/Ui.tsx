@@ -2,7 +2,7 @@ import {
   type ShortHandType,
   type WithShorthandProps,
   resolveShorthandProps,
-} from "~/utils/resolveShorthandProps";
+} from "~/utils/shorthand";
 import { BaseUi, type BaseUiProps } from "./BaseUi";
 
 const shortHands = {

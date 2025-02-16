@@ -1,9 +1,9 @@
+import { Ui, type UiProps } from "~/core";
 import {
   type ShortHandType,
   type WithShorthandProps,
   resolveShorthandProps,
-} from "~/utils/resolveShorthandProps";
-import { Box, type BoxProps } from "../box";
+} from "~/utils/shorthand";
 
 const shortHands = {
   bold: { fontWeight: "bold" },
@@ -17,10 +17,10 @@ const defaultProps: TextProps = {
   as: "span",
 };
 
-export type TextProps = WithShorthandProps<BoxProps<"span">, typeof shortHands>;
+export type TextProps = WithShorthandProps<UiProps<"span">, typeof shortHands>;
 
 export const Text = (props: TextProps) => {
   const mergedProps = { ...defaultProps, ...props };
   const newProps = resolveShorthandProps(mergedProps, shortHands);
-  return <Box {...newProps} />;
+  return <Ui {...newProps} />;
 };

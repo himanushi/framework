@@ -1,1 +1,1 @@
-export * from "./resolveShorthandProps";
+export * from "./shorthand";

@@ -3,7 +3,7 @@ import {
   type ShortHandType,
   type WithShorthandProps,
   resolveShorthandProps,
-} from "~/utils/resolveShorthandProps";
+} from "~/utils/shorthand";
 
 const shortHands = {} as const satisfies ShortHandType;
 
