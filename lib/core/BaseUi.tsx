@@ -6,7 +6,7 @@ import { useSetting } from "./UiProvider";
 // --- Types ---
 
 type BreakpointKeys = "xs" | "sm" | "md" | "lg" | "xl";
-type ResponsiveProp<T> = T | Partial<Record<BreakpointKeys, T>>;
+export type ResponsiveProp<T> = T | Partial<Record<BreakpointKeys, T>>;
 type ColorValue = string;
 type ResponsiveColor = ColorValue | Partial<Record<BreakpointKeys, ColorValue>>;
 

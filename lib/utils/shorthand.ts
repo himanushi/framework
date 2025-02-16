@@ -1,11 +1,11 @@
 import type * as CSS from "csstype";
 import type React from "react";
-import type { BaseUiProps } from "~/core";
+import type { BaseUiProps, ResponsiveProp } from "~/core";
 
 type ShorthandFunctionProp<T> = T extends (value: infer U) => any ? U : boolean;
 
 type ShorthandProp<T> = T extends string
-  ? string | number | undefined
+  ? ResponsiveProp<string | number | undefined>
   : ShorthandFunctionProp<T>;
 
 export type WithShorthandProps<P, S extends Record<string, any>> = P & {
