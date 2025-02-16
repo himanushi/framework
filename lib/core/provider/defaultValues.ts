@@ -252,6 +252,7 @@ export const defaultColors = {
 } as const;
 
 export const defaultAllowedDOMPropKeys = new Set([
+  "animate",
   "accept",
   "action",
   "alt",

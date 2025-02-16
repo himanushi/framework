@@ -7,7 +7,7 @@ import { useSetting } from "~/core";
 // --- Types ---
 
 type BreakpointKeys = "xs" | "sm" | "md" | "lg" | "xl";
-export type ResponsiveProp<T> = T | Partial<Record<BreakpointKeys, T>>;
+type ResponsiveProp<T> = T | Partial<Record<BreakpointKeys, T>>;
 type ColorValue = string;
 type ResponsiveColor = ColorValue | Partial<Record<BreakpointKeys, ColorValue>>;
 
@@ -17,7 +17,7 @@ type ExtendedCSSProperties = {
     : ResponsiveProp<CSS.Properties<string | number>[K]>;
 };
 
-export interface BaseUiStyleProps extends Partial<ExtendedCSSProperties> {
+interface BaseMotionStyleProps extends Partial<ExtendedCSSProperties> {
   className?: string;
 }
 
@@ -54,15 +54,15 @@ type PseudoClass =
   | "__nth-of-type"
   | "__nth-last-of-type"
   | "__target";
-export type PolymorphicProps<E extends React.ElementType> = {
+type PolymorphicProps<E extends React.ElementType> = {
   as?: E;
   ref?: React.Ref<any>;
 } & Omit<React.ComponentPropsWithoutRef<E>, "className"> &
-  BaseUiStyleProps & {
-    [K in PseudoClass]?: BaseUiStyleProps;
+  BaseMotionStyleProps & {
+    [K in PseudoClass]?: BaseMotionStyleProps;
   };
 
-export type BaseUiProps<E extends React.ElementType = "div"> =
+export type BaseMotionProps<E extends React.ElementType = "div"> =
   PolymorphicProps<E>;
 
 // --- Utility Functions ---
@@ -128,7 +128,7 @@ const filterAllowedDOMProps = (
 const emptySet = new Set<string>();
 
 const flattenStyles = (
-  styles: BaseUiStyleProps,
+  styles: BaseMotionStyleProps,
   breakpoints: Record<string, string>,
   colors: Record<string, string>,
   parentSelector = "&",
@@ -184,14 +184,14 @@ const flattenStyles = (
 
 // --- Component ---
 
-export const BaseUi = <E extends React.ElementType = React.ElementType>(
-  props: BaseUiProps<E>,
+export const BaseMotion = <E extends React.ElementType = "div">(
+  props: BaseMotionProps<E>,
 ) => {
   const { as, ref, className, children, ...restProps } = props;
   const { breakpoints, colors, allowedDOMPropKeys } = useSetting();
 
   const { base, media, pseudo } = flattenStyles(
-    restProps as BaseUiStyleProps,
+    restProps as BaseMotionStyleProps,
     breakpoints,
     colors,
   );
@@ -200,6 +200,7 @@ export const BaseUi = <E extends React.ElementType = React.ElementType>(
   const allowedProps = filterAllowedDOMProps(restProps, allowedDOMPropKeys);
 
   const Component = motion[(as as "div") ?? "div"];
+
   return (
     <Component
       ref={ref}
