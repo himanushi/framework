@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { fn } from "@storybook/test";
+import { Ui } from "~/core";
 import { Text } from "./Text";
 
 const meta: Meta<typeof Text> = {
@@ -39,6 +40,20 @@ export const Large: Story = {
 
 export const Small: Story = {
   args: {
-    children: "ああああああ",
+    children: (
+      <Ui>
+        {[0, 1, 2, 3].map((_, i) => (
+          <Ui
+            key={i}
+            // width={1}
+            // height={1}
+            // backgroundColor={i % 2 === 0 ? "red" : "blue"}
+            // __hover={{ backgroundColor: "black" }}
+          >
+            a
+          </Ui>
+        ))}
+      </Ui>
+    ),
   },
 };
