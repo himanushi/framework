@@ -18,14 +18,13 @@ type ExtendedCSSProperties = {
 
 export interface UiStyleProps extends Partial<ExtendedCSSProperties> {
   [key: `__${string}`]: UiStyleProps | undefined;
-  htmTranslate?: "yes" | "no";
   className?: string;
 }
 
 export type PolymorphicProps<E extends React.ElementType> = {
   as?: E;
   ref?: React.Ref<any>;
-} & Omit<React.ComponentPropsWithoutRef<E>, "className" | "htmTranslate"> &
+} & Omit<React.ComponentPropsWithoutRef<E>, "className"> &
   UiStyleProps;
 
 export type UiProps<E extends React.ElementType = "div"> = PolymorphicProps<E>;
@@ -150,7 +149,7 @@ const flattenStyles = (
 // --- Component ---
 
 export const Ui = <E extends React.ElementType = "div">(props: UiProps<E>) => {
-  const { as, ref, htmTranslate, className, ...restProps } = props;
+  const { as, ref, className, ...restProps } = props;
   const Component = as || "div";
   const { breakpoints, colors, allowedDOMPropKeys } = useSetting();
 
@@ -167,7 +166,6 @@ export const Ui = <E extends React.ElementType = "div">(props: UiProps<E>) => {
     <Component
       ref={ref}
       {...allowedProps}
-      translate={htmTranslate}
       className={cx(generatedClass, className)}
     />
   );

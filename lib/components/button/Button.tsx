@@ -61,5 +61,3 @@ export const Button = (props: ButtonProps) => {
   const newProps = resolveShorthandProps(mergedProps, shortHands);
   return <Box {...newProps} />;
 };
-
-const Ts = () => <Button>aa</Button>;
