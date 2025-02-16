@@ -1,6 +1,6 @@
 import type * as CSS from "csstype";
 import type React from "react";
-import type { UiProps } from "~/core";
+import type { BaseUiProps } from "~/core";
 
 type ShorthandProp<T> = T extends string ? string | number : boolean;
 
@@ -8,12 +8,12 @@ export type WithShorthandProps<P, S extends Record<string, any>> = P & {
   [K in keyof S]?: ShorthandProp<S[K]>;
 };
 
-export type ShortHandType = Record<string, string | UiProps>;
+export type ShortHandType = Record<string, string | BaseUiProps>;
 
 export const resolveShorthandProps = <E extends React.ElementType = "div">(
-  props: UiProps<E>,
+  props: BaseUiProps<E>,
   shortHands: ShortHandType,
-): UiProps<E> => {
+): BaseUiProps<E> => {
   const shorthandStyles: Partial<CSS.Properties<string | number>> = {};
   const restProps: Record<string, any> = {};
 
@@ -34,5 +34,5 @@ export const resolveShorthandProps = <E extends React.ElementType = "div">(
     }
   });
 
-  return { ...restProps, ...shorthandStyles } as UiProps<E>;
+  return { ...restProps, ...shorthandStyles } as BaseUiProps<E>;
 };

@@ -1,9 +1,9 @@
+import { Ui, type UiProps } from "~/core";
 import {
   type ShortHandType,
   type WithShorthandProps,
   resolveShorthandProps,
 } from "~/utils/resolveShorthandProps";
-import { Box, type BoxProps } from "../box";
 
 const shortHands = {
   primary: {
@@ -52,12 +52,12 @@ const defaultProps: ButtonProps = {
 };
 
 export type ButtonProps = WithShorthandProps<
-  BoxProps<"button">,
+  UiProps<"button">,
   typeof shortHands
 >;
 
 export const Button = (props: ButtonProps) => {
   const mergedProps = { ...defaultProps, ...props };
   const newProps = resolveShorthandProps(mergedProps, shortHands);
-  return <Box {...newProps} />;
+  return <Ui {...newProps} />;
 };

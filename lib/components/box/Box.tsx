@@ -5,42 +5,11 @@ import {
   resolveShorthandProps,
 } from "~/utils/resolveShorthandProps";
 
-const shortHands = {
-  iCenter: { alignItems: "center" },
-  iStart: { alignItems: "flex-start" },
-  iEnd: { alignItems: "flex-end" },
-  jCenter: { justifyContent: "center" },
-  jStart: { justifyContent: "flex-start" },
-  jEnd: { justifyContent: "flex-end" },
-  jBetween: { justifyContent: "space-between" },
+const shortHands = {} as const satisfies ShortHandType;
 
-  p: "padding",
-  pt: "paddingTop",
-  pr: "paddingRight",
-  pb: "paddingBottom",
-  pl: "paddingLeft",
+const defaultProps: BoxProps = {};
 
-  m: "margin",
-  mt: "marginTop",
-  mr: "marginRight",
-  mb: "marginBottom",
-  ml: "marginLeft",
-
-  w: "width",
-  h: "height",
-  column: { flexDirection: "column" },
-
-  solid: { border: "1px solid" },
-
-  radius: "borderRadius",
-} as const satisfies ShortHandType;
-
-const defaultProps: UiProps = {
-  display: "flex",
-};
-
-export type BoxProps<E extends React.ElementType = React.ElementType> =
-  WithShorthandProps<UiProps<E>, typeof shortHands>;
+export type BoxProps = WithShorthandProps<UiProps<"div">, typeof shortHands>;
 
 export const Box = (props: BoxProps) => {
   const mergedProps = { ...defaultProps, ...props };
