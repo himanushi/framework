@@ -3,6 +3,8 @@ import type * as CSS from "csstype";
 import type React from "react";
 import { useSetting } from "./UiProvider";
 
+// --- Types ---
+
 type BreakpointKeys = "xs" | "sm" | "md" | "lg" | "xl";
 type ResponsiveProp<T> = T | Partial<Record<BreakpointKeys, T>>;
 type ColorValue = string;
@@ -28,27 +30,25 @@ export type PolymorphicProps<E extends React.ElementType> = {
 
 export type UiProps<E extends React.ElementType = "div"> = PolymorphicProps<E>;
 
+// --- Utility Functions ---
+
 const resolveValue = (
   key: string,
   value: any,
   colors: Record<string, string>,
-) => {
-  if (
-    typeof value === "string" &&
-    key.toLowerCase().includes("color") &&
-    colors[value]
-  ) {
-    return colors[value];
-  }
-  return value;
-};
+): any =>
+  typeof value === "string" &&
+  key.toLowerCase().includes("color") &&
+  colors[value]
+    ? colors[value]
+    : value;
 
 const resolveResponsiveStyles = (
   key: string,
   value: any,
   breakpoints: Record<string, string>,
   colors: Record<string, string>,
-) => {
+): { base: Record<string, any>; media: Record<string, any> } => {
   if (typeof value !== "object" || value === null || Array.isArray(value)) {
     return { base: { [key]: resolveValue(key, value, colors) }, media: {} };
   }
@@ -73,30 +73,22 @@ const resolveResponsiveStyles = (
   return { base, media };
 };
 
-// allowedDOMPropKeys に依存する関数は、context から渡された値を引数で受け取る形に変更
-const isAllowedDOMProp = (key: string, allowedKeys: Set<string>): boolean => {
-  return (
-    allowedKeys.has(key) ||
-    key.startsWith("on") ||
-    key.startsWith("aria-") ||
-    key.startsWith("data-")
-  );
-};
+const isAllowedDOMProp = (key: string, allowedKeys: Set<string>): boolean =>
+  allowedKeys.has(key) ||
+  key.startsWith("on") ||
+  key.startsWith("aria-") ||
+  key.startsWith("data-");
 
 const filterAllowedDOMProps = (
   props: Record<string, any>,
   allowedKeys: Set<string>,
-): Record<string, any> => {
-  return Object.keys(props).reduce(
-    (acc, key) => {
-      if (isAllowedDOMProp(key, allowedKeys)) {
-        acc[key] = props[key];
-      }
-      return acc;
-    },
-    {} as Record<string, any>,
-  );
-};
+): Record<string, any> =>
+  Object.keys(props).reduce<Record<string, any>>((acc, key) => {
+    if (isAllowedDOMProp(key, allowedKeys)) {
+      acc[key] = props[key];
+    }
+    return acc;
+  }, {});
 
 const emptySet = new Set<string>();
 
@@ -105,46 +97,57 @@ const flattenStyles = (
   breakpoints: Record<string, string>,
   colors: Record<string, string>,
   parentSelector = "&",
-) => {
-  let base: Record<string, any> = {};
-  const media: Record<string, any> = {};
-  let pseudo: Record<string, any> = {};
+): {
+  base: Record<string, any>;
+  media: Record<string, any>;
+  pseudo: Record<string, any>;
+} =>
+  Object.entries(styles).reduce(
+    (acc, [key, value]) => {
+      // DOM にそのまま渡すプロパティは除外
+      if (isAllowedDOMProp(key, emptySet)) return acc;
 
-  Object.entries(styles).forEach(([key, value]) => {
-    // DOM にそのまま渡すプロパティはスタイル処理から除外する
-    if (isAllowedDOMProp(key, emptySet)) {
-      return;
-    }
-
-    // 擬似クラス（"__" で始まる場合）
-    if (key.startsWith("__")) {
-      const pseudoSelector = `${parentSelector}:${key.slice(2)}`;
-      if (typeof value === "object" && value !== null) {
-        const {
-          base: nestedBase,
-          media: nestedMedia,
-          pseudo: nestedPseudo,
-        } = flattenStyles(value, breakpoints, colors, pseudoSelector);
-        pseudo[pseudoSelector] = { ...nestedBase };
-        pseudo = { ...pseudo, ...nestedPseudo };
-        Object.entries(nestedMedia).forEach(([mq, mqStyles]) => {
-          media[mq] = { ...media[mq], ...mqStyles };
-        });
+      // 疑似セレクタの場合
+      if (key.startsWith("__")) {
+        const pseudoSelector = `${parentSelector}:${key.slice(2)}`;
+        if (typeof value === "object" && value !== null) {
+          const { base, media, pseudo } = flattenStyles(
+            value,
+            breakpoints,
+            colors,
+            pseudoSelector,
+          );
+          acc.pseudo[pseudoSelector] = { ...base };
+          acc.pseudo = { ...acc.pseudo, ...pseudo };
+          for (const [mq, mqStyles] of Object.entries(media)) {
+            acc.media[mq] = { ...acc.media[mq], ...mqStyles };
+          }
+        } else {
+          acc.pseudo[pseudoSelector] = value;
+        }
       } else {
-        pseudo[pseudoSelector] = value;
+        // 通常のスタイルの場合
+        const { base, media } = resolveResponsiveStyles(
+          key,
+          value,
+          breakpoints,
+          colors,
+        );
+        acc.base = { ...acc.base, ...base };
+        for (const [mq, mqStyles] of Object.entries(media)) {
+          acc.media[mq] = { ...acc.media[mq], ...mqStyles };
+        }
       }
-    } else {
-      // 通常のスタイルプロパティ
-      const { base: resolvedBase, media: resolvedMedia } =
-        resolveResponsiveStyles(key, value, breakpoints, colors);
-      base = { ...base, ...resolvedBase };
-      Object.entries(resolvedMedia).forEach(([mq, mqStyles]) => {
-        media[mq] = { ...media[mq], ...mqStyles };
-      });
-    }
-  });
-  return { base, media, pseudo };
-};
+      return acc;
+    },
+    {
+      base: {} as Record<string, any>,
+      media: {} as Record<string, any>,
+      pseudo: {} as Record<string, any>,
+    },
+  );
+
+// --- Component ---
 
 export const Ui = <E extends React.ElementType = "div">(props: UiProps<E>) => {
   const { as, ref, htmTranslate, className, ...restProps } = props;
