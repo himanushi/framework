@@ -2,6 +2,7 @@
   "name": "framework",
   "version": "1.0.0",
   "scripts": {
+    "ai": "npx repomix",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "storybook dev -p 6006",
     "build": "vite build",
