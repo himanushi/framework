@@ -286,7 +286,8 @@ const l = {
   "transition",
   "title",
   "type",
-  "value"
+  "value",
+  "variants"
 ]);
 export {
   c as defaultAllowedDOMPropKeys,

@@ -116,6 +116,7 @@ const resolveResponsiveStyles = (
 const isAllowedDOMProp = (key: string, allowedKeys: Set<string>): boolean =>
   allowedKeys.has(key) ||
   key.startsWith("on") ||
+  key.startsWith("while") ||
   key.startsWith("aria-") ||
   key.startsWith("data-");
 
