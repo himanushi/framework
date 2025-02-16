@@ -1,21 +1,21 @@
-import { j as u } from "../_virtual/jsx-runtime.js";
-import { css as O, cx as x } from "../node_modules/@emotion/css/dist/emotion-css.esm.js";
-import { useStyle as S } from "./StyleProvider.js";
-const h = (t, e, r) => typeof e == "string" && t.toLowerCase().includes("color") && r[e] ? r[e] : e, E = (t, e, r, i) => {
-  if (typeof e != "object" || e === null || Array.isArray(e))
-    return { base: { [t]: h(t, e, i) }, media: {} };
-  const c = {}, o = {};
-  return Object.keys(e).some((s) => r[s]) ? Object.entries(e).forEach(([s, n]) => {
-    if (r[s]) {
-      const a = `@media (min-width: ${r[s]})`;
-      o[a] = {
-        ...o[a],
-        [t]: h(t, n, i)
+import { j as O } from "../_virtual/jsx-runtime.js";
+import { css as w, cx as x } from "../node_modules/@emotion/css/dist/emotion-css.esm.js";
+import { useStyle as P } from "./StyleProvider.js";
+const h = (e, t, s) => typeof t == "string" && e.toLowerCase().includes("color") && s[t] ? s[t] : t, S = (e, t, s, c) => {
+  if (typeof t != "object" || t === null || Array.isArray(t))
+    return { base: { [e]: h(e, t, c) }, media: {} };
+  const i = {}, r = {};
+  return Object.keys(t).some((o) => s[o]) ? Object.entries(t).forEach(([o, n]) => {
+    if (s[o]) {
+      const a = `@media (min-width: ${s[o]})`;
+      r[a] = {
+        ...r[a],
+        [e]: h(e, n, c)
       };
     } else
-      c[t] = h(t, n, i);
-  }) : c[t] = h(t, e, i), { base: c, media: o };
-}, w = /* @__PURE__ */ new Set([
+      i[e] = h(e, n, c);
+  }) : i[e] = h(e, t, c), { base: i, media: r };
+}, E = /* @__PURE__ */ new Set([
   "children",
   "className",
   "style",
@@ -39,45 +39,48 @@ const h = (t, e, r) => typeof e == "string" && t.toLowerCase().includes("color")
   "min",
   "step",
   "method"
-]), j = (t, e, r, i = "&") => {
-  let c = {};
-  const o = {};
+]), u = (e) => E.has(e) || e.startsWith("on") || e.startsWith("aria-") || e.startsWith("data-"), M = (e) => Object.keys(e).reduce(
+  (t, s) => (u(s) && (t[s] = e[s]), t),
+  {}
+), j = (e, t, s, c = "&") => {
+  let i = {};
+  const r = {};
   let d = {};
-  return Object.entries(t).forEach(([s, n]) => {
-    if (!(w.has(s) || s.startsWith("on") || s.startsWith("aria-") || s.startsWith("data-")))
-      if (s.startsWith("__")) {
-        const a = `${i}:${s.slice(2)}`;
+  return Object.entries(e).forEach(([o, n]) => {
+    if (!u(o))
+      if (o.startsWith("__")) {
+        const a = `${c}:${o.slice(2)}`;
         if (typeof n == "object" && n !== null) {
           const {
-            base: l,
-            media: m,
+            base: m,
+            media: l,
             pseudo: f
-          } = j(n, e, r, a);
-          d[a] = { ...l }, d = { ...d, ...f }, Object.entries(m).forEach(([p, b]) => {
-            o[p] = { ...o[p], ...b };
+          } = j(n, t, s, a);
+          d[a] = { ...m }, d = { ...d, ...f }, Object.entries(l).forEach(([p, b]) => {
+            r[p] = { ...r[p], ...b };
           });
         } else
           d[a] = n;
       } else {
-        const { base: a, media: l } = E(s, n, e, r);
-        c = { ...c, ...a }, Object.entries(l).forEach(([m, f]) => {
-          o[m] = { ...o[m], ...f };
+        const { base: a, media: m } = S(o, n, t, s);
+        i = { ...i, ...a }, Object.entries(m).forEach(([l, f]) => {
+          r[l] = { ...r[l], ...f };
         });
       }
-  }), { base: c, media: o, pseudo: d };
-}, C = (t) => {
-  const { as: e, ref: r, ...i } = t, c = e || "div", { breakpoints: o, colors: d } = S(), { base: s, media: n, pseudo: a } = j(
-    i,
+  }), { base: i, media: r, pseudo: d };
+}, C = (e) => {
+  const { as: t, ref: s, htmTranslate: c, className: i, ...r } = e, d = t || "div", { breakpoints: o, colors: n } = P(), { base: a, media: m, pseudo: l } = j(
+    r,
     o,
-    d
-  ), l = { ...s, ...a, ...n }, m = O(l), { htmTranslate: f, className: p, ...b } = i;
-  return /* @__PURE__ */ u.jsx(
-    c,
+    n
+  ), f = { ...a, ...l, ...m }, p = w(f), b = M(r);
+  return /* @__PURE__ */ O.jsx(
+    d,
     {
-      ref: r,
+      ref: s,
       ...b,
-      translate: f,
-      className: x(m, p)
+      translate: c,
+      className: x(p, i)
     }
   );
 };
