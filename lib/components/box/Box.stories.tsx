@@ -22,6 +22,7 @@ export const Primary: Story = {
   args: {
     children: "ああああああ",
     iEnd: true,
+    px: "10px",
   },
 };
 
