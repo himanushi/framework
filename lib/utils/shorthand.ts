@@ -2,16 +2,20 @@ import type * as CSS from "csstype";
 import type React from "react";
 import type { BaseUiProps } from "~/core";
 
-export type ShorthandProp<T> = T extends (value: infer U) => any ? U : boolean;
+export type ShorthandProp<T> = T extends (value: infer U) => any
+  ? U
+  : string | number | boolean | undefined;
 
 export type WithShorthandProps<P, S extends Record<string, any>> = P & {
   [K in keyof S]?: ShorthandProp<S[K]>;
 };
 
-type ShorthandResolver<T> = (value: T) => Record<string, string | number>;
+type ShorthandResolver<T> = (
+  value: T,
+) => Record<string, string | number | BaseUiProps>;
 type ShorthandMapping<T> =
   | ShorthandResolver<T>
-  | Record<string, string | number>
+  | Record<string, string | number | BaseUiProps>
   | string;
 
 export type ShortHandType = Record<string, ShorthandMapping<any>>;
