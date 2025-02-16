@@ -99,6 +99,29 @@ const allowedDOMPropKeys = new Set([
   "method",
 ]);
 
+const isAllowedDOMProp = (key: string): boolean => {
+  return (
+    allowedDOMPropKeys.has(key) ||
+    key.startsWith("on") ||
+    key.startsWith("aria-") ||
+    key.startsWith("data-")
+  );
+};
+
+const filterAllowedDOMProps = (
+  props: Record<string, any>,
+): Record<string, any> => {
+  return Object.keys(props).reduce(
+    (acc, key) => {
+      if (isAllowedDOMProp(key)) {
+        acc[key] = props[key];
+      }
+      return acc;
+    },
+    {} as Record<string, any>,
+  );
+};
+
 const flattenStyles = (
   styles: UiStyleProps,
   breakpoints: Record<string, string>,
@@ -110,13 +133,8 @@ const flattenStyles = (
   let pseudo: Record<string, any> = {};
 
   Object.entries(styles).forEach(([key, value]) => {
-    // DOM にそのまま渡すプロパティ
-    if (
-      allowedDOMPropKeys.has(key) ||
-      key.startsWith("on") ||
-      key.startsWith("aria-") ||
-      key.startsWith("data-")
-    ) {
+    // DOM にそのまま渡すプロパティはスタイル処理から除外する
+    if (isAllowedDOMProp(key)) {
       return;
     }
 
@@ -151,7 +169,7 @@ const flattenStyles = (
 };
 
 export const Ui = <E extends React.ElementType = "div">(props: UiProps<E>) => {
-  const { as, ref, ...restProps } = props;
+  const { as, ref, htmTranslate, className, ...restProps } = props;
   const Component = as || "div";
   const { breakpoints, colors } = useStyle();
 
@@ -162,13 +180,12 @@ export const Ui = <E extends React.ElementType = "div">(props: UiProps<E>) => {
   );
   const combinedStyles = { ...base, ...pseudo, ...media };
   const generatedClass = css(combinedStyles);
-
-  const { htmTranslate, className, ...domProps } = restProps;
+  const allowedProps = filterAllowedDOMProps(restProps);
 
   return (
     <Component
       ref={ref}
-      {...domProps}
+      {...allowedProps}
       translate={htmTranslate}
       className={cx(generatedClass, className)}
     />
