@@ -1,6 +1,6 @@
 /** @type { import('@storybook/react').Preview } */
 import React from "react";
-import { StyleProvider } from "../lib/core";
+import { UiProvider } from "../lib/core";
 
 const preview = {
   parameters: {
@@ -13,9 +13,9 @@ const preview = {
   },
   decorators: [
     (Story) => (
-      <StyleProvider>
+      <UiProvider>
         <Story />
-      </StyleProvider>
+      </UiProvider>
     ),
   ],
 };

@@ -1,7 +1,7 @@
 import { css, cx } from "@emotion/css";
 import type * as CSS from "csstype";
 import type React from "react";
-import { useStyle } from "./StyleProvider";
+import { useSetting } from "./UiProvider";
 
 type BreakpointKeys = "xs" | "sm" | "md" | "lg" | "xl";
 type ResponsiveProp<T> = T | Partial<Record<BreakpointKeys, T>>;
@@ -73,48 +73,10 @@ const resolveResponsiveStyles = (
   return { base, media };
 };
 
-const allowedDOMPropKeys = new Set([
-  "accept",
-  "action",
-  "alt",
-  "autoFocus",
-  "capture",
-  "checked",
-  "children",
-  "className",
-  "defaultChecked",
-  "defaultValue",
-  "disabled",
-  "download",
-  "form",
-  "hidden",
-  "href",
-  "htmTranslate",
-  "id",
-  "lang",
-  "max",
-  "method",
-  "min",
-  "multiple",
-  "name",
-  "placeholder",
-  "readOnly",
-  "rel",
-  "required",
-  "role",
-  "src",
-  "step",
-  "style",
-  "tabIndex",
-  "target",
-  "title",
-  "type",
-  "value",
-]);
-
-const isAllowedDOMProp = (key: string): boolean => {
+// allowedDOMPropKeys に依存する関数は、context から渡された値を引数で受け取る形に変更
+const isAllowedDOMProp = (key: string, allowedKeys: Set<string>): boolean => {
   return (
-    allowedDOMPropKeys.has(key) ||
+    allowedKeys.has(key) ||
     key.startsWith("on") ||
     key.startsWith("aria-") ||
     key.startsWith("data-")
@@ -123,10 +85,11 @@ const isAllowedDOMProp = (key: string): boolean => {
 
 const filterAllowedDOMProps = (
   props: Record<string, any>,
+  allowedKeys: Set<string>,
 ): Record<string, any> => {
   return Object.keys(props).reduce(
     (acc, key) => {
-      if (isAllowedDOMProp(key)) {
+      if (isAllowedDOMProp(key, allowedKeys)) {
         acc[key] = props[key];
       }
       return acc;
@@ -134,6 +97,8 @@ const filterAllowedDOMProps = (
     {} as Record<string, any>,
   );
 };
+
+const emptySet = new Set<string>();
 
 const flattenStyles = (
   styles: UiStyleProps,
@@ -147,7 +112,7 @@ const flattenStyles = (
 
   Object.entries(styles).forEach(([key, value]) => {
     // DOM にそのまま渡すプロパティはスタイル処理から除外する
-    if (isAllowedDOMProp(key)) {
+    if (isAllowedDOMProp(key, emptySet)) {
       return;
     }
 
@@ -184,7 +149,7 @@ const flattenStyles = (
 export const Ui = <E extends React.ElementType = "div">(props: UiProps<E>) => {
   const { as, ref, htmTranslate, className, ...restProps } = props;
   const Component = as || "div";
-  const { breakpoints, colors } = useStyle();
+  const { breakpoints, colors, allowedDOMPropKeys } = useSetting();
 
   const { base, media, pseudo } = flattenStyles(
     restProps as UiStyleProps,
@@ -193,7 +158,7 @@ export const Ui = <E extends React.ElementType = "div">(props: UiProps<E>) => {
   );
   const combinedStyles = { ...base, ...pseudo, ...media };
   const generatedClass = css(combinedStyles);
-  const allowedProps = filterAllowedDOMProps(restProps);
+  const allowedProps = filterAllowedDOMProps(restProps, allowedDOMPropKeys);
 
   return (
     <Component

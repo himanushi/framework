@@ -2,9 +2,10 @@ import type React from "react";
 import { createContext, useContext } from "react";
 import "modern-normalize/modern-normalize.css";
 
-export interface StyleConfig {
+export interface UiConfig {
   breakpoints: Record<string, string>;
   colors: Record<string, string>;
+  allowedDOMPropKeys: Set<string>;
 }
 
 const defaultBreakpoints: Record<string, string> = {
@@ -260,24 +261,63 @@ export const defaultColors = {
   "rose-950": "oklch(0.271 0.105 12.094)",
 } as const;
 
-const defaultStyleConfig: StyleConfig = {
+const defaultAllowedDOMPropKeys = new Set([
+  "accept",
+  "action",
+  "alt",
+  "autoFocus",
+  "capture",
+  "checked",
+  "children",
+  "className",
+  "defaultChecked",
+  "defaultValue",
+  "disabled",
+  "download",
+  "form",
+  "hidden",
+  "href",
+  "htmTranslate",
+  "id",
+  "lang",
+  "max",
+  "method",
+  "min",
+  "multiple",
+  "name",
+  "placeholder",
+  "readOnly",
+  "rel",
+  "required",
+  "role",
+  "src",
+  "step",
+  "style",
+  "tabIndex",
+  "target",
+  "title",
+  "type",
+  "value",
+]);
+
+const defaultConfig: UiConfig = {
   breakpoints: defaultBreakpoints,
   colors: defaultColors,
+  allowedDOMPropKeys: defaultAllowedDOMPropKeys,
 };
 
-const StyleContext = createContext<StyleConfig>(defaultStyleConfig);
+const UiContext = createContext<UiConfig>(defaultConfig);
 
-export const StyleProvider: React.FC<
-  Partial<StyleConfig> & { children: React.ReactNode }
-> = ({ breakpoints, colors, children }) => {
-  const value: StyleConfig = {
+export const UiProvider: React.FC<
+  Partial<UiConfig> & { children: React.ReactNode }
+> = ({ breakpoints, colors, allowedDOMPropKeys, children }) => {
+  const value: UiConfig = {
     breakpoints: breakpoints || defaultBreakpoints,
     colors: colors || defaultColors,
+    allowedDOMPropKeys: allowedDOMPropKeys || defaultAllowedDOMPropKeys,
   };
 
-  return (
-    <StyleContext.Provider value={value}>{children}</StyleContext.Provider>
-  );
+  return <UiContext.Provider value={value}>{children}</UiContext.Provider>;
 };
 
-export const useStyle = () => useContext(StyleContext);
+export const useSetting = () => useContext(UiContext);
