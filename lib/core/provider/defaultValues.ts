@@ -291,4 +291,5 @@ export const defaultAllowedDOMPropKeys = new Set([
   "title",
   "type",
   "value",
+  "variants",
 ]);

@@ -192,7 +192,7 @@ const flattenStyles = (
 export const BaseUi = <E extends React.ElementType = React.ElementType>(
   props: BaseUiProps<E>,
 ) => {
-  const { as, ref, className, children, $motion, ...restProps } = props;
+  const { as, ref, className, children, style, $motion, ...restProps } = props;
   const { breakpoints, colors, allowedDOMPropKeys } = useSetting();
 
   const { base, media, pseudo } = flattenStyles(
@@ -211,6 +211,7 @@ export const BaseUi = <E extends React.ElementType = React.ElementType>(
       ref={ref}
       {...allowedProps}
       className={cx(generatedClass, className)}
+      style={style}
     >
       {children}
     </Component>
