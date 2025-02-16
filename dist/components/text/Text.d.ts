@@ -1,5 +1,5 @@
-import { WithShorthandProps } from '../../utils/resolveShorthandProps';
-import { BoxProps } from '../box';
+import { UiProps } from '../../core';
+import { WithShorthandProps } from '../../utils/shorthand';
 declare const shortHands: {
     readonly bold: {
         readonly fontWeight: "bold";
@@ -8,6 +8,6 @@ declare const shortHands: {
         readonly whiteSpace: "nowrap";
     };
 };
-export type TextProps = WithShorthandProps<BoxProps<"span">, typeof shortHands>;
+export type TextProps = WithShorthandProps<UiProps<"span">, typeof shortHands>;
 export declare const Text: (props: TextProps) => import("react/jsx-runtime").JSX.Element;
 export {};

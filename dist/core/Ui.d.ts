@@ -1,20 +1,50 @@
-import { default as React } from 'react';
-import type * as CSS from "csstype";
-type BreakpointKeys = "xs" | "sm" | "md" | "lg" | "xl";
-type ResponsiveProp<T> = T | Partial<Record<BreakpointKeys, T>>;
-type ColorValue = string;
-type ResponsiveColor = ColorValue | Partial<Record<BreakpointKeys, ColorValue>>;
-type ExtendedCSSProperties = {
-    [K in keyof CSS.Properties<string | number>]: K extends `${string}Color` ? ResponsiveColor : ResponsiveProp<CSS.Properties<string | number>[K]>;
+import { WithShorthandProps } from '../utils/shorthand';
+import { BaseUiProps } from './BaseUi';
+declare const shortHands: {
+    readonly iCenter: {
+        readonly alignItems: "center";
+    };
+    readonly iStart: {
+        readonly alignItems: "flex-start";
+    };
+    readonly iEnd: {
+        readonly alignItems: "flex-end";
+    };
+    readonly jCenter: {
+        readonly justifyContent: "center";
+    };
+    readonly jStart: {
+        readonly justifyContent: "flex-start";
+    };
+    readonly jEnd: {
+        readonly justifyContent: "flex-end";
+    };
+    readonly jBetween: {
+        readonly justifyContent: "space-between";
+    };
+    readonly column: {
+        readonly flexDirection: "column";
+    };
+    readonly p: "padding";
+    readonly pt: "paddingTop";
+    readonly pr: "paddingRight";
+    readonly pb: "paddingBottom";
+    readonly pl: "paddingLeft";
+    readonly py: (value: string | number) => {
+        paddingTop: string | number;
+        paddingBottom: string | number;
+    };
+    readonly px: (value: string | number) => {
+        paddingLeft: string | number;
+        paddingRight: string | number;
+    };
+    readonly w: "width";
+    readonly h: "height";
+    readonly solid: {
+        readonly border: "1px solid";
+    };
+    readonly radius: "borderRadius";
 };
-export interface UiStyleProps extends Partial<ExtendedCSSProperties> {
-    [key: `__${string}`]: UiStyleProps | undefined;
-    className?: string;
-}
-export type PolymorphicProps<E extends React.ElementType> = {
-    as?: E;
-    ref?: React.Ref<any>;
-} & Omit<React.ComponentPropsWithoutRef<E>, "className"> & UiStyleProps;
-export type UiProps<E extends React.ElementType = "div"> = PolymorphicProps<E>;
-export declare const Ui: <E extends React.ElementType = "div">(props: UiProps<E>) => import("react/jsx-runtime").JSX.Element;
+export type UiProps<E extends React.ElementType = React.ElementType> = WithShorthandProps<BaseUiProps<E>, typeof shortHands>;
+export declare const Ui: (props: UiProps) => import("react/jsx-runtime").JSX.Element;
 export {};

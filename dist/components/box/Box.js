@@ -1,36 +1,11 @@
-import { j as r } from "../../_virtual/jsx-runtime.js";
-import { Ui as o } from "../../core/Ui.js";
-import "../../core/UiProvider.js";
+import { j as s } from "../../_virtual/jsx-runtime.js";
+import { Ui as p } from "../../core/Ui.js";
 import "../../node_modules/@emotion/css/dist/emotion-css.esm.js";
-import { resolveShorthandProps as i } from "../../utils/resolveShorthandProps.js";
-const s = {
-  iCenter: { alignItems: "center" },
-  iStart: { alignItems: "flex-start" },
-  iEnd: { alignItems: "flex-end" },
-  jCenter: { justifyContent: "center" },
-  jStart: { justifyContent: "flex-start" },
-  jEnd: { justifyContent: "flex-end" },
-  jBetween: { justifyContent: "space-between" },
-  p: "padding",
-  pt: "paddingTop",
-  pr: "paddingRight",
-  pb: "paddingBottom",
-  pl: "paddingLeft",
-  m: "margin",
-  mt: "marginTop",
-  mr: "marginRight",
-  mb: "marginBottom",
-  ml: "marginLeft",
-  w: "width",
-  h: "height",
-  column: { flexDirection: "column" },
-  solid: { border: "1px solid" },
-  radius: "borderRadius"
-}, m = {
-  display: "flex"
-}, f = (t) => {
-  const e = { ...m, ...t }, n = i(e, s);
-  return /* @__PURE__ */ r.jsx(o, { ...n });
+import "../../core/UiProvider.js";
+import { resolveShorthandProps as m } from "../../utils/shorthand.js";
+const n = {}, e = {}, f = (o) => {
+  const r = { ...e, ...o }, t = m(r, n);
+  return /* @__PURE__ */ s.jsx(p, { ...t });
 };
 export {
   f as Box

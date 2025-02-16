@@ -1,5 +1,5 @@
-import { WithShorthandProps } from '../../utils/resolveShorthandProps';
-import { BoxProps } from '../box';
+import { UiProps } from '../../core';
+import { WithShorthandProps } from '../../utils/shorthand';
 declare const shortHands: {
     readonly primary: {
         readonly backgroundColor: "blue-500";
@@ -22,6 +22,6 @@ declare const shortHands: {
         };
     };
 };
-export type ButtonProps = WithShorthandProps<BoxProps<"button">, typeof shortHands>;
+export type ButtonProps = WithShorthandProps<UiProps<"button">, typeof shortHands>;
 export declare const Button: (props: ButtonProps) => import("react/jsx-runtime").JSX.Element;
 export {};
