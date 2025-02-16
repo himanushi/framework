@@ -1,77 +1,86 @@
-import { j as O } from "../_virtual/jsx-runtime.js";
-import { css as y, cx as A } from "../node_modules/@emotion/css/dist/emotion-css.esm.js";
-import { useStyle as E } from "./StyleProvider.js";
-const b = (d, i, a) => typeof i == "string" && d.toLowerCase().includes("color") && a[i] ? a[i] : i, w = (d, i, a) => {
-  const l = {}, p = {}, c = {}, m = {}, h = /* @__PURE__ */ new Set([
-    "children",
-    "className",
-    "style",
-    "htmTranslate"
-  ]), j = (e) => {
-    const s = {}, o = {};
-    return Object.entries(e).forEach(([r, t]) => {
-      if (typeof t == "object" && t !== null && !Array.isArray(t)) {
-        let n = !1;
-        for (const f in t)
-          if (i[f]) {
-            n = !0;
-            break;
-          }
-        if (n)
-          for (const [f, x] of Object.entries(t))
-            if (i[f]) {
-              const u = `@media (min-width: ${i[f]})`;
-              o[u] || (o[u] = {}), o[u][r] = b(r, x, a);
-            } else
-              s[r] = b(r, x, a);
-        else
-          s[r] = b(r, t, a);
-      } else
-        s[r] = b(r, t, a);
-    }), { base: s, media: o };
-  };
-  return Object.entries(d).forEach(([e, s]) => {
-    if (h.has(e) || e.startsWith("on"))
-      m[e] = s;
-    else if (e.startsWith("__")) {
-      const o = `&:${e.slice(2)}`;
-      if (typeof s == "object" && s !== null && !Array.isArray(s)) {
-        const { base: r, media: t } = j(s);
-        p[o] = r, Object.entries(t).forEach(([n, f]) => {
-          c[n] || (c[n] = {}), c[n][o] || (c[n][o] = {}), Object.assign(c[n][o], f);
-        });
-      } else
-        p[o] = s;
-    } else if (typeof s == "object" && s !== null && !Array.isArray(s)) {
-      const { base: o, media: r } = j({
-        [e]: s
-      });
-      l[e] = o[e], Object.entries(r).forEach(([t, n]) => {
-        c[t] || (c[t] = {}), c[t][e] = n[e];
-      });
+import { j as u } from "../_virtual/jsx-runtime.js";
+import { css as O, cx as x } from "../node_modules/@emotion/css/dist/emotion-css.esm.js";
+import { useStyle as S } from "./StyleProvider.js";
+const h = (t, e, r) => typeof e == "string" && t.toLowerCase().includes("color") && r[e] ? r[e] : e, E = (t, e, r, i) => {
+  if (typeof e != "object" || e === null || Array.isArray(e))
+    return { base: { [t]: h(t, e, i) }, media: {} };
+  const c = {}, o = {};
+  return Object.keys(e).some((s) => r[s]) ? Object.entries(e).forEach(([s, n]) => {
+    if (r[s]) {
+      const a = `@media (min-width: ${r[s]})`;
+      o[a] = {
+        ...o[a],
+        [t]: h(t, n, i)
+      };
     } else
-      e === "content" && typeof s == "object" ? l[e] = s.default : l[e] = b(
-        e,
-        s,
-        a
-      );
-  }), { base: l, pseudo: p, media: c, rest: m };
-}, B = (d) => {
-  const { as: i, ref: a, ...l } = d, p = i || "div", { breakpoints: c, colors: m } = E(), { base: h, pseudo: j, media: e, rest: s } = w(
-    l,
+      c[t] = h(t, n, i);
+  }) : c[t] = h(t, e, i), { base: c, media: o };
+}, w = /* @__PURE__ */ new Set([
+  "children",
+  "className",
+  "style",
+  "htmTranslate",
+  "id",
+  "disabled",
+  "href",
+  "alt",
+  "src",
+  "value",
+  "defaultValue",
+  "placeholder",
+  "name",
+  "type",
+  "readOnly",
+  "required",
+  "role",
+  "autoFocus",
+  "form",
+  "max",
+  "min",
+  "step",
+  "method"
+]), j = (t, e, r, i = "&") => {
+  let c = {};
+  const o = {};
+  let d = {};
+  return Object.entries(t).forEach(([s, n]) => {
+    if (!(w.has(s) || s.startsWith("on") || s.startsWith("aria-") || s.startsWith("data-")))
+      if (s.startsWith("__")) {
+        const a = `${i}:${s.slice(2)}`;
+        if (typeof n == "object" && n !== null) {
+          const {
+            base: l,
+            media: m,
+            pseudo: f
+          } = j(n, e, r, a);
+          d[a] = { ...l }, d = { ...d, ...f }, Object.entries(m).forEach(([p, b]) => {
+            o[p] = { ...o[p], ...b };
+          });
+        } else
+          d[a] = n;
+      } else {
+        const { base: a, media: l } = E(s, n, e, r);
+        c = { ...c, ...a }, Object.entries(l).forEach(([m, f]) => {
+          o[m] = { ...o[m], ...f };
+        });
+      }
+  }), { base: c, media: o, pseudo: d };
+}, C = (t) => {
+  const { as: e, ref: r, ...i } = t, c = e || "div", { breakpoints: o, colors: d } = S(), { base: s, media: n, pseudo: a } = j(
+    i,
+    o,
+    d
+  ), l = { ...s, ...a, ...n }, m = O(l), { htmTranslate: f, className: p, ...b } = i;
+  return /* @__PURE__ */ u.jsx(
     c,
-    m
-  ), o = { ...h, ...j, ...e }, r = y(o), { htmTranslate: t, className: n, ...f } = s;
-  return /* @__PURE__ */ O.jsx(
-    p,
     {
-      ref: a,
-      ...f,
-      translate: t,
-      className: A(r, n)
+      ref: r,
+      ...b,
+      translate: f,
+      className: x(m, p)
     }
   );
 };
 export {
-  B as Ui
+  C as Ui
 };

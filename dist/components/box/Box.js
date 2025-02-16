@@ -1,6 +1,7 @@
 import { j as r } from "../../_virtual/jsx-runtime.js";
 import { Ui as o } from "../../core/Ui.js";
 import "../../core/StyleProvider.js";
+import "../../node_modules/@emotion/css/dist/emotion-css.esm.js";
 import { resolveShorthandProps as i } from "../../utils/resolveShorthandProps.js";
 const s = {
   iCenter: { alignItems: "center" },
@@ -23,14 +24,12 @@ const s = {
   w: "width",
   h: "height",
   column: { flexDirection: "column" },
-  radius: "borderRadius",
-  shadowS: {
-    boxShadow: "0 2px 8px rgba(32, 37, 50, 8%),0 2px 4px rgba(32, 37, 50, 3%);"
-  }
-}, a = {
+  solid: { border: "1px solid" },
+  radius: "borderRadius"
+}, m = {
   display: "flex"
 }, f = (t) => {
-  const e = { ...a, ...t }, n = i(e, s);
+  const e = { ...m, ...t }, n = i(e, s);
   return /* @__PURE__ */ r.jsx(o, { ...n });
 };
 export {

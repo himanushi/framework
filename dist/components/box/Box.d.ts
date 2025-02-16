@@ -37,11 +37,11 @@ declare const shortHands: {
     readonly column: {
         readonly flexDirection: "column";
     };
-    readonly radius: "borderRadius";
-    readonly shadowS: {
-        readonly boxShadow: "0 2px 8px rgba(32, 37, 50, 8%),0 2px 4px rgba(32, 37, 50, 3%);";
+    readonly solid: {
+        readonly border: "1px solid";
     };
+    readonly radius: "borderRadius";
 };
-export type BoxProps = WithShorthandProps<UiProps, typeof shortHands>;
+export type BoxProps<E extends React.ElementType = React.ElementType> = WithShorthandProps<UiProps<E>, typeof shortHands>;
 export declare const Box: (props: BoxProps) => import("react/jsx-runtime").JSX.Element;
 export {};

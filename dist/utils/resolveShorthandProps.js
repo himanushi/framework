@@ -6,7 +6,7 @@ const f = (i, n) => {
       typeof o == "string" ? typeof t != "boolean" && (e[o] = t) : typeof o == "object" && t === !0 && Object.assign(e, o);
     } else
       r[s] = t;
-  }), { ...e, ...r };
+  }), { ...r, ...e };
 };
 export {
   f as resolveShorthandProps
