@@ -28,7 +28,6 @@ export type PolymorphicProps<E extends React.ElementType> = {
 
 export type UiProps<E extends React.ElementType = "div"> = PolymorphicProps<E>;
 
-// カラー値の解決（colors に登録されていれば置換）
 const resolveValue = (
   key: string,
   value: any,
@@ -44,14 +43,12 @@ const resolveValue = (
   return value;
 };
 
-// レスポンシブ対応のスタイルを解決する
 const resolveResponsiveStyles = (
   key: string,
   value: any,
   breakpoints: Record<string, string>,
   colors: Record<string, string>,
 ) => {
-  // 単一値の場合
   if (typeof value !== "object" || value === null || Array.isArray(value)) {
     return { base: { [key]: resolveValue(key, value, colors) }, media: {} };
   }
@@ -76,7 +73,32 @@ const resolveResponsiveStyles = (
   return { base, media };
 };
 
-// スタイルオブジェクトをフラット化（通常スタイル＋再帰的な擬似クラス対応）
+const allowedDOMPropKeys = new Set([
+  "children",
+  "className",
+  "style",
+  "htmTranslate",
+  "id",
+  "disabled",
+  "href",
+  "alt",
+  "src",
+  "value",
+  "defaultValue",
+  "placeholder",
+  "name",
+  "type",
+  "readOnly",
+  "required",
+  "role",
+  "autoFocus",
+  "form",
+  "max",
+  "min",
+  "step",
+  "method",
+]);
+
 const flattenStyles = (
   styles: UiStyleProps,
   breakpoints: Record<string, string>,
@@ -88,14 +110,17 @@ const flattenStyles = (
   let pseudo: Record<string, any> = {};
 
   Object.entries(styles).forEach(([key, value]) => {
-    // DOM用のプロパティは対象外（ここでは style 扱いしない）
+    // DOM にそのまま渡すプロパティ
     if (
-      ["children", "className", "style", "htmTranslate"].includes(key) ||
-      key.startsWith("on")
+      allowedDOMPropKeys.has(key) ||
+      key.startsWith("on") ||
+      key.startsWith("aria-") ||
+      key.startsWith("data-")
     ) {
       return;
     }
-    // 擬似クラス（キーが "__" で始まる場合）
+
+    // 擬似クラス（"__" で始まる場合）
     if (key.startsWith("__")) {
       const pseudoSelector = `${parentSelector}:${key.slice(2)}`;
       if (typeof value === "object" && value !== null) {
