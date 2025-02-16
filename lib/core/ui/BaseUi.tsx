@@ -1,6 +1,5 @@
 import { css, cx } from "@emotion/css";
 import type * as CSS from "csstype";
-import { motion } from "motion/react";
 import type React from "react";
 import { useSetting } from "~/core";
 
@@ -199,7 +198,7 @@ export const BaseUi = <E extends React.ElementType = React.ElementType>(
   const generatedClass = css(combinedStyles);
   const allowedProps = filterAllowedDOMProps(restProps, allowedDOMPropKeys);
 
-  const Component = motion[(as as "div") ?? "div"];
+  const Component = as || "div";
   return (
     <Component
       ref={ref}
