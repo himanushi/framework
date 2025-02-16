@@ -1,7 +1,8 @@
 import { default as React } from 'react';
-export interface StyleConfig {
+export interface UiConfig {
     breakpoints: Record<string, string>;
     colors: Record<string, string>;
+    allowedDOMPropKeys: Set<string>;
 }
 export declare const defaultColors: {
     readonly "slate-50": "oklch(0.984 0.003 247.858)";
@@ -247,7 +248,7 @@ export declare const defaultColors: {
     readonly "rose-900": "oklch(0.41 0.159 10.272)";
     readonly "rose-950": "oklch(0.271 0.105 12.094)";
 };
-export declare const StyleProvider: React.FC<Partial<StyleConfig> & {
+export declare const UiProvider: React.FC<Partial<UiConfig> & {
     children: React.ReactNode;
 }>;
-export declare const useStyle: () => StyleConfig;
+export declare const useSetting: () => UiConfig;

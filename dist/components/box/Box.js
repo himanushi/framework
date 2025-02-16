@@ -1,6 +1,6 @@
 import { j as r } from "../../_virtual/jsx-runtime.js";
 import { Ui as o } from "../../core/Ui.js";
-import "../../core/StyleProvider.js";
+import "../../core/UiProvider.js";
 import "../../node_modules/@emotion/css/dist/emotion-css.esm.js";
 import { resolveShorthandProps as i } from "../../utils/resolveShorthandProps.js";
 const s = {

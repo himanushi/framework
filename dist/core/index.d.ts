@@ -1,3 +1,3 @@
 export * from './Ui';
-export * from './StyleProvider';
+export * from './UiProvider';
 export { css, cx } from '@emotion/css';

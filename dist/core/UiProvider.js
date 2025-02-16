@@ -1,5 +1,5 @@
-import { j as a } from "../_virtual/jsx-runtime.js";
-import { createContext as n, useContext as i } from "react";
+import { j as t } from "../_virtual/jsx-runtime.js";
+import { createContext as i, useContext as s } from "react";
 /* empty css                                                    */
 const l = {
   xs: "0px",
@@ -250,18 +250,57 @@ const l = {
   "rose-800": "oklch(0.455 0.188 13.697)",
   "rose-900": "oklch(0.41 0.159 10.272)",
   "rose-950": "oklch(0.271 0.105 12.094)"
-}, t = {
+}, c = /* @__PURE__ */ new Set([
+  "accept",
+  "action",
+  "alt",
+  "autoFocus",
+  "capture",
+  "checked",
+  "children",
+  "className",
+  "defaultChecked",
+  "defaultValue",
+  "disabled",
+  "download",
+  "form",
+  "hidden",
+  "href",
+  "htmTranslate",
+  "id",
+  "lang",
+  "max",
+  "method",
+  "min",
+  "multiple",
+  "name",
+  "placeholder",
+  "readOnly",
+  "rel",
+  "required",
+  "role",
+  "src",
+  "step",
+  "style",
+  "tabIndex",
+  "target",
+  "title",
+  "type",
+  "value"
+]), u = {
   breakpoints: l,
-  colors: o
-}, c = n(t), g = ({ breakpoints: k, colors: h, children: e }) => {
-  const r = {
-    breakpoints: k || l,
-    colors: h || o
+  colors: o,
+  allowedDOMPropKeys: c
+}, k = i(u), g = ({ breakpoints: h, colors: e, allowedDOMPropKeys: r, children: a }) => {
+  const n = {
+    breakpoints: h || l,
+    colors: e || o,
+    allowedDOMPropKeys: r || c
   };
-  return /* @__PURE__ */ a.jsx(c.Provider, { value: r, children: e });
-}, p = () => i(c);
+  return /* @__PURE__ */ t.jsx(k.Provider, { value: n, children: a });
+}, m = () => s(k);
 export {
-  g as StyleProvider,
+  g as UiProvider,
   o as defaultColors,
-  p as useStyle
+  m as useSetting
 };
