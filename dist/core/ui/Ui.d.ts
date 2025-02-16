@@ -1,4 +1,4 @@
-import { WithShorthandProps } from '../utils/shorthand';
+import { WithShorthandProps } from '../../utils/shorthand';
 import { BaseUiProps } from './BaseUi';
 declare const shortHands: {
     readonly iCenter: {

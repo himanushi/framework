@@ -1,7 +1,7 @@
 import { j as t } from "../../_virtual/jsx-runtime.js";
-import { Ui as e } from "../../core/Ui.js";
+import { Ui as e } from "../../core/ui/Ui.js";
 import "../../node_modules/@emotion/css/dist/emotion-css.esm.js";
-import "../../core/UiProvider.js";
+import "../../core/ui/UiProvider.js";
 import { resolveShorthandProps as n } from "../../utils/shorthand.js";
 const d = {
   primary: {

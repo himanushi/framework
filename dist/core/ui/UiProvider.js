@@ -1,6 +1,6 @@
-import { j as p } from "../_virtual/jsx-runtime.js";
+import { j as p } from "../../_virtual/jsx-runtime.js";
 import { createContext as d, useContext as u } from "react";
-/* empty css                                                    */
+/* empty css                                                       */
 import { defaultAllowedDOMPropKeys as o, defaultColors as t, defaultBreakpoints as e } from "./defaultValues.js";
 const c = {
   breakpoints: e,

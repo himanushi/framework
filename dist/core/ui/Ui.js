@@ -1,5 +1,5 @@
-import { j as o } from "../_virtual/jsx-runtime.js";
-import { resolveShorthandProps as i } from "../utils/shorthand.js";
+import { j as o } from "../../_virtual/jsx-runtime.js";
+import { resolveShorthandProps as i } from "../../utils/shorthand.js";
 import { BaseUi as d } from "./BaseUi.js";
 const r = {
   iCenter: { alignItems: "center" },
