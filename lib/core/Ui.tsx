@@ -149,7 +149,7 @@ const flattenStyles = (
 // --- Component ---
 
 export const Ui = <E extends React.ElementType = "div">(props: UiProps<E>) => {
-  const { as, ref, className, ...restProps } = props;
+  const { as, ref, className, children, ...restProps } = props;
   const Component = as || "div";
   const { breakpoints, colors, allowedDOMPropKeys } = useSetting();
 
@@ -167,6 +167,7 @@ export const Ui = <E extends React.ElementType = "div">(props: UiProps<E>) => {
       ref={ref}
       {...allowedProps}
       className={cx(generatedClass, className)}
+      children={children}
     />
   );
 };
