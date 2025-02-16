@@ -1,3 +1,4 @@
+import { MotionProps } from 'motion/react';
 import { default as React } from 'react';
 import type * as CSS from "csstype";
 type BreakpointKeys = "xs" | "sm" | "md" | "lg" | "xl";
@@ -14,9 +15,11 @@ type PseudoClass = "__link" | "__visited" | "__hover" | "__active" | "__focus" |
 export type PolymorphicProps<E extends React.ElementType> = {
     as?: E;
     ref?: React.Ref<any>;
-} & Omit<React.ComponentPropsWithoutRef<E>, "className"> & BaseUiStyleProps & {
+} & Omit<React.ComponentPropsWithoutRef<E>, "className" | "color"> & BaseUiStyleProps & {
     [K in PseudoClass]?: BaseUiStyleProps;
 };
-export type BaseUiProps<E extends React.ElementType = "div"> = PolymorphicProps<E>;
+export type BaseUiProps<E extends React.ElementType = "div"> = PolymorphicProps<E> & Omit<MotionProps, "children"> & {
+    $motion?: boolean;
+};
 export declare const BaseUi: <E extends React.ElementType = React.ElementType<any, keyof React.JSX.IntrinsicElements>>(props: BaseUiProps<E>) => import("react/jsx-runtime").JSX.Element;
 export {};

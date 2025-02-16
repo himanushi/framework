@@ -266,6 +266,7 @@ const l = {
   "href",
   "htmTranslate",
   "id",
+  "initial",
   "lang",
   "max",
   "method",
@@ -282,6 +283,7 @@ const l = {
   "style",
   "tabIndex",
   "target",
+  "transition",
   "title",
   "type",
   "value"

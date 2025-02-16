@@ -1,9 +1,9 @@
-import { j as t } from "../../_virtual/jsx-runtime.js";
-import { Ui as e } from "../../core/ui/Ui.js";
+import { j as a } from "../../_virtual/jsx-runtime.js";
+import { Ui as n } from "../../core/ui/Ui.js";
 import "../../node_modules/@emotion/css/dist/emotion-css.esm.js";
 import "../../core/provider/UiProvider.js";
-import { resolveShorthandProps as n } from "../../utils/shorthand.js";
-const d = {
+import { resolveShorthandProps as e } from "../../utils/shorthand.js";
+const i = {
   primary: {
     backgroundColor: "blue-500",
     color: "white",
@@ -24,7 +24,7 @@ const d = {
       backgroundColor: "gray-700"
     }
   }
-}, s = {
+}, c = {
   cursor: "pointer",
   __disabled: {
     opacity: 0.5,
@@ -42,11 +42,15 @@ const d = {
   },
   __active: {
     backgroundColor: "gray-300"
-  }
-}, p = (o) => {
-  const r = { ...s, ...o }, a = n(r, d);
-  return /* @__PURE__ */ t.jsx(e, { ...a });
+  },
+  $motion: !0,
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  transition: { duration: 5 }
+}, g = (o) => {
+  const r = { ...c, ...o }, t = e(r, i);
+  return /* @__PURE__ */ a.jsx(n, { ...t });
 };
 export {
-  p as Button
+  g as Button
 };
