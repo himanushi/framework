@@ -21,7 +21,6 @@ type Story = StoryObj<typeof Text>;
 export const Primary: Story = {
   args: {
     children: "ああああああ",
-    sizeS: true,
   },
 };
 

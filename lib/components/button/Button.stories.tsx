@@ -18,7 +18,6 @@ export const Primary: Story = {
   args: {
     children: "ああああああ",
     primary: true,
-    onClick: () => console.log("click"),
   },
 };
 
@@ -32,6 +31,8 @@ export const Secondary: Story = {
 export const Large: Story = {
   args: {
     children: "ああああああ",
+    disabled: true,
+    onClick: () => console.log("click"),
   },
 };
 

@@ -10,14 +10,14 @@ const shortHands = {
   nowrap: { whiteSpace: "nowrap" },
 } as const satisfies ShortHandType;
 
-const defaultProps: BoxProps = {
+const defaultProps: TextProps = {
   display: "inline",
   color: "gray-900",
   fontWeight: "normal",
   as: "span",
 };
 
-export type TextProps = WithShorthandProps<BoxProps, typeof shortHands>;
+export type TextProps = WithShorthandProps<BoxProps<"span">, typeof shortHands>;
 
 export const Text = (props: TextProps) => {
   const mergedProps = { ...defaultProps, ...props };

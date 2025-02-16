@@ -9,10 +9,10 @@ const shortHands = {
   primary: {
     backgroundColor: "blue-500",
     color: "white",
-    _hover: {
+    __hover: {
       backgroundColor: "blue-600",
     },
-    _active: {
+    __active: {
       backgroundColor: "blue-700",
     },
   },
@@ -20,33 +20,46 @@ const shortHands = {
   secondary: {
     backgroundColor: "gray-500",
     color: "white",
-    _hover: {
+    __hover: {
       backgroundColor: "gray-600",
     },
-    _active: {
+    __active: {
       backgroundColor: "gray-700",
     },
   },
 } as const satisfies ShortHandType;
 
-const defaultProps: BoxProps<"button"> = {
+const defaultProps: ButtonProps = {
+  cursor: "pointer",
+  __disabled: {
+    opacity: 0.5,
+    cursor: "not-allowed",
+  },
+
   radius: "6px",
   backgroundColor: "gray-100",
   border: "none",
   as: "button",
+  solid: true,
+  borderColor: "gray-200",
   padding: { xs: "12px", md: "20px" },
-  _hover: {
+  __hover: {
     backgroundColor: "gray-200",
   },
-  _active: {
+  __active: {
     backgroundColor: "gray-300",
   },
 };
 
-export type ButtonProps = WithShorthandProps<BoxProps, typeof shortHands>;
+export type ButtonProps = WithShorthandProps<
+  BoxProps<"button">,
+  typeof shortHands
+>;
 
 export const Button = (props: ButtonProps) => {
   const mergedProps = { ...defaultProps, ...props };
   const newProps = resolveShorthandProps(mergedProps, shortHands);
   return <Box {...newProps} />;
 };
+
+const Ts = () => <Button>aa</Button>;

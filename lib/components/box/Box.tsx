@@ -30,6 +30,8 @@ const shortHands = {
   h: "height",
   column: { flexDirection: "column" },
 
+  solid: { border: "1px solid" },
+
   radius: "borderRadius",
 } as const satisfies ShortHandType;
 
