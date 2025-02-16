@@ -49,11 +49,6 @@ const defaultProps: ButtonProps = {
   __active: {
     backgroundColor: "gray-300",
   },
-
-  $motion: true,
-  initial: { opacity: 0 },
-  animate: { opacity: 1 },
-  transition: { duration: 5 },
 };
 
 export type ButtonProps = WithShorthandProps<
@@ -64,5 +59,5 @@ export type ButtonProps = WithShorthandProps<
 export const Button = (props: ButtonProps) => {
   const mergedProps = { ...defaultProps, ...props };
   const newProps = resolveShorthandProps(mergedProps, shortHands);
-  return <Ui {...newProps} />;
+  return <Ui {...newProps} $motion />;
 };

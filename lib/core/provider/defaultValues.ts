@@ -252,7 +252,6 @@ export const defaultColors = {
 } as const;
 
 export const defaultAllowedDOMPropKeys = new Set([
-  "animate",
   "accept",
   "action",
   "alt",
@@ -270,7 +269,6 @@ export const defaultAllowedDOMPropKeys = new Set([
   "href",
   "htmTranslate",
   "id",
-  "initial",
   "lang",
   "max",
   "method",
@@ -287,9 +285,16 @@ export const defaultAllowedDOMPropKeys = new Set([
   "style",
   "tabIndex",
   "target",
-  "transition",
   "title",
   "type",
   "value",
+
+  // motion
+  "initial",
+  "transition",
+  "transformTemplate",
+  "animate",
   "variants",
+  "exit",
+  "viewport",
 ]);

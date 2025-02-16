@@ -117,6 +117,8 @@ const isAllowedDOMProp = (key: string, allowedKeys: Set<string>): boolean =>
   allowedKeys.has(key) ||
   key.startsWith("on") ||
   key.startsWith("while") ||
+  key.startsWith("drag") ||
+  key.startsWith("layout") ||
   key.startsWith("aria-") ||
   key.startsWith("data-");
 
