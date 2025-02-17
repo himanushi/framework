@@ -61,7 +61,7 @@ export type PolymorphicProps<E extends React.ElementType> = {
   ref?: React.Ref<any>;
 } & Omit<React.ComponentPropsWithoutRef<E>, "className" | "color"> &
   BaseUiStyleProps & {
-    [K in PseudoClass]?: BaseUiStyleProps;
+    [K in PseudoClass]?: PolymorphicProps<any>;
   };
 
 export type BaseUiProps<E extends React.ElementType = "div"> =
@@ -144,51 +144,55 @@ const flattenStyles = (
   base: Record<string, any>;
   media: Record<string, any>;
   pseudo: Record<string, any>;
-} =>
-  Object.entries(styles).reduce(
-    (acc, [key, value]) => {
-      // DOM にそのまま渡すプロパティは除外
-      if (isAllowedDOMProp(key, emptySet)) return acc;
+} => {
+  let base: Record<string, any> = {};
+  const media: Record<string, any> = {};
+  const pseudo: Record<string, any> = {};
 
-      // 疑似セレクタの場合
-      if (key.startsWith("__")) {
-        const pseudoSelector = `${parentSelector}:${key.slice(2)}`;
-        if (typeof value === "object" && value !== null) {
-          const { base, media, pseudo } = flattenStyles(
-            value,
-            breakpoints,
-            colors,
-            pseudoSelector,
-          );
-          acc.pseudo[pseudoSelector] = { ...base };
-          acc.pseudo = { ...acc.pseudo, ...pseudo };
-          for (const [mq, mqStyles] of Object.entries(media)) {
-            acc.media[mq] = { ...acc.media[mq], ...mqStyles };
-          }
-        } else {
-          acc.pseudo[pseudoSelector] = value;
+  for (const [key, value] of Object.entries(styles)) {
+    // DOM にそのまま渡すプロパティは除外
+    if (isAllowedDOMProp(key, emptySet)) continue;
+
+    // 疑似セレクタの場合
+    if (key.startsWith("__")) {
+      const pseudoKey =
+        parentSelector === "&"
+          ? `&:${key.slice(2)}`
+          : `${parentSelector}:${key.slice(2)}`;
+
+      if (typeof value === "object" && value !== null) {
+        const {
+          base: nestedBase,
+          media: nestedMedia,
+          pseudo: nestedPseudo,
+        } = flattenStyles(value, breakpoints, colors, pseudoKey);
+
+        pseudo[pseudoKey] = { ...(pseudo[pseudoKey] || {}), ...nestedBase };
+
+        for (const nestedPseudoKey in nestedPseudo) {
+          const suffix = nestedPseudoKey.replace(pseudoKey, "");
+          pseudo[pseudoKey][suffix] = nestedPseudo[nestedPseudoKey];
+        }
+
+        for (const mq in nestedMedia) {
+          media[mq] = { ...media[mq], ...nestedMedia[mq] };
         }
       } else {
-        // 通常のスタイルの場合
-        const { base, media } = resolveResponsiveStyles(
-          key,
-          value,
-          breakpoints,
-          colors,
-        );
-        acc.base = { ...acc.base, ...base };
-        for (const [mq, mqStyles] of Object.entries(media)) {
-          acc.media[mq] = { ...acc.media[mq], ...mqStyles };
-        }
+        pseudo[pseudoKey] = value;
       }
-      return acc;
-    },
-    {
-      base: {} as Record<string, any>,
-      media: {} as Record<string, any>,
-      pseudo: {} as Record<string, any>,
-    },
-  );
+    } else {
+      // 通常のスタイルの場合
+      const { base: resolvedBase, media: resolvedMedia } =
+        resolveResponsiveStyles(key, value, breakpoints, colors);
+      base = { ...base, ...resolvedBase };
+      for (const mq in resolvedMedia) {
+        media[mq] = { ...media[mq], ...resolvedMedia[mq] };
+      }
+    }
+  }
+
+  return { base, media, pseudo };
+};
 
 // --- Component ---
 

@@ -15,6 +15,16 @@ const shortHands = {
     __active: {
       backgroundColor: "blue-700",
     },
+    __disabled: {
+      opacity: 0.5,
+      cursor: "not-allowed",
+      __hover: {
+        backgroundColor: "blue-500",
+      },
+      __active: {
+        backgroundColor: "blue-500",
+      },
+    },
   },
 
   secondary: {
@@ -26,28 +36,44 @@ const shortHands = {
     __active: {
       backgroundColor: "gray-700",
     },
+    __disabled: {
+      opacity: 0.5,
+      cursor: "not-allowed",
+      __hover: {
+        backgroundColor: "gray-500",
+      },
+      __active: {
+        backgroundColor: "gray-500",
+      },
+    },
   },
 } as const satisfies ShortHandType;
 
 const defaultProps: ButtonProps = {
   cursor: "pointer",
-  __disabled: {
-    opacity: 0.5,
-    cursor: "not-allowed",
-  },
-
   radius: "6px",
   backgroundColor: "gray-100",
   border: "none",
   as: "button",
   solid: true,
   borderColor: "gray-200",
-  padding: { xs: "12px", md: "20px" },
+  padding: { xs: "12px", md: "16px" },
+
   __hover: {
     backgroundColor: "gray-200",
   },
   __active: {
     backgroundColor: "gray-300",
+  },
+  __disabled: {
+    opacity: 0.5,
+    cursor: "not-allowed",
+    __hover: {
+      backgroundColor: "gray-100",
+    },
+    __active: {
+      backgroundColor: "gray-100",
+    },
   },
 };
 

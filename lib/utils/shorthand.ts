@@ -14,10 +14,10 @@ export type WithShorthandProps<P, S extends Record<string, any>> = P & {
 
 type ShorthandResolver<T> = (
   value: T,
-) => Record<string, string | number | BaseUiProps>;
+) => Record<string, string | number | BaseUiProps | ResponsiveProp<any>>;
 type ShorthandMapping<T> =
   | ShorthandResolver<T>
-  | Record<string, string | number | BaseUiProps>
+  | Record<string, string | number | BaseUiProps | ResponsiveProp<any>>
   | string;
 
 export type ShortHandType = Record<string, ShorthandMapping<any>>;
