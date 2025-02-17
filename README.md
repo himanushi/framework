@@ -25,15 +25,7 @@
 </Button>
 ```
 
-## インストール
-
-```bash
-npm install framework
-# or
-yarn add framework
-# or
-pnpm add framework
-```
+## インストールできません
 
 ## 基本的な使い方
 
