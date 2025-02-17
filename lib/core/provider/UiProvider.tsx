@@ -1,5 +1,5 @@
 import type React from "react";
-import { createContext, useContext } from "react";
+import { createContext } from "react";
 import "modern-normalize/modern-normalize.css";
 import {
   defaultAllowedDOMPropKeys,
@@ -41,7 +41,7 @@ const defaultConfig: UiConfig = {
   allowedDOMPropKeys: defaultAllowedDOMPropKeys,
 };
 
-const UiContext = createContext<UiConfig>(defaultConfig);
+export const UiContext = createContext<UiConfig>(defaultConfig);
 
 export const UiProvider: React.FC<
   Partial<UiConfig> & { children: React.ReactNode }
@@ -54,5 +54,3 @@ export const UiProvider: React.FC<
 
   return <UiContext.Provider value={value}>{children}</UiContext.Provider>;
 };
-
-export const useSetting = () => useContext(UiContext);
