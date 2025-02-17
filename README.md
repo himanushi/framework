@@ -1,6 +1,4 @@
-# Framework
-
-モダンなReactアプリケーション向けの軽量でカスタマイズ可能なUIコンポーネントライブラリです。
+私用の練習用のモダンなReactアプリケーション向けの軽量でカスタマイズ可能なUIコンポーネントライブラリです。
 
 ## 特徴
 
@@ -93,37 +91,88 @@ function MyComponent() {
 - `whileHover`: ホバー時のアニメーション
 - `whileTap`: タップ/クリック時のアニメーション
 
-## 利用可能なコンポーネント
+## 擬似クラス
 
-- `Box` - フレックスボックスベースのレイアウトコンポーネント
-- `Button` - カスタマイズ可能なボタンコンポーネント
-- `Checkbox` - チェックボックスコンポーネント
-- `Icon` - アイコン表示用コンポーネント
-- `Switch` - トグルスイッチコンポーネント
-- `Text` - テキスト表示用コンポーネント
-- `Tooltip` - ツールチップコンポーネント
-
-## ショートハンドプロパティ
-
-このライブラリは、一般的なスタイリングパターンを簡単に適用できるショートハンドプロパティを提供します：
+各コンポーネントは擬似クラスを`__`（アンダースコア2つ）で始まるプロパティとして指定できます：
 
 ```tsx
-// 従来の方法
-<Box display="flex" alignItems="center" justifyContent="center">
+// 基本的な使い方
+<Button
+  backgroundColor="blue-500"
+  __hover={{ backgroundColor: "blue-600" }}
+  __active={{ backgroundColor: "blue-700" }}
+>
+  ホバーで色が変化
+</Button>
 
-// ショートハンドプロパティを使用
-<Box iCenter jCenter>
+// disabled状態のスタイリング
+<Button
+  backgroundColor="blue-500"
+  __disabled={{
+    opacity: 0.5,
+    cursor: "not-allowed",
+    __hover: { backgroundColor: "blue-500" }
+  }}
+>
+  無効状態
+</Button>
+
+// フォーカス状態
+<Input
+  borderColor="gray-300"
+  __focus={{ borderColor: "blue-500" }}
+/>
 ```
 
-主なショートハンドプロパティ：
+すべての擬似クラスは入れ子にすることができます：
+```tsx
+<Box
+  color="blue-500"
+  __hover={{
+    color: "blue-600",
+    __active: {
+      color: "blue-700"
+    }
+  }}
+>
+  ホバー中のアクティブ状態でさらに色が変化
+</Box>
+```
 
-- `iCenter`, `iStart`, `iEnd` - align-items
-- `jCenter`, `jStart`, `jEnd`, `jBetween` - justify-content
-- `col` - flexDirection: column
-- `p`, `pt`, `pr`, `pb`, `pl`, `py`, `px` - パディング関連
-- `w`, `h` - 幅と高さ
-- `radius` - border-radius
-- `solid` - border: 1px solid
+利用可能な擬似クラス：
+
+- `__link`
+- `__visited`
+- `__hover`
+- `__active`
+- `__focus`
+- `__focus-visible`
+- `__focus-within`
+- `__checked`
+- `__disabled`
+- `__enabled`
+- `__required`
+- `__optional`
+- `__valid`
+- `__invalid`
+- `__in-range`
+- `__out-of-range`
+- `__read-only`
+- `__read-write`
+- `__placeholder-shown`
+- `__root`
+- `__empty`
+- `__first-child`
+- `__last-child`
+- `__first-of-type`
+- `__last-of-type`
+- `__only-child`
+- `__only-of-type`
+- `__nth-child`
+- `__nth-last-child`
+- `__nth-of-type`
+- `__nth-last-of-type`
+- `__target`
 
 ## レスポンシブデザイン
 
@@ -149,6 +198,38 @@ function MyComponent() {
 - md: 768px
 - lg: 1024px
 - xl: 1280px
+
+## ショートハンドプロパティ
+
+このライブラリは、一般的なスタイリングパターンを簡単に適用できるショートハンドプロパティを提供します：
+
+```tsx
+// 従来の方法
+<Box display="flex" alignItems="center" justifyContent="center">
+
+// ショートハンドプロパティを使用
+<Box iCenter jCenter>
+```
+
+主なショートハンドプロパティ：
+
+- `iCenter`, `iStart`, `iEnd` - align-items
+- `jCenter`, `jStart`, `jEnd`, `jBetween` - justify-content
+- `col` - flexDirection: column
+- `p`, `pt`, `pr`, `pb`, `pl`, `py`, `px` - パディング関連
+- `w`, `h` - 幅と高さ
+- `radius` - border-radius
+- `solid` - border: 1px solid
+
+## 利用可能なコンポーネント
+
+- `Box` - フレックスボックスベースのレイアウトコンポーネント
+- `Button` - カスタマイズ可能なボタンコンポーネント
+- `Checkbox` - チェックボックスコンポーネント
+- `Icon` - アイコン表示用コンポーネント
+- `Switch` - トグルスイッチコンポーネント
+- `Text` - テキスト表示用コンポーネント
+- `Tooltip` - ツールチップコンポーネント
 
 ## カスタマイズ
 
