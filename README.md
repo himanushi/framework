@@ -1,4 +1,4 @@
-# UI Framework
+# Framework
 
 モダンなReactアプリケーション向けの軽量でカスタマイズ可能なUIコンポーネントライブラリです。
 
