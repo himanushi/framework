@@ -36,7 +36,7 @@ type Story = StoryObj<typeof Switch>;
 
 export const Small: Story = {
   args: {
-    sizeS: true,
+    switchSize: "m",
     checked: false,
   },
 };

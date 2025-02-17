@@ -1,51 +1,46 @@
 import { defaultColors } from "~/core";
 import { Ui, type UiProps } from "~/core/ui/Ui";
-import {
-  type ShortHandType,
-  type WithShorthandProps,
-  resolveShorthandProps,
-} from "~/utils";
 
-const shortHands = {
-  sizeS: { transform: "scale(0.75)" },
-  sizeM: { transform: "scale(2)" },
-  sizeL: { transform: "scale(1.25)" },
-} as const satisfies ShortHandType;
+type SwitchSizes = "s" | "m" | "l";
 
-export type SwitchProps = WithShorthandProps<
-  { checked?: boolean } & UiProps<"button">,
-  typeof shortHands
->;
+const sizes = {
+  s: { container: { w: 35, h: 20, p: 2 }, handle: { w: 16, h: 16 } },
+  m: { container: { w: 40, h: 24, p: 2 }, handle: { w: 20, h: 20 } },
+  l: { container: { w: 50, h: 28, p: 2 }, handle: { w: 24, h: 24 } },
+} as const;
+
+export type SwitchProps = {
+  checked?: boolean;
+  switchSize?: SwitchSizes;
+} & UiProps<"input">;
 
 const containerCss: UiProps = {
-  w: 40,
-  h: 24,
-  p: 2,
   radius: 20,
   cursor: "pointer",
   border: "none",
-
-  __disabled: {
-    cursor: "not-allowed",
-    opacity: 0.5,
-  },
 };
 
 const handleCss: UiProps = {
-  w: 20,
-  h: 20,
   radius: "50%",
   backgroundColor: "white",
 };
 
 export const Switch = (props: SwitchProps) => {
-  const { checked, disabled, style, onClick, ...restProps } = props;
-  const newProps = resolveShorthandProps(restProps, shortHands);
+  const {
+    checked: defaultChecked,
+    value,
+    className,
+    style,
+    switchSize = "m",
+    disabled,
+    ...restProps
+  } = props;
+
+  const checked = defaultChecked ?? !!value ?? false;
 
   return (
     <Ui
-      as="button"
-      disabled={disabled}
+      as="label"
       style={{
         backgroundColor: checked
           ? defaultColors["amber-400"]
@@ -53,8 +48,10 @@ export const Switch = (props: SwitchProps) => {
         justifyContent: checked ? "flex-end" : "flex-start",
         ...style,
       }}
-      onClick={onClick}
+      className={className}
       {...containerCss}
+      {...sizes[switchSize].container}
+      {...(disabled ? { opacity: 0.5, cursor: "not-allowed" } : {})}
     >
       <Ui
         as="div"
@@ -65,14 +62,16 @@ export const Switch = (props: SwitchProps) => {
           visualDuration: 0.2,
           bounce: 0.2,
         }}
+        {...sizes[switchSize].handle}
         {...handleCss}
       />
       <Ui
         as="input"
-        disabled={disabled}
-        type="hidden"
+        type="checkbox"
         checked={checked}
-        {...newProps}
+        disabled={disabled}
+        style={{ display: "none" }}
+        {...restProps}
       />
     </Ui>
   );
