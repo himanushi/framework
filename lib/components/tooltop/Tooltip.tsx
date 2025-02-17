@@ -1,4 +1,5 @@
 import {
+  FloatingPortal,
   type Placement,
   arrow,
   autoUpdate,
@@ -7,8 +8,10 @@ import {
   shift,
   useFloating,
 } from "@floating-ui/react";
+import { AnimatePresence } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { Ui, type UiProps } from "~/core";
+import { zIndexes } from "~/utils/const";
 import {
   type ShortHandType,
   type WithShorthandProps,
@@ -48,8 +51,9 @@ export const Tooltip = (props: TooltipProps) => {
   } = { ...defaultProps, ...props };
 
   const [isOpen, setIsOpen] = useState(false);
-  const [showTooltip, setShowTooltip] = useState(false);
-  const timeoutRef = useRef<number>(0);
+  const [shouldRender, setShouldRender] = useState(false);
+  const showTimeoutRef = useRef<number>(0);
+  const hideTimeoutRef = useRef<number>(0);
   const arrowRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -72,17 +76,22 @@ export const Tooltip = (props: TooltipProps) => {
 
   useEffect(() => {
     if (isOpen) {
-      timeoutRef.current = window.setTimeout(() => {
-        setShowTooltip(true);
+      if (hideTimeoutRef.current) {
+        clearTimeout(hideTimeoutRef.current);
+      }
+      showTimeoutRef.current = window.setTimeout(() => {
+        setShouldRender(true);
       }, delay);
     } else {
-      setShowTooltip(false);
+      if (showTimeoutRef.current) {
+        clearTimeout(showTimeoutRef.current);
+      }
+      setShouldRender(false);
     }
 
     return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
+      if (showTimeoutRef.current) clearTimeout(showTimeoutRef.current);
+      if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
     };
   }, [isOpen, delay]);
 
@@ -107,41 +116,54 @@ export const Tooltip = (props: TooltipProps) => {
       >
         {children}
       </Ui>
-      {showTooltip && (
-        <Ui
-          ref={refs.setFloating}
-          style={{
-            position: strategy,
-            top: y ?? 0,
-            left: x ?? 0,
-            width: "max-content",
-          }}
-          backgroundColor="gray-800"
-          color="white"
-          p="8px 12px"
-          radius="4px"
-          fontSize="14px"
-          zIndex={1000}
-          {...mergedProps}
-        >
-          {content}
-          {showArrow && (
+      <FloatingPortal>
+        <AnimatePresence>
+          {shouldRender && (
             <Ui
-              ref={arrowRef}
+              ref={refs.setFloating}
               style={{
-                position: "absolute",
-                left: middlewareData.arrow?.x ?? "",
-                top: middlewareData.arrow?.y ?? "",
-                [staticSide]: "-4px",
-                width: "8px",
-                height: "8px",
-                transform: "rotate(45deg)",
+                position: strategy,
+                top: y ?? 0,
+                left: x ?? 0,
+                width: "max-content",
+                pointerEvents: "none",
               }}
-              backgroundColor="gray-800"
-            />
+            >
+              <Ui
+                backgroundColor="gray-800"
+                color="white"
+                p="8px 12px"
+                radius="4px"
+                fontSize="14px"
+                zIndex={zIndexes.tooltip}
+                {...mergedProps}
+                $motion
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.1 }}
+              >
+                {content}
+                {showArrow && (
+                  <Ui
+                    ref={arrowRef}
+                    style={{
+                      position: "absolute",
+                      left: middlewareData.arrow?.x ?? "",
+                      top: middlewareData.arrow?.y ?? "",
+                      [staticSide]: "-4px",
+                      width: "8px",
+                      height: "8px",
+                      transform: "rotate(45deg)",
+                    }}
+                    backgroundColor="gray-800"
+                  />
+                )}
+              </Ui>
+            </Ui>
           )}
-        </Ui>
-      )}
+        </AnimatePresence>
+      </FloatingPortal>
     </>
   );
 };
