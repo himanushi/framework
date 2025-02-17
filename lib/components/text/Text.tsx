@@ -20,7 +20,9 @@ const defaultProps: TextProps = {
 export type TextProps = WithShorthandProps<UiProps<"span">, typeof shortHands>;
 
 export const Text = (props: TextProps) => {
-  const mergedProps = { ...defaultProps, ...props };
-  const newProps = resolveShorthandProps(mergedProps, shortHands);
+  const newProps = resolveShorthandProps(
+    { ...defaultProps, ...props },
+    shortHands,
+  );
   return <Ui {...newProps} />;
 };

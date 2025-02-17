@@ -22,7 +22,9 @@ const defaultProps: IconProps = {
 export type IconProps = WithShorthandProps<UiProps<"span">, typeof shortHands>;
 
 export const Icon = (props: IconProps) => {
-  const mergedProps = { ...defaultProps, ...props };
-  const newProps = resolveShorthandProps(mergedProps, shortHands);
+  const newProps = resolveShorthandProps(
+    { ...defaultProps, ...props },
+    shortHands,
+  );
   return <Ui {...newProps} />;
 };

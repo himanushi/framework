@@ -87,7 +87,9 @@ export type ButtonProps = WithShorthandProps<
  * primary, secondary
  */
 export const Button = (props: ButtonProps) => {
-  const mergedProps = { ...defaultProps, ...props };
-  const newProps = resolveShorthandProps(mergedProps, shortHands);
+  const newProps = resolveShorthandProps(
+    { ...defaultProps, ...props },
+    shortHands,
+  );
   return <Ui {...newProps} $motion />;
 };
