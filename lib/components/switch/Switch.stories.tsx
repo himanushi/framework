@@ -36,7 +36,7 @@ type Story = StoryObj<typeof Switch>;
 
 export const Small: Story = {
   args: {
-    switchSize: "m",
+    switchSize: "s",
     checked: false,
   },
 };
@@ -49,6 +49,7 @@ export const Checked: Story = {
 
 export const Disabled: Story = {
   args: {
+    switchSize: "l",
     checked: true,
     disabled: true,
   },
