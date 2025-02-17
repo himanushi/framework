@@ -14,7 +14,8 @@ const shortHands = {
   jEnd: { justifyContent: "flex-end" },
   jBetween: { justifyContent: "space-between" },
 
-  column: { flexDirection: "column" },
+  col: { flexDirection: "column" },
+  wrap: { flexWrap: "wrap" },
 
   p: "padding",
   pt: "paddingTop",
@@ -34,8 +35,10 @@ const shortHands = {
   h: "height",
 
   solid: { border: "1px solid" },
-
   radius: "borderRadius",
+
+  absolute: { position: "absolute" },
+  relative: { position: "relative" },
 } as const satisfies ShortHandType;
 
 const defaultProps: UiProps = {
@@ -45,6 +48,11 @@ const defaultProps: UiProps = {
 export type UiProps<E extends React.ElementType = React.ElementType> =
   WithShorthandProps<BaseUiProps<E>, typeof shortHands>;
 
+/**
+ * @shorthands
+ * iCenter, iStart, iEnd, jCenter, jStart, jEnd, jBetween, col,
+ * flexWrap, p, pt, pr, pb, pl, py, px, w, h, solid, radius, absolute, relative
+ */
 export const Ui = (props: UiProps) => {
   const mergedProps = { ...defaultProps, ...props };
   const newProps = resolveShorthandProps(mergedProps, shortHands);

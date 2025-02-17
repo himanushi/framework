@@ -82,6 +82,10 @@ export type ButtonProps = WithShorthandProps<
   typeof shortHands
 >;
 
+/**
+ * @shorthands
+ * primary, secondary
+ */
 export const Button = (props: ButtonProps) => {
   const mergedProps = { ...defaultProps, ...props };
   const newProps = resolveShorthandProps(mergedProps, shortHands);
