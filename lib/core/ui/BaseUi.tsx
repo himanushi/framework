@@ -201,9 +201,6 @@ export const BaseUi = <E extends React.ElementType = React.ElementType>(
 ) => {
   const { as, ref, className, children, style, $motion, ...restProps } = props;
   const { breakpoints, colors, allowedDOMPropKeys } = useContext(UiContext);
-  // const breakpoints = defaultBreakpoints;
-  // const colors = defaultColors;
-  // const allowedDOMPropKeys = defaultAllowedDOMPropKeys;
 
   const { base, media, pseudo } = flattenStyles(
     restProps as BaseUiStyleProps,
