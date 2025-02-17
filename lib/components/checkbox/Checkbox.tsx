@@ -24,9 +24,16 @@ const baseCheckMark: UiProps = {
 };
 
 export const Checkbox = (props: CheckboxProps) => {
-  const { checked, indeterminate, className, style, disabled, ...inputProps } =
-    props;
-  const isChecked = checked ?? false;
+  const {
+    checked,
+    value,
+    indeterminate,
+    className,
+    style,
+    disabled,
+    ...inputProps
+  } = props;
+  const isChecked = checked ?? !!value ?? false;
 
   const containerStyle: UiProps = {
     ...baseContainer,
@@ -54,6 +61,7 @@ export const Checkbox = (props: CheckboxProps) => {
           layout
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
+          transition={{ duration: 0.1 }}
           {...baseCheckMark}
         >
           ✓
@@ -66,6 +74,7 @@ export const Checkbox = (props: CheckboxProps) => {
           layout
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
+          transition={{ duration: 0.1 }}
           {...baseCheckMark}
         >
           —
