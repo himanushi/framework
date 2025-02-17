@@ -21,10 +21,12 @@ export default defineConfig({
       formats: ["es"],
     },
     rollupOptions: {
-      external: ["react", "react-dom"],
+      external: ["react", "react/jsx-runtime", "react-dom"],
       output: {
         globals: {
           react: "React",
+          "react/jsx-runtime": "react/jsx-runtime",
+          "react-dom": "ReactDOM",
         },
         preserveModules: true,
         inlineDynamicImports: false,

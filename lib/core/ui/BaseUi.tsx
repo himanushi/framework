@@ -2,7 +2,6 @@ import { css, cx } from "@emotion/css";
 import type * as CSS from "csstype";
 import type { MotionProps } from "motion/react";
 import { motion as Motion } from "motion/react";
-import type React from "react";
 import { useContext } from "react";
 import { UiContext } from "../provider";
 
@@ -202,6 +201,10 @@ export const BaseUi = <E extends React.ElementType = React.ElementType>(
 ) => {
   const { as, ref, className, children, style, $motion, ...restProps } = props;
   const { breakpoints, colors, allowedDOMPropKeys } = useContext(UiContext);
+  // const breakpoints = defaultBreakpoints;
+  // const colors = defaultColors;
+  // const allowedDOMPropKeys = defaultAllowedDOMPropKeys;
+
   const { base, media, pseudo } = flattenStyles(
     restProps as BaseUiStyleProps,
     breakpoints,

@@ -1,20 +1,21 @@
-import { j as s } from "../../_virtual/jsx-runtime.js";
-import { Ui as n } from "../../core/ui/Ui.js";
-import "../../node_modules/@emotion/css/dist/emotion-css.esm.js";
-import "../../core/provider/UiProvider.js";
-import { resolveShorthandProps as p } from "../../utils/shorthand.js";
+import { jsx as t } from "react/jsx-runtime";
+import { resolveShorthandProps as n } from "../../utils/shorthand.js";
+import { Ui as s } from "../../core/ui/Ui.js";
 const e = {
   bold: { fontWeight: "bold" },
   nowrap: { whiteSpace: "nowrap" }
-}, i = {
+}, p = {
   display: "inline",
   color: "gray-900",
   fontWeight: "normal",
   as: "span"
-}, f = (o) => {
-  const r = { ...i, ...o }, t = p(r, e);
-  return /* @__PURE__ */ s.jsx(n, { ...t });
+}, m = (o) => {
+  const r = n(
+    { ...p, ...o },
+    e
+  );
+  return /* @__PURE__ */ t(s, { ...r });
 };
 export {
-  f as Text
+  m as Text
 };

@@ -1,20 +1,20 @@
-import { j as p } from "../../_virtual/jsx-runtime.js";
-import { createContext as d, useContext as u } from "react";
+import { jsx as n } from "react/jsx-runtime";
+import { createContext as p } from "react";
 /* empty css                                                       */
-import { defaultAllowedDOMPropKeys as o, defaultColors as t, defaultBreakpoints as e } from "./defaultValues.js";
-const c = {
+import { defaultAllowedDOMPropKeys as o, defaultColors as r, defaultBreakpoints as e } from "./defaultValues.js";
+const d = {
   breakpoints: e,
-  colors: t,
+  colors: r,
   allowedDOMPropKeys: o
-}, r = d(c), P = ({ breakpoints: s, colors: n, allowedDOMPropKeys: i, children: l }) => {
+}, f = p(d), x = ({ breakpoints: t, colors: l, allowedDOMPropKeys: s, children: i }) => {
   const a = {
-    breakpoints: s || e,
-    colors: n || t,
-    allowedDOMPropKeys: i || o
+    breakpoints: t || e,
+    colors: l || r,
+    allowedDOMPropKeys: s || o
   };
-  return /* @__PURE__ */ p.jsx(r.Provider, { value: a, children: l });
-}, j = () => u(r);
+  return /* @__PURE__ */ n(f.Provider, { value: a, children: i });
+};
 export {
-  P as UiProvider,
-  j as useSetting
+  f as UiContext,
+  x as UiProvider
 };

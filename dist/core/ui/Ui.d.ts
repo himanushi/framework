@@ -22,8 +22,11 @@ declare const shortHands: {
     readonly jBetween: {
         readonly justifyContent: "space-between";
     };
-    readonly column: {
+    readonly col: {
         readonly flexDirection: "column";
+    };
+    readonly wrap: {
+        readonly flexWrap: "wrap";
     };
     readonly p: "padding";
     readonly pt: "paddingTop";
@@ -44,7 +47,18 @@ declare const shortHands: {
         readonly border: "1px solid";
     };
     readonly radius: "borderRadius";
+    readonly absolute: {
+        readonly position: "absolute";
+    };
+    readonly relative: {
+        readonly position: "relative";
+    };
 };
 export type UiProps<E extends React.ElementType = React.ElementType> = WithShorthandProps<BaseUiProps<E>, typeof shortHands>;
+/**
+ * @shorthands
+ * iCenter, iStart, iEnd, jCenter, jStart, jEnd, jBetween, col,
+ * flexWrap, p, pt, pr, pb, pl, py, px, w, h, solid, radius, absolute, relative
+ */
 export declare const Ui: (props: UiProps) => import("react/jsx-runtime").JSX.Element;
 export {};

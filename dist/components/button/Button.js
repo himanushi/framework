@@ -1,8 +1,6 @@
-import { j as a } from "../../_virtual/jsx-runtime.js";
-import { Ui as e } from "../../core/ui/Ui.js";
-import "../../node_modules/@emotion/css/dist/emotion-css.esm.js";
-import "../../core/provider/UiProvider.js";
-import { resolveShorthandProps as n } from "../../utils/shorthand.js";
+import { jsx as a } from "react/jsx-runtime";
+import { resolveShorthandProps as e } from "../../utils/shorthand.js";
+import { Ui as c } from "../../core/ui/Ui.js";
 const d = {
   primary: {
     backgroundColor: "blue-500",
@@ -12,6 +10,16 @@ const d = {
     },
     __active: {
       backgroundColor: "blue-700"
+    },
+    __disabled: {
+      opacity: 0.5,
+      cursor: "not-allowed",
+      __hover: {
+        backgroundColor: "blue-500"
+      },
+      __active: {
+        backgroundColor: "blue-500"
+      }
     }
   },
   secondary: {
@@ -22,31 +30,50 @@ const d = {
     },
     __active: {
       backgroundColor: "gray-700"
+    },
+    __disabled: {
+      opacity: 0.5,
+      cursor: "not-allowed",
+      __hover: {
+        backgroundColor: "gray-500"
+      },
+      __active: {
+        backgroundColor: "gray-500"
+      }
     }
   }
-}, s = {
+}, l = {
   cursor: "pointer",
-  __disabled: {
-    opacity: 0.5,
-    cursor: "not-allowed"
-  },
   radius: "6px",
   backgroundColor: "gray-100",
   border: "none",
   as: "button",
   solid: !0,
   borderColor: "gray-200",
-  padding: { xs: "12px", md: "20px" },
+  padding: { xs: "12px", md: "16px" },
   __hover: {
     backgroundColor: "gray-200"
   },
   __active: {
     backgroundColor: "gray-300"
+  },
+  __disabled: {
+    opacity: 0.5,
+    cursor: "not-allowed",
+    __hover: {
+      backgroundColor: "gray-100"
+    },
+    __active: {
+      backgroundColor: "gray-100"
+    }
   }
-}, p = (o) => {
-  const r = { ...s, ...o }, t = n(r, d);
-  return /* @__PURE__ */ a.jsx(e, { ...t, $motion: !0 });
+}, _ = (o) => {
+  const r = e(
+    { ...l, ...o },
+    d
+  );
+  return /* @__PURE__ */ a(c, { ...r, $motion: !0 });
 };
 export {
-  p as Button
+  _ as Button
 };

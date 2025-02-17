@@ -4,7 +4,7 @@ export interface UiConfig {
     colors: Record<string, string>;
     allowedDOMPropKeys: Set<string>;
 }
+export declare const UiContext: React.Context<UiConfig>;
 export declare const UiProvider: React.FC<Partial<UiConfig> & {
     children: React.ReactNode;
 }>;
-export declare const useSetting: () => UiConfig;

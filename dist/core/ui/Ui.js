@@ -1,7 +1,7 @@
-import { j as o } from "../../_virtual/jsx-runtime.js";
+import { jsx as o } from "react/jsx-runtime";
 import { resolveShorthandProps as i } from "../../utils/shorthand.js";
-import { BaseUi as d } from "./BaseUi.js";
-const r = {
+import { BaseUi as r } from "./BaseUi.js";
+const d = {
   iCenter: { alignItems: "center" },
   iStart: { alignItems: "flex-start" },
   iEnd: { alignItems: "flex-end" },
@@ -9,7 +9,8 @@ const r = {
   jStart: { justifyContent: "flex-start" },
   jEnd: { justifyContent: "flex-end" },
   jBetween: { justifyContent: "space-between" },
-  column: { flexDirection: "column" },
+  col: { flexDirection: "column" },
+  wrap: { flexWrap: "wrap" },
   p: "padding",
   pt: "paddingTop",
   pr: "paddingRight",
@@ -26,13 +27,15 @@ const r = {
   w: "width",
   h: "height",
   solid: { border: "1px solid" },
-  radius: "borderRadius"
-}, s = {
+  radius: "borderRadius",
+  absolute: { position: "absolute" },
+  relative: { position: "relative" }
+}, p = {
   display: "flex"
-}, g = (t) => {
-  const e = { ...s, ...t }, n = i(e, r);
-  return /* @__PURE__ */ o.jsx(d, { ...n });
+}, f = (t) => {
+  const e = { ...p, ...t }, n = i(e, d);
+  return /* @__PURE__ */ o(r, { ...n });
 };
 export {
-  g as Ui
+  f as Ui
 };

@@ -1,5 +1,4 @@
 import { MotionProps } from 'motion/react';
-import { default as React } from 'react';
 import type * as CSS from "csstype";
 type BreakpointKeys = "xs" | "sm" | "md" | "lg" | "xl";
 export type ResponsiveProp<T> = T | Partial<Record<BreakpointKeys, T>>;
@@ -16,10 +15,10 @@ export type PolymorphicProps<E extends React.ElementType> = {
     as?: E;
     ref?: React.Ref<any>;
 } & Omit<React.ComponentPropsWithoutRef<E>, "className" | "color"> & BaseUiStyleProps & {
-    [K in PseudoClass]?: BaseUiStyleProps;
+    [K in PseudoClass]?: PolymorphicProps<any>;
 };
-export type BaseUiProps<E extends React.ElementType = "div"> = PolymorphicProps<E> & Omit<MotionProps, "children"> & {
+export type BaseUiProps<E extends React.ElementType = "div"> = PolymorphicProps<E> & Omit<MotionProps, "children" | "style"> & {
     $motion?: boolean;
 };
-export declare const BaseUi: <E extends React.ElementType = React.ElementType<any, keyof React.JSX.IntrinsicElements>>(props: BaseUiProps<E>) => import("react/jsx-runtime").JSX.Element;
+export declare const BaseUi: <E extends React.ElementType = import('react').ElementType<any, keyof import("react").JSX.IntrinsicElements>>(props: BaseUiProps<E>) => import("react/jsx-runtime").JSX.Element;
 export {};

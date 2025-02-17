@@ -1,19 +1,21 @@
-import { j as t } from "../../_virtual/jsx-runtime.js";
-import { css as e } from "../../node_modules/@emotion/css/dist/emotion-css.esm.js";
+import { jsx as r } from "react/jsx-runtime";
+import { css as t } from "../../node_modules/@emotion/css/dist/emotion-css.esm.js";
+import { resolveShorthandProps as e } from "../../utils/shorthand.js";
 import { Ui as i } from "../../core/ui/Ui.js";
-import "../../core/provider/UiProvider.js";
-import { resolveShorthandProps as n } from "../../utils/shorthand.js";
-const m = {
+const n = {
   size: "fontSize"
-}, p = {
+}, m = {
   as: "span",
   display: "inline-block",
   lineHeight: "0.1rem",
-  className: e("svg { width: 1em; height: 100%; }")
-}, f = (o) => {
-  const s = { ...p, ...o }, r = n(s, m);
-  return /* @__PURE__ */ t.jsx(i, { ...r });
+  className: t("svg { width: 1em; height: 100%; }")
+}, l = (o) => {
+  const s = e(
+    { ...m, ...o },
+    n
+  );
+  return /* @__PURE__ */ r(i, { ...s });
 };
 export {
-  f as Icon
+  l as Icon
 };
