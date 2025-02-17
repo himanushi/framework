@@ -19,6 +19,10 @@ const defaultProps: TextProps = {
 
 export type TextProps = WithShorthandProps<UiProps<"span">, typeof shortHands>;
 
+/**
+ * @shorthands
+ * bold, nowrap
+ */
 export const Text = (props: TextProps) => {
   const newProps = resolveShorthandProps(
     { ...defaultProps, ...props },

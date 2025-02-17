@@ -21,6 +21,10 @@ const defaultProps: IconProps = {
 
 export type IconProps = WithShorthandProps<UiProps<"span">, typeof shortHands>;
 
+/**
+ * @shorthands
+ * size
+ */
 export const Icon = (props: IconProps) => {
   const newProps = resolveShorthandProps(
     { ...defaultProps, ...props },
