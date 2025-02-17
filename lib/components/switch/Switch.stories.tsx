@@ -15,8 +15,8 @@ const meta: Meta<typeof Switch> = {
       <Switch
         {...newProps}
         checked={checked}
-        onChange={() => {
-          setChecked(!checked);
+        onClick={() => {
+          setChecked((c) => !c);
         }}
       />
     );

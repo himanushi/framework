@@ -39,14 +39,13 @@ const handleCss: UiProps = {
 };
 
 export const Switch = (props: SwitchProps) => {
-  const { checked, onChange, disabled, style, ...restProps } = props;
+  const { checked, disabled, style, onClick, ...restProps } = props;
   const newProps = resolveShorthandProps(restProps, shortHands);
 
   return (
     <Ui
       as="button"
       disabled={disabled}
-      onClick={disabled ? undefined : onChange}
       style={{
         backgroundColor: checked
           ? defaultColors["amber-400"]
@@ -54,8 +53,8 @@ export const Switch = (props: SwitchProps) => {
         justifyContent: checked ? "flex-end" : "flex-start",
         ...style,
       }}
+      onClick={onClick}
       {...containerCss}
-      {...newProps}
     >
       <Ui
         as="div"
@@ -67,6 +66,13 @@ export const Switch = (props: SwitchProps) => {
           bounce: 0.2,
         }}
         {...handleCss}
+      />
+      <Ui
+        as="input"
+        disabled={disabled}
+        type="hidden"
+        checked={checked}
+        {...newProps}
       />
     </Ui>
   );
