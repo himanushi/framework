@@ -37,55 +37,55 @@ export const Checkbox = (props: CheckboxProps) => {
 
   const containerStyle: UiProps = {
     ...baseContainer,
-    backgroundColor: isChecked ? defaultColors["amber-400"] : "transparent",
-    borderColor: isChecked
-      ? defaultColors["amber-400"]
-      : defaultColors["gray-400"],
+    backgroundColor:
+      indeterminate || isChecked ? defaultColors["amber-400"] : "transparent",
+    borderColor:
+      indeterminate || isChecked
+        ? defaultColors["amber-400"]
+        : defaultColors["gray-400"],
     ...(disabled ? { opacity: 0.5, cursor: "not-allowed" } : {}),
     style,
   };
 
-  const inputRef = useRef<HTMLInputElement>(null);
+  const isFirstRender = useRef(true);
   useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.indeterminate = indeterminate ?? false;
-    }
-  }, [indeterminate]);
+    isFirstRender.current = false;
+  }, []);
 
   return (
     <Ui as="label" userSelect="none" className={className} {...containerStyle}>
-      {isChecked && !indeterminate && (
+      {indeterminate ? (
         <Ui
           as="div"
           $motion
           layout
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 0.1 }}
-          {...baseCheckMark}
-        >
-          ✓
-        </Ui>
-      )}
-      {indeterminate && (
-        <Ui
-          as="div"
-          $motion
-          layout
-          initial={{ scale: 0 }}
+          initial={isFirstRender.current ? undefined : { scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ duration: 0.1 }}
           {...baseCheckMark}
         >
           —
         </Ui>
-      )}
+      ) : isChecked ? (
+        <Ui
+          as="div"
+          $motion
+          layout
+          initial={isFirstRender.current ? undefined : { scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 0.1 }}
+          {...baseCheckMark}
+        >
+          ✓
+        </Ui>
+      ) : null}
       <Ui
         as="input"
         type="checkbox"
         checked={isChecked}
         disabled={disabled}
         style={{ display: "none" }}
+        indeterminate={indeterminate}
         {...inputProps}
       />
     </Ui>
