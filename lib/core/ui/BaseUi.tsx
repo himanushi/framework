@@ -66,7 +66,7 @@ export type PolymorphicProps<E extends React.ElementType> = {
 
 export type BaseUiProps<E extends React.ElementType = "div"> =
   PolymorphicProps<E> &
-    Omit<MotionProps, "children"> & {
+    Omit<MotionProps, "children" | "style"> & {
       $motion?: boolean;
     };
 
