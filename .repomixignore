@@ -3,4 +3,17 @@
 # *.log
 # tmp/
 
+tmp/
+log/
+node_modules/
+dist/
+.vscode/
+
+*repomix*
+*.log
+*.stories.tsx
+
+vscode.code-workspace
 defaultValues.ts
+package-lock.json
+.gitignore
