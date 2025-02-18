@@ -19,7 +19,7 @@ const VIEWPORTS = {
     },
     type: "tablet",
   },
-  wide: {
+  desktop: {
     name: "Desktop",
     styles: {
       width: "1920px",
@@ -33,7 +33,7 @@ const preview: Preview = {
   parameters: {
     viewport: {
       viewports: VIEWPORTS,
-      defaultViewport: "desktop",
+      defaultViewport: "tablet",
     },
     controls: {
       matchers: {
