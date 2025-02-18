@@ -7,19 +7,24 @@ import {
 
 const shortHands = {} as const satisfies ShortHandType;
 
-const defaultProps: BoxProps = {};
+const defaultProps: BoxProps = {
+  as: "div",
+};
 
-export type BoxProps = WithShorthandProps<UiProps<"div">, typeof shortHands>;
+export type BoxProps<E extends React.ElementType = "div"> = WithShorthandProps<
+  UiProps<E>,
+  typeof shortHands
+>;
 
 /**
  * @shorthands
  * iCenter, iStart, iEnd, jCenter, jStart, jEnd, jBetween, col,
  * flexWrap, p, pt, pr, pb, pl, py, px, w, h, solid, radius, absolute, relative
  */
-export const Box = (props: BoxProps) => {
-  const newProps = resolveShorthandProps(
-    { ...defaultProps, ...props },
-    shortHands,
-  );
+export const Box = <E extends React.ElementType = "div">(
+  props: BoxProps<E>,
+) => {
+  const mergedProps = { ...defaultProps, ...props };
+  const newProps = resolveShorthandProps(mergedProps, shortHands);
   return <Ui {...newProps} />;
 };

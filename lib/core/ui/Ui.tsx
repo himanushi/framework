@@ -41,19 +41,21 @@ const shortHands = {
   relative: { position: "relative" },
 } as const satisfies ShortHandType;
 
-const defaultProps: UiProps = {
+const defaultProps = {
   display: "flex",
 };
 
-export type UiProps<E extends React.ElementType = React.ElementType> =
-  WithShorthandProps<BaseUiProps<E>, typeof shortHands>;
+export type UiProps<E extends React.ElementType = "div"> = WithShorthandProps<
+  BaseUiProps<E>,
+  typeof shortHands
+>;
 
 /**
  * @shorthands
  * iCenter, iStart, iEnd, jCenter, jStart, jEnd, jBetween, col,
  * flexWrap, p, pt, pr, pb, pl, py, px, w, h, solid, radius, absolute, relative
  */
-export const Ui = (props: UiProps) => {
+export const Ui = <E extends React.ElementType = "div">(props: UiProps<E>) => {
   const mergedProps = { ...defaultProps, ...props };
   const newProps = resolveShorthandProps(mergedProps, shortHands);
   return <BaseUi {...newProps} />;
