@@ -1,5 +1,12 @@
-export declare const defaultBreakpoints: Record<string, string>;
-export declare const defaultColors: {
+export declare const breakpoints: {
+    readonly xs: "0px";
+    readonly sm: "640px";
+    readonly md: "768px";
+    readonly lg: "1024px";
+    readonly xl: "1280px";
+    readonly "2xl": "1536px";
+};
+export declare const colors: {
     readonly "slate-50": "oklch(0.984 0.003 247.858)";
     readonly "slate-100": "oklch(0.968 0.007 247.896)";
     readonly "slate-200": "oklch(0.929 0.013 255.508)";
@@ -243,4 +250,4 @@ export declare const defaultColors: {
     readonly "rose-900": "oklch(0.41 0.159 10.272)";
     readonly "rose-950": "oklch(0.271 0.105 12.094)";
 };
-export declare const defaultAllowedDOMPropKeys: Set<string>;
+export declare const allowedDOMPropKeys: Set<string>;

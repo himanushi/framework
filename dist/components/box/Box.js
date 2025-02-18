@@ -1,13 +1,12 @@
 import { jsx as t } from "react/jsx-runtime";
-import { resolveShorthandProps as s } from "../../utils/shorthand.js";
-import { Ui as n } from "../../core/ui/Ui.js";
-const p = {}, e = {}, i = (o) => {
-  const r = s(
-    { ...e, ...o },
-    p
-  );
-  return /* @__PURE__ */ t(n, { ...r });
+import { resolveShorthandProps as n } from "../../utils/shorthand.js";
+import { Ui as e } from "../../core/ui/Ui.js";
+const p = {}, m = {
+  as: "div"
+}, a = (o) => {
+  const r = { ...m, ...o }, s = n(r, p);
+  return /* @__PURE__ */ t(e, { ...s });
 };
 export {
-  i as Box
+  a as Box
 };

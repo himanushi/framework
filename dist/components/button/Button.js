@@ -1,79 +1,81 @@
-import { jsx as a } from "react/jsx-runtime";
-import { resolveShorthandProps as e } from "../../utils/shorthand.js";
-import { Ui as c } from "../../core/ui/Ui.js";
-const d = {
+import { jsx as d } from "react/jsx-runtime";
+import { resolveShorthandProps as n } from "../../utils/shorthand.js";
+import { Ui as t } from "../../core/ui/Ui.js";
+const e = {
   primary: {
-    backgroundColor: "blue-500",
+    backgroundColor: "primary-20",
     color: "white",
     __hover: {
-      backgroundColor: "blue-600"
+      backgroundColor: "primary-35"
     },
     __active: {
-      backgroundColor: "blue-700"
+      backgroundColor: "primary-50"
     },
     __disabled: {
       opacity: 0.5,
       cursor: "not-allowed",
       __hover: {
-        backgroundColor: "blue-500"
+        backgroundColor: "primary-20"
       },
       __active: {
-        backgroundColor: "blue-500"
+        backgroundColor: "primary-20"
       }
     }
   },
   secondary: {
-    backgroundColor: "gray-500",
+    backgroundColor: "gray-20",
     color: "white",
     __hover: {
-      backgroundColor: "gray-600"
+      backgroundColor: "gray-35"
     },
     __active: {
-      backgroundColor: "gray-700"
+      backgroundColor: "gray-50"
     },
     __disabled: {
       opacity: 0.5,
       cursor: "not-allowed",
       __hover: {
-        backgroundColor: "gray-500"
+        backgroundColor: "gray-20"
       },
       __active: {
-        backgroundColor: "gray-500"
+        backgroundColor: "gray-20"
       }
     }
   }
-}, l = {
+}, s = {
+  s: { xs: "8px 12px", md: "8px 12px" },
+  m: { xs: "12px 16px", md: "12px 16px" },
+  l: { xs: "16px 24px", md: "16px 24px" }
+}, i = {
   cursor: "pointer",
   radius: "6px",
-  backgroundColor: "gray-100",
+  backgroundColor: "gray-10",
   border: "none",
   as: "button",
-  solid: !0,
-  borderColor: "gray-200",
-  padding: { xs: "12px", md: "16px" },
+  size: "m",
   __hover: {
-    backgroundColor: "gray-200"
+    backgroundColor: "gray-35"
   },
   __active: {
-    backgroundColor: "gray-300"
+    backgroundColor: "gray-50"
   },
   __disabled: {
     opacity: 0.5,
     cursor: "not-allowed",
     __hover: {
-      backgroundColor: "gray-100"
+      backgroundColor: "gray-10"
     },
     __active: {
-      backgroundColor: "gray-100"
+      backgroundColor: "gray-10"
     }
   }
-}, _ = (o) => {
-  const r = e(
-    { ...l, ...o },
-    d
+}, g = (o) => {
+  const { size: r = "m", ...a } = o, c = n(
+    { ...i, ...a },
+    e
   );
-  return /* @__PURE__ */ a(c, { ...r, $motion: !0 });
+  return /* @__PURE__ */ d(t, { ...c, padding: s[r].xs, $motion: !0 });
 };
 export {
-  _ as Button
+  g as Button
 };

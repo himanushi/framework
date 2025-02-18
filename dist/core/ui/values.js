@@ -1,9 +1,10 @@
 const l = {
   xs: "0px",
-  sm: "480px",
+  sm: "640px",
   md: "768px",
   lg: "1024px",
-  xl: "1280px"
+  xl: "1280px",
+  "2xl": "1536px"
 }, o = {
   "slate-50": "oklch(0.984 0.003 247.858)",
   "slate-100": "oklch(0.968 0.007 247.896)",
@@ -294,7 +295,7 @@ const l = {
   "viewport"
 ]);
 export {
-  c as defaultAllowedDOMPropKeys,
-  l as defaultBreakpoints,
-  o as defaultColors
+  c as allowedDOMPropKeys,
+  l as breakpoints,
+  o as colors
 };

@@ -1,6 +1,7 @@
 import { MotionProps } from 'motion/react';
+import { breakpoints } from './values';
 import type * as CSS from "csstype";
-type BreakpointKeys = "xs" | "sm" | "md" | "lg" | "xl";
+type BreakpointKeys = keyof typeof breakpoints;
 export type ResponsiveProp<T> = T | Partial<Record<BreakpointKeys, T>>;
 type ColorValue = string;
 type ResponsiveColor = ColorValue | Partial<Record<BreakpointKeys, ColorValue>>;

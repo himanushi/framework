@@ -54,11 +54,11 @@ declare const shortHands: {
         readonly position: "relative";
     };
 };
-export type UiProps<E extends React.ElementType = React.ElementType> = WithShorthandProps<BaseUiProps<E>, typeof shortHands>;
+export type UiProps<E extends React.ElementType = "div"> = WithShorthandProps<BaseUiProps<E>, typeof shortHands>;
 /**
  * @shorthands
  * iCenter, iStart, iEnd, jCenter, jStart, jEnd, jBetween, col,
  * flexWrap, p, pt, pr, pb, pl, py, px, w, h, solid, radius, absolute, relative
  */
-export declare const Ui: (props: UiProps) => import("react/jsx-runtime").JSX.Element;
+export declare const Ui: <E extends React.ElementType = "div">(props: UiProps<E>) => import("react/jsx-runtime").JSX.Element;
 export {};

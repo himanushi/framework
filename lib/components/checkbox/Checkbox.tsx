@@ -83,7 +83,6 @@ export const Checkbox = (props: CheckboxProps) => {
         checked={isChecked}
         disabled={disabled}
         style={{ display: "none" }}
-        indeterminate={indeterminate}
         {...inputProps}
       />
     </Ui>
