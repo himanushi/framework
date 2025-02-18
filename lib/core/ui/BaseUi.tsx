@@ -150,10 +150,8 @@ const flattenStyles = (
   const pseudo: Record<string, any> = {};
 
   for (const [key, value] of Object.entries(styles)) {
-    // DOM にそのまま渡すプロパティは除外
     if (isAllowedDOMProp(key, emptySet)) continue;
 
-    // 疑似セレクタの場合
     if (key.startsWith("__")) {
       const pseudoKey =
         parentSelector === "&"
@@ -167,25 +165,39 @@ const flattenStyles = (
           pseudo: nestedPseudo,
         } = flattenStyles(value, breakpoints, colors, pseudoKey);
 
+        // 通常のスタイル
         pseudo[pseudoKey] = { ...(pseudo[pseudoKey] || {}), ...nestedBase };
 
-        for (const nestedPseudoKey in nestedPseudo) {
-          const suffix = nestedPseudoKey.replace(pseudoKey, "");
-          pseudo[pseudoKey][suffix] = nestedPseudo[nestedPseudoKey];
+        // ネストされた擬似クラス
+        for (const [nestedPseudoSelector, nestedPseudoStyles] of Object.entries(
+          nestedPseudo,
+        )) {
+          const combinedSelector = nestedPseudoSelector.replace("&", pseudoKey);
+          pseudo[combinedSelector] = nestedPseudoStyles;
         }
 
-        for (const mq in nestedMedia) {
-          media[mq] = { ...media[mq], ...nestedMedia[mq] };
+        // メディアクエリ内の擬似クラス
+        for (const [mediaQuery, mediaStyles] of Object.entries(nestedMedia)) {
+          if (!media[mediaQuery]) {
+            media[mediaQuery] = {};
+          }
+          media[mediaQuery][pseudoKey] = {
+            ...(media[mediaQuery][pseudoKey] || {}),
+            ...mediaStyles,
+          };
         }
       } else {
-        pseudo[pseudoKey] = value;
+        pseudo[pseudoKey] = resolveValue(key, value, colors);
       }
     } else {
-      // 通常のスタイルの場合
       const { base: resolvedBase, media: resolvedMedia } =
         resolveResponsiveStyles(key, value, breakpoints, colors);
       base = { ...base, ...resolvedBase };
+
       for (const mq in resolvedMedia) {
+        if (!media[mq]) {
+          media[mq] = {};
+        }
         media[mq] = { ...media[mq], ...resolvedMedia[mq] };
       }
     }
