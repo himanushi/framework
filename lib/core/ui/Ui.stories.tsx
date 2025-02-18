@@ -3,7 +3,7 @@ import { fn } from "@storybook/test";
 import { Ui } from "./Ui";
 
 export default {
-  title: "Example/Ui",
+  title: "Core/Ui",
   component: Ui,
   parameters: {
     layout: "centered",

@@ -4,7 +4,7 @@ import { Ui } from "~/core";
 import { Text } from "./Text";
 
 const meta: Meta<typeof Text> = {
-  title: "Example/Text",
+  title: "Components/Text",
   component: Text,
   parameters: {
     layout: "centered",

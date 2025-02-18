@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Switch } from "./Switch";
 
 const meta: Meta<typeof Switch> = {
-  title: "Example/Switch",
+  title: "Components/Switch",
   component: (props) => {
     const { checked: defaultChecked, ...newProps } = props;
     const [checked, setChecked] = useState(defaultChecked);

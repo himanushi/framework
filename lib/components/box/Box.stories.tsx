@@ -3,7 +3,7 @@ import { fn } from "@storybook/test";
 import { Box } from "./Box";
 
 const meta: Meta<typeof Box> = {
-  title: "Example/Box",
+  title: "Components/Box",
   component: Box,
   parameters: {
     layout: "centered",

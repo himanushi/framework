@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Checkbox } from "./Checkbox";
 
 const meta: Meta<typeof Checkbox> = {
-  title: "Example/Checkbox",
+  title: "Components/Checkbox",
   component: (props) => {
     const { checked: defaultChecked, ...newProps } = props;
     const [checked, setChecked] = useState(defaultChecked);
