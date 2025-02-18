@@ -1,9 +1,40 @@
-/** @type { import('@storybook/react').Preview } */
+import type { Preview } from "@storybook/react";
 import React from "react";
 import { UiProvider } from "../lib/core";
 
-const preview = {
+const VIEWPORTS = {
+  mobile: {
+    name: "mobile",
+    styles: {
+      width: "414px",
+      height: "896px",
+    },
+    type: "mobile",
+  },
+  tablet: {
+    name: "Tablet",
+    styles: {
+      width: "768px",
+      height: "1024px",
+    },
+    type: "tablet",
+  },
+  wide: {
+    name: "Desktop",
+    styles: {
+      width: "1920px",
+      height: "1080px",
+    },
+    type: "desktop",
+  },
+};
+
+const preview: Preview = {
   parameters: {
+    viewport: {
+      viewports: VIEWPORTS,
+      defaultViewport: "desktop",
+    },
     controls: {
       matchers: {
         color: /(background|color)$/i,
