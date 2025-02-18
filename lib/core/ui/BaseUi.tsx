@@ -21,7 +21,8 @@ export interface BaseUiStyleProps extends Partial<ExtendedCSSProperties> {
   className?: string;
 }
 
-type PseudoClass =
+type PseudoSelector =
+  // シングルコロン擬似クラス
   | "__link"
   | "__visited"
   | "__hover"
@@ -53,14 +54,23 @@ type PseudoClass =
   | "__nth-last-child"
   | "__nth-of-type"
   | "__nth-last-of-type"
-  | "__target";
+  | "__target"
+  // ダブルコロン擬似要素
+  | "__before"
+  | "__after"
+  | "__first-line"
+  | "__first-letter"
+  | "__selection"
+  | "__marker"
+  | "__backdrop"
+  | "__placeholder";
 
 export type PolymorphicProps<E extends React.ElementType> = {
   as?: E;
   ref?: React.Ref<any>;
 } & Omit<React.ComponentPropsWithoutRef<E>, "className" | "color"> &
   BaseUiStyleProps & {
-    [K in PseudoClass]?: PolymorphicProps<any>;
+    [K in PseudoSelector]?: PolymorphicProps<any>;
   };
 
 export type BaseUiProps<E extends React.ElementType = "div"> =
@@ -69,7 +79,27 @@ export type BaseUiProps<E extends React.ElementType = "div"> =
       $motion?: boolean;
     };
 
-// --- Utility Functions ---
+const doubleColonPseudoElements = new Set([
+  "before",
+  "after",
+  "first-line",
+  "first-letter",
+  "selection",
+  "marker",
+  "backdrop",
+  "placeholder",
+]);
+
+const getPseudoSelector = (key: string, parentSelector = "&"): string => {
+  if (key.startsWith("__")) {
+    const pseudoName = key.slice(2);
+    const colonType = doubleColonPseudoElements.has(pseudoName) ? "::" : ":";
+    return parentSelector === "&"
+      ? `&${colonType}${pseudoName}`
+      : `${parentSelector}${colonType}${pseudoName}`;
+  }
+  return key;
+};
 
 const resolveValue = (
   key: string,
@@ -152,41 +182,44 @@ const flattenStyles = (
     if (isAllowedDOMProp(key, emptySet)) continue;
 
     if (key.startsWith("__")) {
-      const pseudoKey =
-        parentSelector === "&"
-          ? `&:${key.slice(2)}`
-          : `${parentSelector}:${key.slice(2)}`;
+      const pseudoSelector = getPseudoSelector(key, parentSelector);
 
       if (typeof value === "object" && value !== null) {
         const {
           base: nestedBase,
           media: nestedMedia,
           pseudo: nestedPseudo,
-        } = flattenStyles(value, breakpoints, colors, pseudoKey);
+        } = flattenStyles(value, breakpoints, colors, pseudoSelector);
 
         // 通常のスタイル
-        pseudo[pseudoKey] = { ...(pseudo[pseudoKey] || {}), ...nestedBase };
+        pseudo[pseudoSelector] = {
+          ...(pseudo[pseudoSelector] || {}),
+          ...nestedBase,
+        };
 
-        // ネストされた擬似クラス
+        // ネストされた擬似クラス/要素
         for (const [nestedPseudoSelector, nestedPseudoStyles] of Object.entries(
           nestedPseudo,
         )) {
-          const combinedSelector = nestedPseudoSelector.replace("&", pseudoKey);
+          const combinedSelector = nestedPseudoSelector.replace(
+            "&",
+            pseudoSelector,
+          );
           pseudo[combinedSelector] = nestedPseudoStyles;
         }
 
-        // メディアクエリ内の擬似クラス
+        // メディアクエリ内の擬似クラス/要素
         for (const [mediaQuery, mediaStyles] of Object.entries(nestedMedia)) {
           if (!media[mediaQuery]) {
             media[mediaQuery] = {};
           }
-          media[mediaQuery][pseudoKey] = {
-            ...(media[mediaQuery][pseudoKey] || {}),
+          media[mediaQuery][pseudoSelector] = {
+            ...(media[mediaQuery][pseudoSelector] || {}),
             ...mediaStyles,
           };
         }
       } else {
-        pseudo[pseudoKey] = resolveValue(key, value, colors);
+        pseudo[pseudoSelector] = resolveValue(key, value, colors);
       }
     } else {
       const { base: resolvedBase, media: resolvedMedia } =
