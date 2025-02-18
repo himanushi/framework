@@ -31,10 +31,14 @@ const VIEWPORTS = {
 
 const preview: Preview = {
   parameters: {
-    viewport: {
-      viewports: VIEWPORTS,
-      defaultViewport: "tablet",
-    },
+    ...(import.meta.env.STORYBOOK_CHROMATIC
+      ? {
+          viewport: {
+            viewports: VIEWPORTS,
+            defaultViewport: "tablet",
+          },
+        }
+      : {}),
     controls: {
       matchers: {
         color: /(background|color)$/i,
