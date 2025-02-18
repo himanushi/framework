@@ -35,7 +35,7 @@ type TooltipProps = WithShorthandProps<
 const defaultProps: Partial<TooltipProps> = {
   placement: "top",
   offset: 8,
-  delay: 200,
+  delay: 0,
   showArrow: true,
 };
 
@@ -130,7 +130,7 @@ export const Tooltip = (props: TooltipProps) => {
               }}
             >
               <Ui
-                backgroundColor="gray-800"
+                backgroundColor="gray-50"
                 color="white"
                 p="8px 12px"
                 radius="4px"
@@ -141,7 +141,7 @@ export const Tooltip = (props: TooltipProps) => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.8 }}
-                transition={{ duration: 0.1 }}
+                transition={{ duration: 0.05 }}
               >
                 {content}
                 {showArrow && (
@@ -156,7 +156,7 @@ export const Tooltip = (props: TooltipProps) => {
                       height: "8px",
                       transform: "rotate(45deg)",
                     }}
-                    backgroundColor="gray-800"
+                    backgroundColor="gray-50"
                   />
                 )}
               </Ui>

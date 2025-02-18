@@ -7,78 +7,84 @@ import {
 
 const shortHands = {
   primary: {
-    backgroundColor: "blue-500",
+    backgroundColor: "primary-20",
     color: "white",
     __hover: {
-      backgroundColor: "blue-600",
+      backgroundColor: "primary-35",
     },
     __active: {
-      backgroundColor: "blue-700",
+      backgroundColor: "primary-50",
     },
     __disabled: {
       opacity: 0.5,
       cursor: "not-allowed",
       __hover: {
-        backgroundColor: "blue-500",
+        backgroundColor: "primary-20",
       },
       __active: {
-        backgroundColor: "blue-500",
+        backgroundColor: "primary-20",
       },
     },
   },
 
   secondary: {
-    backgroundColor: "gray-500",
+    backgroundColor: "gray-20",
     color: "white",
     __hover: {
-      backgroundColor: "gray-600",
+      backgroundColor: "gray-35",
     },
     __active: {
-      backgroundColor: "gray-700",
+      backgroundColor: "gray-50",
     },
     __disabled: {
       opacity: 0.5,
       cursor: "not-allowed",
       __hover: {
-        backgroundColor: "gray-500",
+        backgroundColor: "gray-20",
       },
       __active: {
-        backgroundColor: "gray-500",
+        backgroundColor: "gray-20",
       },
     },
   },
 } as const satisfies ShortHandType;
 
+const sizePaddings = {
+  s: { xs: "8px 12px", md: "8px 12px" },
+  m: { xs: "12px 16px", md: "12px 16px" },
+  l: { xs: "16px 24px", md: "16px 24px" },
+} as const;
+
 const defaultProps: ButtonProps = {
   cursor: "pointer",
   radius: "6px",
-  backgroundColor: "gray-100",
+  backgroundColor: "gray-10",
   border: "none",
   as: "button",
-  solid: true,
-  borderColor: "gray-200",
-  padding: { xs: "12px", md: "16px" },
+  size: "m",
 
   __hover: {
-    backgroundColor: "gray-200",
+    backgroundColor: "gray-35",
   },
   __active: {
-    backgroundColor: "gray-300",
+    backgroundColor: "gray-50",
   },
   __disabled: {
     opacity: 0.5,
     cursor: "not-allowed",
     __hover: {
-      backgroundColor: "gray-100",
+      backgroundColor: "gray-10",
     },
     __active: {
-      backgroundColor: "gray-100",
+      backgroundColor: "gray-10",
     },
   },
 };
 
 export type ButtonProps = WithShorthandProps<
-  UiProps<"button">,
+  UiProps<"button"> & {
+    size?: keyof typeof sizePaddings;
+  },
   typeof shortHands
 >;
 
@@ -87,9 +93,11 @@ export type ButtonProps = WithShorthandProps<
  * primary, secondary
  */
 export const Button = (props: ButtonProps) => {
+  const { size = "m", ...rest } = props;
   const newProps = resolveShorthandProps(
-    { ...defaultProps, ...props },
+    { ...defaultProps, ...rest },
     shortHands,
   );
-  return <Ui {...newProps} $motion />;
+
+  return <Ui {...newProps} padding={sizePaddings[size].xs} $motion />;
 };

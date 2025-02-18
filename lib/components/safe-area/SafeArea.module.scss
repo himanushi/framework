@@ -1,0 +1,13 @@
+.safe {
+  --safe-area-height: 100vh;
+  // fallback for browsers that do not support CSS variables
+  --safe-area-height: calc(var(--vh, 1vh) * 100);
+
+  height: var(--safe-area-height);
+  width: 100vw;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
+
+  display: flex;
+  overflow: hidden;
+}

@@ -1,5 +1,5 @@
-import { defaultColors } from "~/core";
 import { Ui, type UiProps } from "~/core/ui/Ui";
+import { colors } from "~/core/ui/values";
 
 type SwitchSizes = "s" | "m" | "l";
 const sizes = {
@@ -41,9 +41,7 @@ export const Switch = (props: SwitchProps) => {
   const containerStyle: UiProps = {
     ...baseContainer,
     ...containerSize,
-    backgroundColor: isChecked
-      ? defaultColors["amber-400"]
-      : defaultColors["gray-400"],
+    backgroundColor: isChecked ? colors["blue-500"] : colors["gray-500"],
     justifyContent: isChecked ? "flex-end" : "flex-start",
     ...(disabled ? { opacity: 0.5, cursor: "not-allowed" } : {}),
     style,

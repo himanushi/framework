@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
-import { defaultColors } from "~/core";
 import { Ui, type UiProps } from "~/core/ui/Ui";
+import { colors } from "~/core/ui/values";
 
 export type CheckboxProps = {
   checked?: boolean;
@@ -38,11 +38,9 @@ export const Checkbox = (props: CheckboxProps) => {
   const containerStyle: UiProps = {
     ...baseContainer,
     backgroundColor:
-      indeterminate || isChecked ? defaultColors["amber-400"] : "transparent",
+      indeterminate || isChecked ? colors["blue-500"] : "transparent",
     borderColor:
-      indeterminate || isChecked
-        ? defaultColors["amber-400"]
-        : defaultColors["gray-400"],
+      indeterminate || isChecked ? colors["blue-500"] : colors["gray-200"],
     ...(disabled ? { opacity: 0.5, cursor: "not-allowed" } : {}),
     style,
   };

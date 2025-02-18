@@ -1,6 +1,8 @@
+import "../lib/style.scss";
+import "modern-normalize/modern-normalize.css";
+
 import type { Preview } from "@storybook/react";
 import React from "react";
-import { UiProvider } from "../lib/core";
 
 const VIEWPORTS = {
   mobile: {
@@ -46,13 +48,7 @@ const preview: Preview = {
       },
     },
   },
-  decorators: [
-    (Story) => (
-      <UiProvider>
-        <Story />
-      </UiProvider>
-    ),
-  ],
+  decorators: [(Story) => <Story />],
 };
 
 export default preview;

@@ -4,3 +4,4 @@ export * from "./checkbox";
 export * from "./icon";
 export * from "./text";
 export * from "./switch";
+export * from "./safe-area";

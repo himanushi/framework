@@ -2,12 +2,11 @@ import { css, cx } from "@emotion/css";
 import type * as CSS from "csstype";
 import type { MotionProps } from "motion/react";
 import { motion as Motion } from "motion/react";
-import { useContext } from "react";
-import { UiContext } from "../provider";
+import { allowedDOMPropKeys, breakpoints, colors } from "~/core/ui/values";
 
 // --- Types ---
 
-type BreakpointKeys = "xs" | "sm" | "md" | "lg" | "xl";
+type BreakpointKeys = keyof typeof breakpoints;
 export type ResponsiveProp<T> = T | Partial<Record<BreakpointKeys, T>>;
 type ColorValue = string;
 type ResponsiveColor = ColorValue | Partial<Record<BreakpointKeys, ColorValue>>;
@@ -212,7 +211,6 @@ export const BaseUi = <E extends React.ElementType = React.ElementType>(
   props: BaseUiProps<E>,
 ) => {
   const { as, ref, className, children, style, $motion, ...restProps } = props;
-  const { breakpoints, colors, allowedDOMPropKeys } = useContext(UiContext);
 
   const { base, media, pseudo } = flattenStyles(
     restProps as BaseUiStyleProps,

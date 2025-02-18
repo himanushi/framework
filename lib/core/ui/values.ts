@@ -1,12 +1,20 @@
-export const defaultBreakpoints: Record<string, string> = {
+// Breakpoint prefix	Minimum width	CSS
+// sm	40rem (640px)	@media (width >= 40rem) { ... }
+// md	48rem (768px)	@media (width >= 48rem) { ... }
+// lg	64rem (1024px)	@media (width >= 64rem) { ... }
+// xl	80rem (1280px)	@media (width >= 80rem) { ... }
+// 2xl	96rem (1536px)	@media (width >= 96rem) { ... }
+
+export const breakpoints = {
   xs: "0px",
-  sm: "480px",
+  sm: "640px",
   md: "768px",
   lg: "1024px",
   xl: "1280px",
-};
+  "2xl": "1536px",
+} as const;
 
-export const defaultColors = {
+export const colors = {
   "slate-50": "oklch(0.984 0.003 247.858)",
   "slate-100": "oklch(0.968 0.007 247.896)",
   "slate-200": "oklch(0.929 0.013 255.508)",
@@ -251,7 +259,7 @@ export const defaultColors = {
   "rose-950": "oklch(0.271 0.105 12.094)",
 } as const;
 
-export const defaultAllowedDOMPropKeys = new Set([
+export const allowedDOMPropKeys = new Set([
   "accept",
   "action",
   "alt",
