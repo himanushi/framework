@@ -1,6 +1,6 @@
-import { jsx as d } from "react/jsx-runtime";
-import { resolveShorthandProps as n } from "../../utils/shorthand.js";
-import { Ui as t } from "../../core/ui/Ui.js";
+import { jsx as n } from "react/jsx-runtime";
+import { resolveShorthandProps as c } from "../../utils/shorthand.js";
+import { Ui as d } from "../../core/ui/Ui.js";
 const e = {
   primary: {
     backgroundColor: "primary-20",
@@ -53,6 +53,7 @@ const e = {
   border: "none",
   as: "button",
   size: "m",
+  type: "button",
   __hover: {
     backgroundColor: "gray-35"
   },
@@ -70,11 +71,11 @@ const e = {
     }
   }
 }, g = (o) => {
-  const { size: r = "m", ...a } = o, c = n(
+  const { size: r = "m", ...a } = o, t = c(
     { ...i, ...a },
     e
   );
-  return /* @__PURE__ */ d(t, { ...c, padding: s[r].xs, $motion: !0 });
+  return /* @__PURE__ */ n(d, { ...t, padding: s[r].xs, $motion: !0 });
 };
 export {
   g as Button
