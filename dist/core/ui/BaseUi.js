@@ -1,72 +1,93 @@
-import { jsx as w } from "react/jsx-runtime";
-import { css as P, cx as S } from "../../node_modules/@emotion/css/dist/emotion-css.esm.js";
-import { colors as W, breakpoints as B, allowedDOMPropKeys as M } from "./values.js";
-import { motion as $ } from "../../node_modules/motion/dist/es/framer-motion/dist/es/render/components/motion/proxy.js";
-const h = (e, t, s) => typeof t == "string" && e.toLowerCase().includes("color") && s[t] ? s[t] : t, A = (e, t, s, r) => {
+import { jsx as j } from "react/jsx-runtime";
+import { css as w, cx as O } from "../../node_modules/@emotion/css/dist/emotion-css.esm.js";
+import { colors as W, breakpoints as $, allowedDOMPropKeys as B } from "./values.js";
+import { motion as M } from "../../node_modules/motion/dist/es/framer-motion/dist/es/render/components/motion/proxy.js";
+const g = /* @__PURE__ */ new Set([
+  "before",
+  "after",
+  "first-line",
+  "first-letter",
+  "selection",
+  "marker",
+  "backdrop",
+  "placeholder"
+]), A = (e, t = "&") => {
+  if (e.startsWith("__")) {
+    const s = e.slice(2), o = g.has(s) ? "::" : ":";
+    return t === "&" ? `&${o}${s}` : `${t}${o}${s}`;
+  }
+  return e;
+}, h = (e, t, s) => typeof t == "string" && e.toLowerCase().includes("color") && s[t] ? s[t] : t, C = (e, t, s, o) => {
   if (typeof t != "object" || t === null || Array.isArray(t))
-    return { base: { [e]: h(e, t, r) }, media: {} };
-  const a = {}, o = {};
-  return Object.keys(t).some((n) => s[n]) ? Object.entries(t).forEach(([n, c]) => {
-    if (s[n]) {
-      const i = `@media (min-width: ${s[n]})`;
-      o[i] = {
-        ...o[i],
-        [e]: h(e, c, r)
+    return { base: { [e]: h(e, t, o) }, media: {} };
+  const a = {}, n = {};
+  return Object.keys(t).some((i) => s[i]) ? Object.entries(t).forEach(([i, c]) => {
+    if (s[i]) {
+      const r = `@media (min-width: ${s[i]})`;
+      n[r] = {
+        ...n[r],
+        [e]: h(e, c, o)
       };
     } else
-      a[e] = h(e, c, r);
-  }) : a[e] = h(e, t, r), { base: a, media: o };
-}, j = (e, t) => t.has(e) || e.startsWith("on") || e.startsWith("while") || e.startsWith("drag") || e.startsWith("layout") || e.startsWith("aria-") || e.startsWith("data-"), g = (e, t) => Object.keys(e).reduce((s, r) => (j(r, t) && (s[r] = e[r]), s), {}), x = /* @__PURE__ */ new Set(), u = (e, t, s, r = "&") => {
+      a[e] = h(e, c, o);
+  }) : a[e] = h(e, t, o), { base: a, media: n };
+}, u = (e, t) => t.has(e) || e.startsWith("on") || e.startsWith("while") || e.startsWith("drag") || e.startsWith("layout") || e.startsWith("aria-") || e.startsWith("data-"), _ = (e, t) => Object.keys(e).reduce((s, o) => (u(o, t) && (s[o] = e[o]), s), {}), x = /* @__PURE__ */ new Set(), S = (e, t, s, o = "&") => {
   let a = {};
-  const o = {}, m = {};
-  for (const [n, c] of Object.entries(e))
-    if (!j(n, x))
-      if (n.startsWith("__")) {
-        const i = r === "&" ? `&:${n.slice(2)}` : `${r}:${n.slice(2)}`;
+  const n = {}, l = {};
+  for (const [i, c] of Object.entries(e))
+    if (!u(i, x))
+      if (i.startsWith("__")) {
+        const r = A(i, o);
         if (typeof c == "object" && c !== null) {
           const {
-            base: f,
+            base: m,
             media: d,
             pseudo: b
-          } = u(c, t, s, i);
-          m[i] = { ...m[i] || {}, ...f };
-          for (const [l, p] of Object.entries(
+          } = S(c, t, s, r);
+          l[r] = {
+            ...l[r] || {},
+            ...m
+          };
+          for (const [f, p] of Object.entries(
             b
           )) {
-            const O = l.replace("&", i);
-            m[O] = p;
+            const P = f.replace(
+              "&",
+              r
+            );
+            l[P] = p;
           }
-          for (const [l, p] of Object.entries(d))
-            o[l] || (o[l] = {}), o[l][i] = {
-              ...o[l][i] || {},
+          for (const [f, p] of Object.entries(d))
+            n[f] || (n[f] = {}), n[f][r] = {
+              ...n[f][r] || {},
               ...p
             };
         } else
-          m[i] = h(n, c, s);
+          l[r] = h(i, c, s);
       } else {
-        const { base: i, media: f } = A(n, c, t, s);
-        a = { ...a, ...i };
-        for (const d in f)
-          o[d] || (o[d] = {}), o[d] = { ...o[d], ...f[d] };
+        const { base: r, media: m } = C(i, c, t, s);
+        a = { ...a, ...r };
+        for (const d in m)
+          n[d] || (n[d] = {}), n[d] = { ...n[d], ...m[d] };
       }
-  return { base: a, media: o, pseudo: m };
-}, N = (e) => {
-  const { as: t, ref: s, className: r, children: a, style: o, $motion: m, ...n } = e, { base: c, media: i, pseudo: f } = u(
-    n,
-    B,
+  return { base: a, media: n, pseudo: l };
+}, y = (e) => {
+  const { as: t, ref: s, className: o, children: a, style: n, $motion: l, ...i } = e, { base: c, media: r, pseudo: m } = S(
+    i,
+    $,
     W
-  ), d = g(n, M), b = m ? $[t ?? "div"] : t || "div", l = { ...c, ...f, ...i }, p = P(l);
-  return /* @__PURE__ */ w(
+  ), d = _(i, B), b = l ? M[t ?? "div"] : t || "div", f = { ...c, ...m, ...r }, p = w(f);
+  return /* @__PURE__ */ j(
     b,
     {
       ref: s,
       ...d,
-      className: S(p, r),
-      style: o,
+      className: O(p, o),
+      style: n,
       children: a
     }
   );
 };
 export {
-  N as BaseUi
+  y as BaseUi
 };

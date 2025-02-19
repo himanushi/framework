@@ -1,0 +1,20 @@
+import { UiProps } from '../../core';
+import { WithShorthandProps } from '../../utils/shorthand';
+declare const shortHands: {
+    readonly error: {
+        readonly borderColor: "red-500";
+        readonly __focus: {
+            readonly borderColor: "red-500";
+            readonly boxShadow: "0 0 0 1px #ef4444";
+        };
+    };
+};
+export type TextFieldProps = WithShorthandProps<UiProps<"input"> & {
+    type?: "text" | "password" | "email" | "tel" | "number" | "search" | "url";
+}, typeof shortHands>;
+/**
+ * @shorthands
+ * error
+ */
+export declare const TextField: (props: TextFieldProps) => import("react/jsx-runtime").JSX.Element;
+export {};
