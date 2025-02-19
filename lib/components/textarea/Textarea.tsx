@@ -1,60 +1,17 @@
 import TextareaAutosize from "react-textarea-autosize";
 import { Ui, type UiProps } from "~/core";
 import {
-  type ShortHandType,
   type WithShorthandProps,
   resolveShorthandProps,
 } from "~/utils/shorthand";
+import { defaultTextProps, textShortHands } from "../text-field";
 
-const shortHands = {
-  error: {
-    borderColor: "red-300",
-    __focus: {
-      borderColor: "red-400",
-      boxShadow: "0 0 0 1px #ef4444",
-    },
-    __hover: {
-      borderColor: "red-500",
-    },
-  },
-} as const satisfies ShortHandType;
-
-const defaultProps: TextareaProps = {
+const defaultProps = {
+  ...defaultTextProps,
   as: TextareaAutosize,
-  w: "100%",
   px: "12px",
-  py: "8px",
-  radius: "6px",
-  border: "1px solid",
-  borderColor: "gray-200",
-  backgroundColor: "white",
-  outline: "none",
-  fontSize: "14px",
-  color: "gray-900",
+  py: "12px",
   resize: "none",
-
-  __placeholder: {
-    color: "gray-400",
-  },
-
-  __hover: {
-    borderColor: "gray-300",
-  },
-
-  __focus: {
-    borderColor: "blue-500",
-    boxShadow: "0 0 0 1px #3b82f6",
-  },
-
-  __disabled: {
-    backgroundColor: "gray-50",
-    cursor: "not-allowed",
-    opacity: 0.7,
-    color: "gray-400",
-    __hover: {
-      borderColor: "gray-200",
-    },
-  },
 };
 
 export type TextareaProps = WithShorthandProps<
@@ -63,7 +20,7 @@ export type TextareaProps = WithShorthandProps<
     maxRows?: number;
     as?: any;
   },
-  typeof shortHands
+  typeof textShortHands
 >;
 
 /**
@@ -73,6 +30,6 @@ export type TextareaProps = WithShorthandProps<
  */
 export const Textarea = (props: TextareaProps) => {
   const mergedProps = { ...defaultProps, ...props };
-  const newProps = resolveShorthandProps(mergedProps, shortHands);
+  const newProps = resolveShorthandProps(mergedProps, textShortHands);
   return <Ui {...newProps} />;
 };

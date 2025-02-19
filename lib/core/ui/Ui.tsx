@@ -3,7 +3,8 @@ import {
   type WithShorthandProps,
   resolveShorthandProps,
 } from "~/utils/shorthand";
-import { BaseUi, type BaseUiProps } from "./BaseUi";
+import type { BaseUiProps } from "~/utils/styleProcessor";
+import { BaseUi } from "./BaseUi";
 
 export const shortHands = {
   iCenter: { alignItems: "center" },
@@ -42,6 +43,7 @@ export const shortHands = {
 } as const satisfies ShortHandType;
 
 const defaultProps = {
+  as: "div",
   display: "flex",
 };
 

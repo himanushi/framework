@@ -5,7 +5,7 @@ import {
   resolveShorthandProps,
 } from "~/utils/shorthand";
 
-const shortHands = {
+export const textShortHands = {
   error: {
     borderColor: "alert-20",
     __focus: {
@@ -18,7 +18,7 @@ const shortHands = {
   },
 } as const satisfies ShortHandType;
 
-const defaultProps: TextFieldProps = {
+export const defaultTextProps: TextFieldProps = {
   as: "input",
   type: "text",
   w: "100%",
@@ -60,7 +60,7 @@ export type TextFieldProps = WithShorthandProps<
   UiProps<"input"> & {
     type?: "text" | "password" | "email" | "tel" | "number" | "search" | "url";
   },
-  typeof shortHands
+  typeof textShortHands
 >;
 
 /**
@@ -68,7 +68,7 @@ export type TextFieldProps = WithShorthandProps<
  * error
  */
 export const TextField = (props: TextFieldProps) => {
-  const mergedProps = { ...defaultProps, ...props };
-  const newProps = resolveShorthandProps(mergedProps, shortHands);
+  const mergedProps = { ...defaultTextProps, ...props };
+  const newProps = resolveShorthandProps(mergedProps, textShortHands);
   return <Ui {...newProps} />;
 };
