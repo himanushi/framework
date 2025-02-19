@@ -1,6 +1,6 @@
 import { WithShorthandProps } from '../../utils/shorthand';
 import { BaseUiProps } from './BaseUi';
-declare const shortHands: {
+export declare const shortHands: {
     readonly iCenter: {
         readonly alignItems: "center";
     };
@@ -61,4 +61,3 @@ export type UiProps<E extends React.ElementType = "div"> = WithShorthandProps<Ba
  * flexWrap, p, pt, pr, pb, pl, py, px, w, h, solid, radius, absolute, relative
  */
 export declare const Ui: <E extends React.ElementType = "div">(props: UiProps<E>) => import("react/jsx-runtime").JSX.Element;
-export {};

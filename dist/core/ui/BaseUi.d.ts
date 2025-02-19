@@ -21,5 +21,15 @@ export type PolymorphicProps<E extends React.ElementType> = {
 export type BaseUiProps<E extends React.ElementType = "div"> = PolymorphicProps<E> & Omit<MotionProps, "children" | "style"> & {
     $motion?: boolean;
 };
+export declare const resolveResponsiveStyles: (key: string, value: any, breakpoints: Record<string, string>, colors: Record<string, string>) => {
+    base: Record<string, any>;
+    media: Record<string, any>;
+};
+export declare const filterAllowedDOMProps: (props: Record<string, any>, allowedKeys: Set<string>) => Record<string, any>;
+export declare const flattenStyles: (styles: BaseUiStyleProps, breakpoints: Record<string, string>, colors: Record<string, string>, parentSelector?: string) => {
+    base: Record<string, any>;
+    media: Record<string, any>;
+    pseudo: Record<string, any>;
+};
 export declare const BaseUi: <E extends React.ElementType = import('react').ElementType<any, keyof import("react").JSX.IntrinsicElements>>(props: BaseUiProps<E>) => import("react/jsx-runtime").JSX.Element;
 export {};

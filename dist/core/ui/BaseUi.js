@@ -76,18 +76,21 @@ const g = /* @__PURE__ */ new Set([
     i,
     $,
     W
-  ), d = _(i, B), b = l ? M[t ?? "div"] : t || "div", f = { ...c, ...m, ...r }, p = w(f);
+  ), d = _(i, B), b = { ...c, ...m, ...r }, f = w(b), p = l ? M[t ?? "div"] : t || "div";
   return /* @__PURE__ */ j(
-    b,
+    p,
     {
       ref: s,
       ...d,
-      className: O(p, o),
+      className: O(f, o),
       style: n,
       children: a
     }
   );
 };
 export {
-  y as BaseUi
+  y as BaseUi,
+  _ as filterAllowedDOMProps,
+  S as flattenStyles,
+  C as resolveResponsiveStyles
 };

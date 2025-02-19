@@ -37,5 +37,6 @@ const d = {
   return /* @__PURE__ */ o(r, { ...n });
 };
 export {
-  f as Ui
+  f as Ui,
+  d as shortHands
 };

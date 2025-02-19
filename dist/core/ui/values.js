@@ -292,7 +292,12 @@ const l = {
   "animate",
   "variants",
   "exit",
-  "viewport"
+  "viewport",
+  // resize textarea
+  "minRows",
+  "maxRows",
+  "onHeightChange",
+  "cacheMeasurements"
 ]);
 export {
   c as allowedDOMPropKeys,
