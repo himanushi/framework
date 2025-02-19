@@ -1,15 +1,18 @@
 import { jsx as d } from "react/jsx-runtime";
-import { resolveShorthandProps as t } from "../../utils/shorthand.js";
-import { Ui as l } from "../../core/ui/Ui.js";
-const p = {
+import { resolveShorthandProps as l } from "../../utils/shorthand.js";
+import { Ui as t } from "../../core/ui/Ui.js";
+const a = {
   error: {
-    borderColor: "red-500",
+    borderColor: "red-300",
     __focus: {
-      borderColor: "red-500",
+      borderColor: "red-400",
       boxShadow: "0 0 0 1px #ef4444"
+    },
+    __hover: {
+      borderColor: "red-500"
     }
   }
-}, s = {
+}, p = {
   as: "input",
   type: "text",
   w: "100%",
@@ -23,7 +26,7 @@ const p = {
   fontSize: "14px",
   color: "gray-900",
   __placeholder: {
-    color: "red-400"
+    color: "gray-400"
   },
   __hover: {
     borderColor: "gray-300"
@@ -36,13 +39,14 @@ const p = {
     backgroundColor: "gray-50",
     cursor: "not-allowed",
     opacity: 0.7,
+    color: "gray-400",
     __hover: {
       borderColor: "gray-200"
     }
   }
 }, c = (o) => {
-  const r = { ...s, ...o }, e = t(r, p);
-  return /* @__PURE__ */ d(l, { ...e });
+  const r = { ...p, ...o }, e = l(r, a);
+  return /* @__PURE__ */ d(t, { ...e });
 };
 export {
   c as TextField

@@ -7,10 +7,13 @@ import {
 
 const shortHands = {
   error: {
-    borderColor: "red-500",
+    borderColor: "red-300",
     __focus: {
-      borderColor: "red-500",
+      borderColor: "red-400",
       boxShadow: "0 0 0 1px #ef4444",
+    },
+    __hover: {
+      borderColor: "red-500",
     },
   },
 } as const satisfies ShortHandType;
@@ -30,7 +33,7 @@ const defaultProps: TextFieldProps = {
   color: "gray-900",
 
   __placeholder: {
-    color: "red-400",
+    color: "gray-400",
   },
 
   __hover: {
@@ -46,6 +49,7 @@ const defaultProps: TextFieldProps = {
     backgroundColor: "gray-50",
     cursor: "not-allowed",
     opacity: 0.7,
+    color: "gray-400",
     __hover: {
       borderColor: "gray-200",
     },

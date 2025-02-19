@@ -1,53 +1,52 @@
-import { jsxs as m, jsx as t } from "react/jsx-runtime";
+import { jsxs as b, jsx as s } from "react/jsx-runtime";
 import { Ui as n } from "../../core/ui/Ui.js";
-import { colors as s } from "../../core/ui/values.js";
-const w = {
+import { colors as r } from "../../core/ui/values.js";
+const y = {
   s: { container: { w: 35, h: 20, p: 2 }, handle: { w: 16, h: 16 } },
   m: { container: { w: 40, h: 24, p: 2 }, handle: { w: 20, h: 20 } },
   l: { container: { w: 50, h: 28, p: 2 }, handle: { w: 24, h: 24 } }
 }, f = {
   radius: 20,
   cursor: "pointer",
-  border: "none"
+  border: "none",
+  position: "relative"
 }, k = {
   radius: "50%",
-  backgroundColor: "white"
-}, g = (r) => {
+  backgroundColor: "white",
+  position: "absolute",
+  transform: "translateY(-50%)"
+}, z = (i) => {
   const {
-    checked: a,
-    value: i,
-    className: c,
-    style: l,
-    switchSize: d = "m",
+    checked: c,
+    value: l,
+    className: d,
+    style: h,
+    switchSize: p = "m",
     disabled: o,
-    ...h
-  } = r, e = a ?? !!i ?? !1, { container: u, handle: p } = w[d], y = {
+    ...u
+  } = i, e = c ?? !!l ?? !1, { container: t, handle: a } = y[p], m = {
     ...f,
-    ...u,
-    backgroundColor: e ? s["blue-500"] : s["gray-500"],
-    justifyContent: e ? "flex-end" : "flex-start",
+    ...t,
+    backgroundColor: e ? r["blue-500"] : r["gray-500"],
     ...o ? { opacity: 0.5, cursor: "not-allowed" } : {},
-    style: l
-  }, b = {
+    style: h
+  }, w = {
     ...k,
-    ...p
+    ...a,
+    left: 2,
+    $motion: !0,
+    animate: {
+      x: e ? t.w - a.w - 4 : 0
+    },
+    transition: {
+      type: "spring",
+      bounce: 0.2,
+      duration: 0.2
+    }
   };
-  return /* @__PURE__ */ m(n, { as: "label", className: c, ...y, children: [
-    /* @__PURE__ */ t(
-      n,
-      {
-        as: "div",
-        $motion: !0,
-        layout: !0,
-        transition: {
-          type: "spring",
-          visualDuration: 0.2,
-          bounce: 0.2
-        },
-        ...b
-      }
-    ),
-    /* @__PURE__ */ t(
+  return /* @__PURE__ */ b(n, { as: "label", className: d, ...m, children: [
+    /* @__PURE__ */ s(n, { as: "div", ...w }),
+    /* @__PURE__ */ s(
       n,
       {
         as: "input",
@@ -55,11 +54,11 @@ const w = {
         checked: e,
         disabled: o,
         style: { display: "none" },
-        ...h
+        ...u
       }
     )
   ] });
 };
 export {
-  g as Switch
+  z as Switch
 };
