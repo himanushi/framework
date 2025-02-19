@@ -35,7 +35,7 @@ export const Default: Story = {
 };
 
 // エラー状態
-export const Error: Story = {
+export const ErrorTextField: Story = {
   args: {
     w: "300px",
     error: true,

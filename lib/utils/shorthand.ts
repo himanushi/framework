@@ -29,7 +29,7 @@ export const resolveShorthandProps = <E extends React.ElementType = "div">(
   let shorthandStyles: Record<string, any> = {};
   const restProps: Record<string, any> = {};
 
-  Object.entries(props).forEach(([key, value]) => {
+  for (const [key, value] of Object.entries(props)) {
     if (key in shortHands && value !== undefined) {
       const mapping = shortHands[key];
       if (typeof mapping === "function") {
@@ -49,7 +49,7 @@ export const resolveShorthandProps = <E extends React.ElementType = "div">(
     } else {
       restProps[key] = value;
     }
-  });
+  }
 
   return { ...restProps, ...shorthandStyles } as BaseUiProps<E>;
 };

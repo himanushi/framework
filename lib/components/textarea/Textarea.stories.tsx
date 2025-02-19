@@ -37,7 +37,7 @@ export const RowLimits: Story = {
 };
 
 // エラー状態
-export const Error: Story = {
+export const ErrorTextarea: Story = {
   args: {
     w: "300px",
     error: true,

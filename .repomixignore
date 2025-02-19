@@ -19,3 +19,5 @@ package-lock.json
 values.ts
 Ui.stories.tsx
 Icon.stories.tsx
+constants.ts
+styleProcessor.test.ts

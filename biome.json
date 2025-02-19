@@ -12,7 +12,11 @@
     "rules": {
       "recommended": true,
       "suspicious": {
-        "noExplicitAny": { "level": "off" }
+        "noExplicitAny": { "level": "off" },
+        "noArrayIndexKey": { "level": "off" }
+      },
+      "a11y": {
+        "noSvgWithoutTitle": { "level": "off" }
       },
       "nursery": {
         "useSortedClasses": {
@@ -45,5 +49,8 @@
     "linter": {
       "enabled": true
     }
+  },
+  "files": {
+    "ignore": ["node_modules", "dist", "coverage", ".storybook", "*.json"]
   }
 }
