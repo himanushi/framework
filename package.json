@@ -60,6 +60,7 @@
     "modern-normalize": "^3.0.1",
     "motion": "^12.4.3",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-textarea-autosize": "^8.5.7"
   }
 }
