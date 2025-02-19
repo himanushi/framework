@@ -1,15 +1,6 @@
 import { WithShorthandProps } from '../../utils/shorthand';
 import { BaseUiProps } from '../../utils/styleProcessor';
 export declare const shortHands: {
-    readonly iCenter: {
-        readonly alignItems: "center";
-    };
-    readonly iStart: {
-        readonly alignItems: "flex-start";
-    };
-    readonly iEnd: {
-        readonly alignItems: "flex-end";
-    };
     readonly jCenter: {
         readonly justifyContent: "center";
     };
@@ -21,6 +12,45 @@ export declare const shortHands: {
     };
     readonly jBetween: {
         readonly justifyContent: "space-between";
+    };
+    readonly jStretch: {
+        readonly justifyContent: "stretch";
+    };
+    readonly jSelfCenter: {
+        readonly justifySelf: "center";
+    };
+    readonly jSelfStart: {
+        readonly justifySelf: "flex-start";
+    };
+    readonly jSelfEnd: {
+        readonly justifySelf: "flex-end";
+    };
+    readonly jSelfStretch: {
+        readonly justifySelf: "stretch";
+    };
+    readonly iCenter: {
+        readonly alignItems: "center";
+    };
+    readonly iStart: {
+        readonly alignItems: "flex-start";
+    };
+    readonly iEnd: {
+        readonly alignItems: "flex-end";
+    };
+    readonly iStretch: {
+        readonly alignItems: "stretch";
+    };
+    readonly iSelfCenter: {
+        readonly alignSelf: "center";
+    };
+    readonly iSelfStart: {
+        readonly alignSelf: "flex-start";
+    };
+    readonly iSelfEnd: {
+        readonly alignSelf: "flex-end";
+    };
+    readonly iSelfStretch: {
+        readonly alignSelf: "stretch";
     };
     readonly col: {
         readonly flexDirection: "column";
@@ -53,11 +83,15 @@ export declare const shortHands: {
     readonly relative: {
         readonly position: "relative";
     };
+    readonly selectNone: {
+        readonly userSelect: "none";
+    };
 };
 export type UiProps<E extends React.ElementType = "div"> = WithShorthandProps<BaseUiProps<E>, typeof shortHands>;
 /**
  * @shorthands
- * iCenter, iStart, iEnd, jCenter, jStart, jEnd, jBetween, col,
- * flexWrap, p, pt, pr, pb, pl, py, px, w, h, solid, radius, absolute, relative
+ * jCenter, jStart, jEnd, jBetween, jStretch, jSelfCenter, jSelfStart, jSelfEnd, jSelfStretch,
+ * iCenter, iStart, iEnd, iStretch, iSelfCenter, iSelfStart, iSelfEnd, iSelfStretch,
+ * col, wrap, p, pt, pr, pb, pl, py, px, w, h, solid, radius, absolute, relative, selectNone
  */
 export declare const Ui: <E extends React.ElementType = "div">(props: UiProps<E>) => import("react/jsx-runtime").JSX.Element;
