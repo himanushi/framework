@@ -1,3 +1,5 @@
+/// <reference types="vitest" />
+
 import { resolve } from "node:path";
 import react from "@vitejs/plugin-react-swc";
 import { defineConfig } from "vite";
@@ -12,6 +14,12 @@ export default defineConfig({
     }),
   ],
   resolve: {
+    alias: { "~/": `${__dirname}/lib/` },
+  },
+  test: {
+    environment: "jsdom",
+    globals: true,
+    setupFiles: ["./test/setup.ts"],
     alias: { "~/": `${__dirname}/lib/` },
   },
   build: {
