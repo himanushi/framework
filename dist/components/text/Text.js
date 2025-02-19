@@ -59,7 +59,7 @@ const r = {
   nowrap: { whiteSpace: "nowrap" }
 }, x = {
   display: "inline",
-  color: "gray-900",
+  color: "gray-90",
   fontWeight: "normal",
   as: "span",
   size: "m"

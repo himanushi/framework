@@ -11,6 +11,7 @@ export declare const colors: {
     readonly "slate-10": "oklch(0.968 0.007 247.896)";
     readonly "slate-20": "oklch(0.929 0.013 255.508)";
     readonly "slate-30": "oklch(0.869 0.022 252.894)";
+    readonly "slate-35": "oklch(0.869 0.022 252.894)";
     readonly "slate-40": "oklch(0.704 0.04 256.788)";
     readonly "slate-50": "oklch(0.554 0.046 257.417)";
     readonly "slate-60": "oklch(0.446 0.043 257.281)";
@@ -34,6 +35,7 @@ export declare const colors: {
     readonly "zinc-10": "oklch(0.967 0.001 286.375)";
     readonly "zinc-20": "oklch(0.92 0.004 286.32)";
     readonly "zinc-30": "oklch(0.871 0.006 286.286)";
+    readonly "zinc-35": "oklch(0.871 0.006 286.286)";
     readonly "zinc-40": "oklch(0.705 0.015 286.067)";
     readonly "zinc-50": "oklch(0.552 0.016 285.938)";
     readonly "zinc-60": "oklch(0.442 0.017 285.786)";
@@ -45,6 +47,7 @@ export declare const colors: {
     readonly "neutral-10": "oklch(0.97 0 0)";
     readonly "neutral-20": "oklch(0.922 0 0)";
     readonly "neutral-30": "oklch(0.87 0 0)";
+    readonly "neutral-35": "oklch(0.87 0 0)";
     readonly "neutral-40": "oklch(0.708 0 0)";
     readonly "neutral-50": "oklch(0.556 0 0)";
     readonly "neutral-60": "oklch(0.439 0 0)";
@@ -56,6 +59,7 @@ export declare const colors: {
     readonly "stone-10": "oklch(0.97 0.001 106.424)";
     readonly "stone-20": "oklch(0.923 0.003 48.717)";
     readonly "stone-30": "oklch(0.869 0.005 56.366)";
+    readonly "stone-35": "oklch(0.869 0.005 56.366)";
     readonly "stone-40": "oklch(0.709 0.01 56.259)";
     readonly "stone-50": "oklch(0.553 0.013 58.071)";
     readonly "stone-60": "oklch(0.444 0.011 73.639)";
@@ -63,21 +67,23 @@ export declare const colors: {
     readonly "stone-80": "oklch(0.268 0.007 34.298)";
     readonly "stone-90": "oklch(0.216 0.006 56.043)";
     readonly "stone-95": "oklch(0.147 0.004 49.25)";
-    readonly "red-5": "oklch(0.971 0.013 17.38)";
-    readonly "red-10": "oklch(0.936 0.032 17.717)";
-    readonly "red-20": "oklch(0.885 0.062 18.334)";
-    readonly "red-30": "oklch(0.808 0.114 19.571)";
-    readonly "red-40": "oklch(0.704 0.191 22.216)";
-    readonly "red-50": "oklch(0.637 0.237 25.331)";
-    readonly "red-60": "oklch(0.577 0.245 27.325)";
-    readonly "red-70": "oklch(0.505 0.213 27.518)";
-    readonly "red-80": "oklch(0.444 0.177 26.899)";
-    readonly "red-90": "oklch(0.396 0.141 25.723)";
-    readonly "red-95": "oklch(0.258 0.092 26.042)";
+    readonly "alert-5": "oklch(0.971 0.013 17.38)";
+    readonly "alert-10": "oklch(0.936 0.032 17.717)";
+    readonly "alert-20": "oklch(0.885 0.062 18.334)";
+    readonly "alert-30": "oklch(0.808 0.114 19.571)";
+    readonly "alert-35": "oklch(0.808 0.114 19.571)";
+    readonly "alert-40": "oklch(0.704 0.191 22.216)";
+    readonly "alert-50": "oklch(0.637 0.237 25.331)";
+    readonly "alert-60": "oklch(0.577 0.245 27.325)";
+    readonly "alert-70": "oklch(0.505 0.213 27.518)";
+    readonly "alert-80": "oklch(0.444 0.177 26.899)";
+    readonly "alert-90": "oklch(0.396 0.141 25.723)";
+    readonly "alert-95": "oklch(0.258 0.092 26.042)";
     readonly "orange-5": "oklch(0.98 0.016 73.684)";
     readonly "orange-10": "oklch(0.954 0.038 75.164)";
     readonly "orange-20": "oklch(0.901 0.076 70.697)";
     readonly "orange-30": "oklch(0.837 0.128 66.29)";
+    readonly "orange-35": "oklch(0.837 0.128 66.29)";
     readonly "orange-40": "oklch(0.75 0.183 55.934)";
     readonly "orange-50": "oklch(0.705 0.213 47.604)";
     readonly "orange-60": "oklch(0.646 0.222 41.116)";
@@ -89,6 +95,7 @@ export declare const colors: {
     readonly "amber-10": "oklch(0.962 0.059 95.617)";
     readonly "amber-20": "oklch(0.924 0.12 95.746)";
     readonly "amber-30": "oklch(0.879 0.169 91.605)";
+    readonly "amber-35": "oklch(0.879 0.169 91.605)";
     readonly "amber-40": "oklch(0.828 0.189 84.429)";
     readonly "amber-50": "oklch(0.769 0.188 70.08)";
     readonly "amber-60": "oklch(0.666 0.179 58.318)";
@@ -100,6 +107,7 @@ export declare const colors: {
     readonly "yellow-10": "oklch(0.973 0.071 103.193)";
     readonly "yellow-20": "oklch(0.945 0.129 101.54)";
     readonly "yellow-30": "oklch(0.905 0.182 98.111)";
+    readonly "yellow-35": "oklch(0.905 0.182 98.111)";
     readonly "yellow-40": "oklch(0.852 0.199 91.936)";
     readonly "yellow-50": "oklch(0.795 0.184 86.047)";
     readonly "yellow-60": "oklch(0.681 0.162 75.834)";
@@ -111,6 +119,7 @@ export declare const colors: {
     readonly "lime-10": "oklch(0.967 0.067 122.328)";
     readonly "lime-20": "oklch(0.938 0.127 124.321)";
     readonly "lime-30": "oklch(0.897 0.196 126.665)";
+    readonly "lime-35": "oklch(0.897 0.196 126.665)";
     readonly "lime-40": "oklch(0.841 0.238 128.85)";
     readonly "lime-50": "oklch(0.768 0.233 130.85)";
     readonly "lime-60": "oklch(0.648 0.2 131.684)";
@@ -122,6 +131,7 @@ export declare const colors: {
     readonly "green-10": "oklch(0.962 0.044 156.743)";
     readonly "green-20": "oklch(0.925 0.084 155.995)";
     readonly "green-30": "oklch(0.871 0.15 154.449)";
+    readonly "green-35": "oklch(0.871 0.15 154.449)";
     readonly "green-40": "oklch(0.792 0.209 151.711)";
     readonly "green-50": "oklch(0.723 0.219 149.579)";
     readonly "green-60": "oklch(0.627 0.194 149.214)";
@@ -133,6 +143,7 @@ export declare const colors: {
     readonly "emerald-10": "oklch(0.95 0.052 163.051)";
     readonly "emerald-20": "oklch(0.905 0.093 164.15)";
     readonly "emerald-30": "oklch(0.845 0.143 164.978)";
+    readonly "emerald-35": "oklch(0.845 0.143 164.978)";
     readonly "emerald-40": "oklch(0.765 0.177 163.223)";
     readonly "emerald-50": "oklch(0.696 0.17 162.48)";
     readonly "emerald-60": "oklch(0.596 0.145 163.225)";
@@ -144,6 +155,7 @@ export declare const colors: {
     readonly "teal-10": "oklch(0.953 0.051 180.801)";
     readonly "teal-20": "oklch(0.91 0.096 180.426)";
     readonly "teal-30": "oklch(0.855 0.138 181.071)";
+    readonly "teal-35": "oklch(0.855 0.138 181.071)";
     readonly "teal-40": "oklch(0.777 0.152 181.912)";
     readonly "teal-50": "oklch(0.704 0.14 182.503)";
     readonly "teal-60": "oklch(0.6 0.118 184.704)";
@@ -155,6 +167,7 @@ export declare const colors: {
     readonly "cyan-10": "oklch(0.956 0.045 203.388)";
     readonly "cyan-20": "oklch(0.917 0.08 205.041)";
     readonly "cyan-30": "oklch(0.865 0.127 207.078)";
+    readonly "cyan-35": "oklch(0.865 0.127 207.078)";
     readonly "cyan-40": "oklch(0.789 0.154 211.53)";
     readonly "cyan-50": "oklch(0.715 0.143 215.221)";
     readonly "cyan-60": "oklch(0.609 0.126 221.723)";
@@ -166,6 +179,7 @@ export declare const colors: {
     readonly "sky-10": "oklch(0.951 0.026 236.824)";
     readonly "sky-20": "oklch(0.901 0.058 230.902)";
     readonly "sky-30": "oklch(0.828 0.111 230.318)";
+    readonly "sky-35": "oklch(0.828 0.111 230.318)";
     readonly "sky-40": "oklch(0.746 0.16 232.661)";
     readonly "sky-50": "oklch(0.685 0.169 237.323)";
     readonly "sky-60": "oklch(0.588 0.158 241.966)";
@@ -189,6 +203,7 @@ export declare const colors: {
     readonly "indigo-10": "oklch(0.93 0.034 272.788)";
     readonly "indigo-20": "oklch(0.87 0.065 274.039)";
     readonly "indigo-30": "oklch(0.785 0.115 274.713)";
+    readonly "indigo-35": "oklch(0.785 0.115 274.713)";
     readonly "indigo-40": "oklch(0.673 0.182 276.935)";
     readonly "indigo-50": "oklch(0.585 0.233 277.117)";
     readonly "indigo-60": "oklch(0.511 0.262 276.966)";
@@ -200,6 +215,7 @@ export declare const colors: {
     readonly "violet-10": "oklch(0.943 0.029 294.588)";
     readonly "violet-20": "oklch(0.894 0.057 293.283)";
     readonly "violet-30": "oklch(0.811 0.111 293.571)";
+    readonly "violet-35": "oklch(0.811 0.111 293.571)";
     readonly "violet-40": "oklch(0.702 0.183 293.541)";
     readonly "violet-50": "oklch(0.606 0.25 292.717)";
     readonly "violet-60": "oklch(0.541 0.281 293.009)";
@@ -211,6 +227,7 @@ export declare const colors: {
     readonly "purple-10": "oklch(0.946 0.033 307.174)";
     readonly "purple-20": "oklch(0.902 0.063 306.703)";
     readonly "purple-30": "oklch(0.827 0.119 306.383)";
+    readonly "purple-35": "oklch(0.827 0.119 306.383)";
     readonly "purple-40": "oklch(0.714 0.203 305.504)";
     readonly "purple-50": "oklch(0.627 0.265 303.9)";
     readonly "purple-60": "oklch(0.558 0.288 302.321)";
@@ -222,6 +239,7 @@ export declare const colors: {
     readonly "fuchsia-10": "oklch(0.952 0.037 318.852)";
     readonly "fuchsia-20": "oklch(0.903 0.076 319.62)";
     readonly "fuchsia-30": "oklch(0.833 0.145 321.434)";
+    readonly "fuchsia-35": "oklch(0.833 0.145 321.434)";
     readonly "fuchsia-40": "oklch(0.74 0.238 322.16)";
     readonly "fuchsia-50": "oklch(0.667 0.295 322.15)";
     readonly "fuchsia-60": "oklch(0.591 0.293 322.896)";
@@ -233,6 +251,7 @@ export declare const colors: {
     readonly "pink-10": "oklch(0.948 0.028 342.258)";
     readonly "pink-20": "oklch(0.899 0.061 343.231)";
     readonly "pink-30": "oklch(0.823 0.12 346.018)";
+    readonly "pink-35": "oklch(0.823 0.12 346.018)";
     readonly "pink-40": "oklch(0.718 0.202 349.761)";
     readonly "pink-50": "oklch(0.656 0.241 354.308)";
     readonly "pink-60": "oklch(0.592 0.249 0.584)";
@@ -244,6 +263,7 @@ export declare const colors: {
     readonly "rose-10": "oklch(0.941 0.03 12.58)";
     readonly "rose-20": "oklch(0.892 0.058 10.001)";
     readonly "rose-30": "oklch(0.81 0.117 11.638)";
+    readonly "rose-35": "oklch(0.81 0.117 11.638)";
     readonly "rose-40": "oklch(0.712 0.194 13.428)";
     readonly "rose-50": "oklch(0.645 0.246 16.439)";
     readonly "rose-60": "oklch(0.586 0.253 17.585)";

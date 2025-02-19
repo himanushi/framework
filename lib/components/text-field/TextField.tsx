@@ -7,13 +7,13 @@ import {
 
 const shortHands = {
   error: {
-    borderColor: "red-300",
+    borderColor: "alert-20",
     __focus: {
-      borderColor: "red-400",
+      borderColor: "alert-50",
       boxShadow: "0 0 0 1px #ef4444",
     },
     __hover: {
-      borderColor: "red-500",
+      borderColor: "alert-50",
     },
   },
 } as const satisfies ShortHandType;
@@ -26,32 +26,32 @@ const defaultProps: TextFieldProps = {
   px: "12px",
   radius: "6px",
   border: "1px solid",
-  borderColor: "gray-200",
+  borderColor: "gray-20",
   backgroundColor: "white",
   outline: "none",
   fontSize: "14px",
-  color: "gray-900",
+  color: "gray-90",
 
   __placeholder: {
-    color: "gray-400",
+    color: "gray-35",
   },
 
   __hover: {
-    borderColor: "gray-300",
+    borderColor: "gray-35",
   },
 
   __focus: {
-    borderColor: "blue-500",
+    borderColor: "primary-50",
     boxShadow: "0 0 0 1px #3b82f6",
   },
 
   __disabled: {
-    backgroundColor: "gray-50",
+    backgroundColor: "gray-20",
     cursor: "not-allowed",
     opacity: 0.7,
-    color: "gray-400",
+    color: "gray-50",
     __hover: {
-      borderColor: "gray-200",
+      borderColor: "gray-10",
     },
   },
 };

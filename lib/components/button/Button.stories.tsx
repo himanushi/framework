@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Icon } from "../icon";
-import { Cookie } from "../icon/Icon.stories";
+import { Cookie } from "../icon/Cookie";
 import { Text } from "../text";
 import { Button } from "./Button";
 

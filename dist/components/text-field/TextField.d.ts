@@ -2,13 +2,13 @@ import { UiProps } from '../../core';
 import { WithShorthandProps } from '../../utils/shorthand';
 declare const shortHands: {
     readonly error: {
-        readonly borderColor: "red-300";
+        readonly borderColor: "alert-20";
         readonly __focus: {
-            readonly borderColor: "red-400";
+            readonly borderColor: "alert-50";
             readonly boxShadow: "0 0 0 1px #ef4444";
         };
         readonly __hover: {
-            readonly borderColor: "red-500";
+            readonly borderColor: "alert-50";
         };
     };
 };
