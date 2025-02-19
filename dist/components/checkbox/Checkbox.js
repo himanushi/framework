@@ -1,7 +1,7 @@
 import { jsxs as h, jsx as n } from "react/jsx-runtime";
 import { useRef as y, useEffect as b } from "react";
 import { Ui as r } from "../../core/ui/Ui.js";
-import { colors as i } from "../../core/ui/values.js";
+import { colors as i } from "../../utils/constants.js";
 const k = {
   w: 20,
   h: 20,

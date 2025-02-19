@@ -1,20 +1,13 @@
-// Breakpoint prefix	Minimum width	CSS
-// sm	40rem (640px)	@media (width >= 40rem) { ... }
-// md	48rem (768px)	@media (width >= 48rem) { ... }
-// lg	64rem (1024px)	@media (width >= 64rem) { ... }
-// xl	80rem (1280px)	@media (width >= 80rem) { ... }
-// 2xl	96rem (1536px)	@media (width >= 96rem) { ... }
-
-export const breakpoints = {
+const l = {
+  tooltip: 1e3
+}, o = {
   xs: "0px",
   sm: "640px",
   md: "768px",
   lg: "1024px",
   xl: "1280px",
-  "2xl": "1536px",
-} as const;
-
-export const colors = {
+  "2xl": "1536px"
+}, c = {
   "slate-5": "oklch(0.984 0.003 247.858)",
   "slate-10": "oklch(0.968 0.007 247.896)",
   "slate-20": "oklch(0.929 0.013 255.508)",
@@ -278,10 +271,8 @@ export const colors = {
   "rose-70": "oklch(0.514 0.222 16.935)",
   "rose-80": "oklch(0.455 0.188 13.697)",
   "rose-90": "oklch(0.41 0.159 10.272)",
-  "rose-95": "oklch(0.271 0.105 12.094)",
-} as const;
-
-export const allowedDOMPropKeys = new Set([
+  "rose-95": "oklch(0.271 0.105 12.094)"
+}, k = /* @__PURE__ */ new Set([
   "accept",
   "action",
   "alt",
@@ -318,7 +309,6 @@ export const allowedDOMPropKeys = new Set([
   "title",
   "type",
   "value",
-
   // motion
   "initial",
   "transition",
@@ -327,10 +317,15 @@ export const allowedDOMPropKeys = new Set([
   "variants",
   "exit",
   "viewport",
-
   // resize textarea
   "minRows",
   "maxRows",
   "onHeightChange",
-  "cacheMeasurements",
+  "cacheMeasurements"
 ]);
+export {
+  k as allowedDOMPropKeys,
+  o as breakpoints,
+  c as colors,
+  l as zIndexes
+};

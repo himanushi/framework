@@ -1,11 +1,17 @@
-const l = {
+export const zIndexes = {
+  tooltip: 1000,
+};
+
+export const breakpoints = {
   xs: "0px",
   sm: "640px",
   md: "768px",
   lg: "1024px",
   xl: "1280px",
-  "2xl": "1536px"
-}, o = {
+  "2xl": "1536px",
+} as const;
+
+export const colors = {
   "slate-5": "oklch(0.984 0.003 247.858)",
   "slate-10": "oklch(0.968 0.007 247.896)",
   "slate-20": "oklch(0.929 0.013 255.508)",
@@ -269,8 +275,10 @@ const l = {
   "rose-70": "oklch(0.514 0.222 16.935)",
   "rose-80": "oklch(0.455 0.188 13.697)",
   "rose-90": "oklch(0.41 0.159 10.272)",
-  "rose-95": "oklch(0.271 0.105 12.094)"
-}, c = /* @__PURE__ */ new Set([
+  "rose-95": "oklch(0.271 0.105 12.094)",
+} as const;
+
+export const allowedDOMPropKeys = new Set([
   "accept",
   "action",
   "alt",
@@ -307,6 +315,7 @@ const l = {
   "title",
   "type",
   "value",
+
   // motion
   "initial",
   "transition",
@@ -315,14 +324,10 @@ const l = {
   "variants",
   "exit",
   "viewport",
+
   // resize textarea
   "minRows",
   "maxRows",
   "onHeightChange",
-  "cacheMeasurements"
+  "cacheMeasurements",
 ]);
-export {
-  c as allowedDOMPropKeys,
-  l as breakpoints,
-  o as colors
-};

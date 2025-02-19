@@ -1,5 +1,5 @@
 import { Ui, type UiProps } from "~/core/ui/Ui";
-import { colors } from "~/core/ui/values";
+import { colors } from "~/utils/constants";
 
 type SwitchSizes = "s" | "m" | "l";
 const sizes = {

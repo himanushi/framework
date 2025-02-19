@@ -1,6 +1,6 @@
 import { jsxs as b, jsx as r } from "react/jsx-runtime";
 import { Ui as n } from "../../core/ui/Ui.js";
-import { colors as s } from "../../core/ui/values.js";
+import { colors as s } from "../../utils/constants.js";
 const y = {
   s: { container: { w: 35, h: 20, p: 2 }, handle: { w: 16, h: 16 } },
   m: { container: { w: 40, h: 24, p: 2 }, handle: { w: 20, h: 20 } },

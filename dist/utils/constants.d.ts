@@ -1,3 +1,6 @@
+export declare const zIndexes: {
+    tooltip: number;
+};
 export declare const breakpoints: {
     readonly xs: "0px";
     readonly sm: "640px";

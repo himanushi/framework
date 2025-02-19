@@ -1,6 +1,6 @@
 import { css, cx } from "@emotion/css";
 import { motion as Motion } from "motion/react";
-import { allowedDOMPropKeys, breakpoints, colors } from "~/core/ui/values";
+import { allowedDOMPropKeys, breakpoints, colors } from "~/utils/constants";
 import {
   type BaseUiProps,
   type BaseUiStyleProps,
