@@ -62,6 +62,7 @@ const defaultProps: ButtonProps = {
   border: "none",
   as: "button",
   size: "m",
+  type: "button",
 
   __hover: {
     backgroundColor: "gray-35",
