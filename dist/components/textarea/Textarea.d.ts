@@ -20,7 +20,7 @@ export type TextareaProps = WithShorthandProps<Omit<UiProps<"textarea">, "as"> &
 /**
  * Textarea component with auto-resize functionality
  * @shorthands
- * error
+ * error minRows maxRows
  */
 export declare const Textarea: (props: TextareaProps) => import("react/jsx-runtime").JSX.Element;
 export {};

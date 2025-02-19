@@ -31,7 +31,7 @@ const defaultProps: TextareaProps = {
   outline: "none",
   fontSize: "14px",
   color: "gray-900",
-  resize: "vertical",
+  resize: "none",
 
   __placeholder: {
     color: "gray-400",
@@ -69,7 +69,7 @@ export type TextareaProps = WithShorthandProps<
 /**
  * Textarea component with auto-resize functionality
  * @shorthands
- * error
+ * error minRows maxRows
  */
 export const Textarea = (props: TextareaProps) => {
   const mergedProps = { ...defaultProps, ...props };

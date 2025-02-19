@@ -2,7 +2,7 @@ import { jsx as d } from "react/jsx-runtime";
 import a from "../../node_modules/react-textarea-autosize/dist/react-textarea-autosize.browser.esm.js";
 import { resolveShorthandProps as l } from "../../utils/shorthand.js";
 import { Ui as s } from "../../core/ui/Ui.js";
-const t = {
+const p = {
   error: {
     borderColor: "red-300",
     __focus: {
@@ -13,7 +13,7 @@ const t = {
       borderColor: "red-500"
     }
   }
-}, p = {
+}, t = {
   as: a,
   w: "100%",
   px: "12px",
@@ -25,7 +25,7 @@ const t = {
   outline: "none",
   fontSize: "14px",
   color: "gray-900",
-  resize: "vertical",
+  resize: "none",
   __placeholder: {
     color: "gray-400"
   },
@@ -46,7 +46,7 @@ const t = {
     }
   }
 }, x = (o) => {
-  const r = { ...p, ...o }, e = l(r, t);
+  const r = { ...t, ...o }, e = l(r, p);
   return /* @__PURE__ */ d(s, { ...e });
 };
 export {
