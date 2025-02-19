@@ -17,11 +17,14 @@ const baseContainer: UiProps = {
   radius: 20,
   cursor: "pointer",
   border: "none",
+  position: "relative",
 };
 
 const baseHandle: UiProps = {
   radius: "50%",
   backgroundColor: "white",
+  position: "absolute",
+  transform: "translateY(-50%)",
 };
 
 export const Switch = (props: SwitchProps) => {
@@ -42,7 +45,6 @@ export const Switch = (props: SwitchProps) => {
     ...baseContainer,
     ...containerSize,
     backgroundColor: isChecked ? colors["blue-500"] : colors["gray-500"],
-    justifyContent: isChecked ? "flex-end" : "flex-start",
     ...(disabled ? { opacity: 0.5, cursor: "not-allowed" } : {}),
     style,
   };
@@ -50,21 +52,21 @@ export const Switch = (props: SwitchProps) => {
   const handleStyle: UiProps = {
     ...baseHandle,
     ...handleSize,
+    left: 2,
+    $motion: true,
+    animate: {
+      x: isChecked ? containerSize.w - handleSize.w - 4 : 0,
+    },
+    transition: {
+      type: "spring",
+      bounce: 0.2,
+      duration: 0.2,
+    },
   };
 
   return (
     <Ui as="label" className={className} {...containerStyle}>
-      <Ui
-        as="div"
-        $motion
-        layout
-        transition={{
-          type: "spring",
-          visualDuration: 0.2,
-          bounce: 0.2,
-        }}
-        {...handleStyle}
-      />
+      <Ui as="div" {...handleStyle} />
       <Ui
         as="input"
         type="checkbox"
