@@ -1,6 +1,6 @@
-import { jsxs as b, jsx as n } from "react/jsx-runtime";
-import { useRef as h, useEffect as y } from "react";
-import { Ui as t } from "../../core/ui/Ui.js";
+import { jsxs as h, jsx as n } from "react/jsx-runtime";
+import { useRef as y, useEffect as b } from "react";
+import { Ui as r } from "../../core/ui/Ui.js";
 import { colors as i } from "../../core/ui/values.js";
 const k = {
   w: 20,
@@ -18,23 +18,23 @@ const k = {
   const {
     checked: l,
     value: d,
-    indeterminate: r,
+    indeterminate: t,
     className: u,
     style: m,
     disabled: s,
     ...p
   } = c, e = l ?? !!d ?? !1, f = {
     ...k,
-    backgroundColor: r || e ? i["blue-500"] : "transparent",
-    borderColor: r || e ? i["blue-500"] : i["gray-200"],
+    backgroundColor: t || e ? i["primary-50"] : "transparent",
+    borderColor: t || e ? i["primary-50"] : i["gray-20"],
     ...s ? { opacity: 0.5, cursor: "not-allowed" } : {},
     style: m
-  }, o = h(!0);
-  return y(() => {
+  }, o = y(!0);
+  return b(() => {
     o.current = !1;
-  }, []), /* @__PURE__ */ b(t, { as: "label", userSelect: "none", className: u, ...f, children: [
-    r ? /* @__PURE__ */ n(
-      t,
+  }, []), /* @__PURE__ */ h(r, { as: "label", userSelect: "none", className: u, ...f, children: [
+    t ? /* @__PURE__ */ n(
+      r,
       {
         as: "div",
         $motion: !0,
@@ -45,7 +45,7 @@ const k = {
         children: "—"
       }
     ) : e ? /* @__PURE__ */ n(
-      t,
+      r,
       {
         as: "div",
         $motion: !0,
@@ -57,7 +57,7 @@ const k = {
       }
     ) : null,
     /* @__PURE__ */ n(
-      t,
+      r,
       {
         as: "input",
         type: "checkbox",

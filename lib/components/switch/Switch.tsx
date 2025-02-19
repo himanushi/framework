@@ -44,7 +44,7 @@ export const Switch = (props: SwitchProps) => {
   const containerStyle: UiProps = {
     ...baseContainer,
     ...containerSize,
-    backgroundColor: isChecked ? colors["blue-500"] : colors["gray-500"],
+    backgroundColor: isChecked ? colors["primary-50"] : colors["gray-50"],
     ...(disabled ? { opacity: 0.5, cursor: "not-allowed" } : {}),
     style,
   };

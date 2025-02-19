@@ -2,22 +2,22 @@ import { UiProps } from '../../core';
 import { WithShorthandProps } from '../../utils/shorthand';
 declare const shortHands: {
     readonly primary: {
-        readonly backgroundColor: "primary-20";
+        readonly backgroundColor: "primary-50";
         readonly color: "white";
         readonly __hover: {
-            readonly backgroundColor: "primary-35";
+            readonly backgroundColor: "primary-80";
         };
         readonly __active: {
-            readonly backgroundColor: "primary-50";
+            readonly backgroundColor: "primary-90";
         };
         readonly __disabled: {
             readonly opacity: 0.5;
             readonly cursor: "not-allowed";
             readonly __hover: {
-                readonly backgroundColor: "primary-20";
+                readonly backgroundColor: "primary-50";
             };
             readonly __active: {
-                readonly backgroundColor: "primary-20";
+                readonly backgroundColor: "primary-50";
             };
         };
     };

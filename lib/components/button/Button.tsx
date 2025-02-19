@@ -7,22 +7,22 @@ import {
 
 const shortHands = {
   primary: {
-    backgroundColor: "primary-20",
+    backgroundColor: "primary-50",
     color: "white",
     __hover: {
-      backgroundColor: "primary-35",
+      backgroundColor: "primary-80",
     },
     __active: {
-      backgroundColor: "primary-50",
+      backgroundColor: "primary-90",
     },
     __disabled: {
       opacity: 0.5,
       cursor: "not-allowed",
       __hover: {
-        backgroundColor: "primary-20",
+        backgroundColor: "primary-50",
       },
       __active: {
-        backgroundColor: "primary-20",
+        backgroundColor: "primary-50",
       },
     },
   },
@@ -80,6 +80,9 @@ const defaultProps: ButtonProps = {
       backgroundColor: "gray-10",
     },
   },
+
+  $motion: true,
+  whileTap: { scale: 0.95 },
 };
 
 export type ButtonProps = WithShorthandProps<

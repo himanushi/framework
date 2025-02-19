@@ -1,24 +1,24 @@
-import { jsx as n } from "react/jsx-runtime";
-import { resolveShorthandProps as c } from "../../utils/shorthand.js";
-import { Ui as d } from "../../core/ui/Ui.js";
-const e = {
+import { jsx as e } from "react/jsx-runtime";
+import { resolveShorthandProps as n } from "../../utils/shorthand.js";
+import { Ui as c } from "../../core/ui/Ui.js";
+const d = {
   primary: {
-    backgroundColor: "primary-20",
+    backgroundColor: "primary-50",
     color: "white",
     __hover: {
-      backgroundColor: "primary-35"
+      backgroundColor: "primary-80"
     },
     __active: {
-      backgroundColor: "primary-50"
+      backgroundColor: "primary-90"
     },
     __disabled: {
       opacity: 0.5,
       cursor: "not-allowed",
       __hover: {
-        backgroundColor: "primary-20"
+        backgroundColor: "primary-50"
       },
       __active: {
-        backgroundColor: "primary-20"
+        backgroundColor: "primary-50"
       }
     }
   },
@@ -42,11 +42,11 @@ const e = {
       }
     }
   }
-}, s = {
+}, i = {
   s: { xs: "8px 12px", md: "8px 12px" },
   m: { xs: "12px 16px", md: "12px 16px" },
   l: { xs: "16px 24px", md: "16px 24px" }
-}, i = {
+}, s = {
   cursor: "pointer",
   radius: "6px",
   backgroundColor: "gray-10",
@@ -69,13 +69,15 @@ const e = {
     __active: {
       backgroundColor: "gray-10"
     }
-  }
+  },
+  $motion: !0,
+  whileTap: { scale: 0.95 }
 }, g = (o) => {
-  const { size: r = "m", ...a } = o, t = c(
-    { ...i, ...a },
-    e
+  const { size: r = "m", ...a } = o, t = n(
+    { ...s, ...a },
+    d
   );
-  return /* @__PURE__ */ n(d, { ...t, padding: s[r].xs, $motion: !0 });
+  return /* @__PURE__ */ e(c, { ...t, padding: i[r].xs, $motion: !0 });
 };
 export {
   g as Button

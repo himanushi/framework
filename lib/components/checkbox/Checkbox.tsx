@@ -38,9 +38,9 @@ export const Checkbox = (props: CheckboxProps) => {
   const containerStyle: UiProps = {
     ...baseContainer,
     backgroundColor:
-      indeterminate || isChecked ? colors["blue-500"] : "transparent",
+      indeterminate || isChecked ? colors["primary-50"] : "transparent",
     borderColor:
-      indeterminate || isChecked ? colors["blue-500"] : colors["gray-200"],
+      indeterminate || isChecked ? colors["primary-50"] : colors["gray-20"],
     ...(disabled ? { opacity: 0.5, cursor: "not-allowed" } : {}),
     style,
   };

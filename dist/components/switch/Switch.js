@@ -1,6 +1,6 @@
-import { jsxs as b, jsx as s } from "react/jsx-runtime";
+import { jsxs as b, jsx as r } from "react/jsx-runtime";
 import { Ui as n } from "../../core/ui/Ui.js";
-import { colors as r } from "../../core/ui/values.js";
+import { colors as s } from "../../core/ui/values.js";
 const y = {
   s: { container: { w: 35, h: 20, p: 2 }, handle: { w: 16, h: 16 } },
   m: { container: { w: 40, h: 24, p: 2 }, handle: { w: 20, h: 20 } },
@@ -27,7 +27,7 @@ const y = {
   } = i, e = c ?? !!l ?? !1, { container: t, handle: a } = y[p], m = {
     ...f,
     ...t,
-    backgroundColor: e ? r["blue-500"] : r["gray-500"],
+    backgroundColor: e ? s["primary-50"] : s["gray-50"],
     ...o ? { opacity: 0.5, cursor: "not-allowed" } : {},
     style: h
   }, w = {
@@ -45,8 +45,8 @@ const y = {
     }
   };
   return /* @__PURE__ */ b(n, { as: "label", className: d, ...m, children: [
-    /* @__PURE__ */ s(n, { as: "div", ...w }),
-    /* @__PURE__ */ s(
+    /* @__PURE__ */ r(n, { as: "div", ...w }),
+    /* @__PURE__ */ r(
       n,
       {
         as: "input",

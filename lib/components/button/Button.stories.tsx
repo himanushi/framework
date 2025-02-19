@@ -1,4 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { Icon } from "../icon";
+import { Cookie } from "../icon/Icon.stories";
+import { Text } from "../text";
 import { Button } from "./Button";
 
 const meta: Meta<typeof Button> = {
@@ -16,22 +19,36 @@ type Story = StoryObj<typeof Button>;
 
 export const Primary: Story = {
   args: {
-    children: "ああああああ",
+    children: "ボタン",
     primary: true,
-    disabled: true,
   },
 };
 
 export const Secondary: Story = {
   args: {
-    children: "bold",
+    children: "ボタン",
     secondary: true,
+  },
+};
+
+export const IconButton: Story = {
+  args: {
+    children: (
+      <>
+        <Icon size={17} color={"red-900"}>
+          <Cookie />
+        </Icon>
+        <Text>ボタン</Text>
+      </>
+    ),
+    gap: "10px",
+    primary: true,
   },
 };
 
 export const Large: Story = {
   args: {
-    children: "ああああああ",
+    children: "ボタン",
     disabled: true,
     onClick: () => console.log("click"),
   },
@@ -39,6 +56,6 @@ export const Large: Story = {
 
 export const Small: Story = {
   args: {
-    children: "ああああああ",
+    children: "ボタン",
   },
 };
