@@ -86,13 +86,11 @@ const doubleColonPseudoElements = new Set([
   "placeholder",
 ]);
 
-const getPseudoSelector = (key: string, parentSelector = "&"): string => {
+const getPseudoSelector = (key: string): string => {
   if (key.startsWith("__")) {
     const pseudoName = key.slice(2);
     const colonType = doubleColonPseudoElements.has(pseudoName) ? "::" : ":";
-    return parentSelector === "&"
-      ? `&${colonType}${pseudoName}`
-      : `${parentSelector}${colonType}${pseudoName}`;
+    return `${colonType}${pseudoName}`;
   }
   return key;
 };
@@ -117,24 +115,32 @@ export const resolveResponsiveStyles = (
   if (typeof value !== "object" || value === null || Array.isArray(value)) {
     return { base: { [key]: resolveValue(key, value, colors) }, media: {} };
   }
+
   const base: Record<string, any> = {};
   const media: Record<string, any> = {};
+
+  // Check if the value is a responsive object
   const hasBreakpoint = Object.keys(value).some((k) => breakpoints[k]);
-  if (hasBreakpoint) {
-    Object.entries(value).forEach(([subKey, subValue]) => {
-      if (breakpoints[subKey]) {
-        const mq = `@media (min-width: ${breakpoints[subKey]})`;
-        media[mq] = {
-          ...media[mq],
-          [key]: resolveValue(key, subValue, colors),
-        };
-      } else {
-        base[key] = resolveValue(key, subValue, colors);
-      }
-    });
-  } else {
-    base[key] = resolveValue(key, value, colors);
+  if (!hasBreakpoint) {
+    return { base: { [key]: resolveValue(key, value, colors) }, media: {} };
   }
+
+  // Handle xs breakpoint as base style
+  if (value.xs !== undefined) {
+    base[key] = resolveValue(key, value.xs, colors);
+  }
+
+  // Handle other breakpoints
+  Object.entries(value).forEach(([breakpoint, breakpointValue]) => {
+    if (breakpoint !== "xs" && breakpoints[breakpoint]) {
+      const mq = `@media (min-width: ${breakpoints[breakpoint]})`;
+      media[mq] = {
+        ...media[mq],
+        [key]: resolveValue(key, breakpointValue, colors),
+      };
+    }
+  });
+
   return { base, media };
 };
 
@@ -160,11 +166,15 @@ export const filterAllowedDOMProps = (
 
 const emptySet = new Set<string>();
 
-export const flattenStyles = (
+const combinePseudoSelectors = (selectors: string[]): string => {
+  return selectors.join("");
+};
+
+const flattenPseudoStyles = (
   styles: BaseUiStyleProps,
   breakpoints: Record<string, string>,
   colors: Record<string, string>,
-  parentSelector = "&",
+  parentSelectors: string[] = [],
 ): {
   base: Record<string, any>;
   media: Record<string, any>;
@@ -178,58 +188,64 @@ export const flattenStyles = (
     if (isAllowedDOMProp(key, emptySet)) continue;
 
     if (key.startsWith("__")) {
-      const pseudoSelector = getPseudoSelector(key, parentSelector);
+      const currentSelector = getPseudoSelector(key);
+      const currentSelectors = [...parentSelectors, currentSelector];
+      const combinedSelector = `&${combinePseudoSelectors(currentSelectors)}`;
 
       if (typeof value === "object" && value !== null) {
         const {
           base: nestedBase,
           media: nestedMedia,
           pseudo: nestedPseudo,
-        } = flattenStyles(value, breakpoints, colors, pseudoSelector);
+        } = flattenPseudoStyles(value, breakpoints, colors, currentSelectors);
 
-        // 通常のスタイル
-        pseudo[pseudoSelector] = {
-          ...(pseudo[pseudoSelector] || {}),
-          ...nestedBase,
-        };
-
-        // ネストされた擬似クラス/要素
-        for (const [nestedPseudoSelector, nestedPseudoStyles] of Object.entries(
-          nestedPseudo,
-        )) {
-          const combinedSelector = nestedPseudoSelector.replace(
-            "&",
-            pseudoSelector,
-          );
-          pseudo[combinedSelector] = nestedPseudoStyles;
+        // Add nested base styles to current pseudo selector
+        if (Object.keys(nestedBase).length > 0) {
+          pseudo[combinedSelector] = nestedBase;
         }
 
-        // メディアクエリ内の擬似クラス/要素
-        for (const [mediaQuery, mediaStyles] of Object.entries(nestedMedia)) {
-          if (!media[mediaQuery]) {
-            media[mediaQuery] = {};
+        // Add nested pseudo styles
+        Object.assign(pseudo, nestedPseudo);
+
+        // Merge nested media queries
+        Object.entries(nestedMedia).forEach(([mediaQuery, mediaStyles]) => {
+          if (!pseudo[mediaQuery]) {
+            pseudo[mediaQuery] = {};
           }
-          media[mediaQuery][pseudoSelector] = {
-            ...(media[mediaQuery][pseudoSelector] || {}),
-            ...mediaStyles,
-          };
-        }
+          if (!pseudo[mediaQuery][combinedSelector]) {
+            pseudo[mediaQuery][combinedSelector] = {};
+          }
+          Object.assign(pseudo[mediaQuery][combinedSelector], mediaStyles);
+        });
       } else {
-        pseudo[pseudoSelector] = resolveValue(key, value, colors);
+        pseudo[combinedSelector] = resolveValue(key, value, colors);
       }
     } else {
       const { base: resolvedBase, media: resolvedMedia } =
         resolveResponsiveStyles(key, value, breakpoints, colors);
       base = { ...base, ...resolvedBase };
 
-      for (const mq in resolvedMedia) {
+      // プロパティ値のメディアクエリ
+      Object.entries(resolvedMedia).forEach(([mq, styles]) => {
         if (!media[mq]) {
           media[mq] = {};
         }
-        media[mq] = { ...media[mq], ...resolvedMedia[mq] };
-      }
+        media[mq] = { ...media[mq], ...styles };
+      });
     }
   }
 
   return { base, media, pseudo };
+};
+
+export const flattenStyles = (
+  styles: BaseUiStyleProps,
+  breakpoints: Record<string, string>,
+  colors: Record<string, string>,
+): {
+  base: Record<string, any>;
+  media: Record<string, any>;
+  pseudo: Record<string, any>;
+} => {
+  return flattenPseudoStyles(styles, breakpoints, colors);
 };
