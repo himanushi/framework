@@ -38,6 +38,7 @@ export const Normal: Story = {
   args: {
     children: <Cookie />,
     size: { xs: 24, sm: 32 },
+    color: "black",
   },
 };
 
@@ -52,6 +53,6 @@ export const Color: Story = {
   args: {
     children: <Cookie />,
     size: "50px",
-    color: "red-900",
+    color: "red-90",
   },
 };
