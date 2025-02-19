@@ -56,7 +56,6 @@ export const Checkbox = (props: CheckboxProps) => {
         <Ui
           as="div"
           $motion
-          layout
           initial={isFirstRender.current ? undefined : { scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ duration: 0.1 }}
@@ -68,7 +67,6 @@ export const Checkbox = (props: CheckboxProps) => {
         <Ui
           as="div"
           $motion
-          layout
           initial={isFirstRender.current ? undefined : { scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ duration: 0.1 }}

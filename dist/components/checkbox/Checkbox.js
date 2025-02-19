@@ -17,13 +17,13 @@ const k = {
 }, j = (c) => {
   const {
     checked: l,
-    value: u,
+    value: d,
     indeterminate: r,
-    className: d,
+    className: u,
     style: m,
     disabled: s,
     ...p
-  } = c, e = l ?? !!u ?? !1, f = {
+  } = c, e = l ?? !!d ?? !1, f = {
     ...k,
     backgroundColor: r || e ? i["blue-500"] : "transparent",
     borderColor: r || e ? i["blue-500"] : i["gray-200"],
@@ -32,13 +32,12 @@ const k = {
   }, o = h(!0);
   return y(() => {
     o.current = !1;
-  }, []), /* @__PURE__ */ b(t, { as: "label", userSelect: "none", className: d, ...f, children: [
+  }, []), /* @__PURE__ */ b(t, { as: "label", userSelect: "none", className: u, ...f, children: [
     r ? /* @__PURE__ */ n(
       t,
       {
         as: "div",
         $motion: !0,
-        layout: !0,
         initial: o.current ? void 0 : { scale: 0 },
         animate: { scale: 1 },
         transition: { duration: 0.1 },
@@ -50,7 +49,6 @@ const k = {
       {
         as: "div",
         $motion: !0,
-        layout: !0,
         initial: o.current ? void 0 : { scale: 0 },
         animate: { scale: 1 },
         transition: { duration: 0.1 },
