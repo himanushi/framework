@@ -4,7 +4,7 @@
   "scripts": {
     "ai": "npx repomix",
     "dev": "storybook dev -p 6006",
-    "build": "vite build && tsc && npx biome check .",
+    "build": "npx biome check . && tsc && vitest run && vite build",
     "build-storybook": "storybook build",
     "test": "vitest",
     "test:ui": "vitest --ui",

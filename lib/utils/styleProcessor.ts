@@ -131,7 +131,7 @@ export const resolveResponsiveStyles = (
   }
 
   // Handle other breakpoints
-  Object.entries(value).forEach(([breakpoint, breakpointValue]) => {
+  for (const [breakpoint, breakpointValue] of Object.entries(value)) {
     if (breakpoint !== "xs" && breakpoints[breakpoint]) {
       const mq = `@media (min-width: ${breakpoints[breakpoint]})`;
       media[mq] = {
@@ -139,7 +139,7 @@ export const resolveResponsiveStyles = (
         [key]: resolveValue(key, breakpointValue, colors),
       };
     }
-  });
+  }
 
   return { base, media };
 };
@@ -208,7 +208,7 @@ const flattenPseudoStyles = (
         Object.assign(pseudo, nestedPseudo);
 
         // Merge nested media queries
-        Object.entries(nestedMedia).forEach(([mediaQuery, mediaStyles]) => {
+        for (const [mediaQuery, mediaStyles] of Object.entries(nestedMedia)) {
           if (!pseudo[mediaQuery]) {
             pseudo[mediaQuery] = {};
           }
@@ -216,7 +216,7 @@ const flattenPseudoStyles = (
             pseudo[mediaQuery][combinedSelector] = {};
           }
           Object.assign(pseudo[mediaQuery][combinedSelector], mediaStyles);
-        });
+        }
       } else {
         pseudo[combinedSelector] = resolveValue(key, value, colors);
       }
@@ -226,12 +226,12 @@ const flattenPseudoStyles = (
       base = { ...base, ...resolvedBase };
 
       // プロパティ値のメディアクエリ
-      Object.entries(resolvedMedia).forEach(([mq, styles]) => {
+      for (const [mq, styles] of Object.entries(resolvedMedia)) {
         if (!media[mq]) {
           media[mq] = {};
         }
         media[mq] = { ...media[mq], ...styles };
-      });
+      }
     }
   }
 

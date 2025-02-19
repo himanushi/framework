@@ -13,45 +13,48 @@ const W = /* @__PURE__ */ new Set([
     return `${W.has(e) ? "::" : ":"}${e}`;
   }
   return t;
-}, h = (t, e, s) => typeof e == "string" && t.toLowerCase().includes("color") && s[e] ? s[e] : e, P = (t, e, s, o) => {
+}, b = (t, e, s) => typeof e == "string" && t.toLowerCase().includes("color") && s[e] ? s[e] : e, P = (t, e, s, n) => {
   if (typeof e != "object" || e === null || Array.isArray(e))
-    return { base: { [t]: h(t, e, o) }, media: {} };
-  const d = {}, i = {};
-  return Object.keys(e).some((n) => s[n]) ? (e.xs !== void 0 && (d[t] = h(t, e.xs, o)), Object.entries(e).forEach(([n, a]) => {
-    if (n !== "xs" && s[n]) {
-      const f = `@media (min-width: ${s[n]})`;
-      i[f] = {
-        ...i[f],
-        [t]: h(t, a, o)
+    return { base: { [t]: b(t, e, n) }, media: {} };
+  const d = {}, c = {};
+  if (!Object.keys(e).some((o) => s[o]))
+    return { base: { [t]: b(t, e, n) }, media: {} };
+  e.xs !== void 0 && (d[t] = b(t, e.xs, n));
+  for (const [o, a] of Object.entries(e))
+    if (o !== "xs" && s[o]) {
+      const f = `@media (min-width: ${s[o]})`;
+      c[f] = {
+        ...c[f],
+        [t]: b(t, a, n)
       };
     }
-  }), { base: d, media: i }) : { base: { [t]: h(t, e, o) }, media: {} };
-}, j = (t, e) => e.has(t) || t.startsWith("on") || t.startsWith("while") || t.startsWith("drag") || t.startsWith("layout") || t.startsWith("aria-") || t.startsWith("data-"), A = (t, e) => Object.keys(t).reduce((s, o) => (j(o, e) && (s[o] = t[o]), s), {}), g = /* @__PURE__ */ new Set(), x = (t) => t.join(""), O = (t, e, s, o = []) => {
+  return { base: d, media: c };
+}, h = (t, e) => e.has(t) || t.startsWith("on") || t.startsWith("while") || t.startsWith("drag") || t.startsWith("layout") || t.startsWith("aria-") || t.startsWith("data-"), A = (t, e) => Object.keys(t).reduce((s, n) => (h(n, e) && (s[n] = t[n]), s), {}), g = /* @__PURE__ */ new Set(), x = (t) => t.join(""), p = (t, e, s, n = []) => {
   let d = {};
-  const i = {}, r = {};
-  for (const [n, a] of Object.entries(t))
-    if (!j(n, g))
-      if (n.startsWith("__")) {
-        const f = w(n), b = [...o, f], c = `&${x(b)}`;
+  const c = {}, r = {};
+  for (const [o, a] of Object.entries(t))
+    if (!h(o, g))
+      if (o.startsWith("__")) {
+        const f = w(o), m = [...n, f], i = `&${x(m)}`;
         if (typeof a == "object" && a !== null) {
           const {
             base: u,
-            media: S,
-            pseudo: p
-          } = O(a, e, s, b);
-          Object.keys(u).length > 0 && (r[c] = u), Object.assign(r, p), Object.entries(S).forEach(([l, m]) => {
-            r[l] || (r[l] = {}), r[l][c] || (r[l][c] = {}), Object.assign(r[l][c], m);
-          });
+            media: j,
+            pseudo: S
+          } = p(a, e, s, m);
+          Object.keys(u).length > 0 && (r[i] = u), Object.assign(r, S);
+          for (const [l, O] of Object.entries(j))
+            r[l] || (r[l] = {}), r[l][i] || (r[l][i] = {}), Object.assign(r[l][i], O);
         } else
-          r[c] = h(n, a, s);
+          r[i] = b(o, a, s);
       } else {
-        const { base: f, media: b } = P(n, a, e, s);
-        d = { ...d, ...f }, Object.entries(b).forEach(([c, u]) => {
-          i[c] || (i[c] = {}), i[c] = { ...i[c], ...u };
-        });
+        const { base: f, media: m } = P(o, a, e, s);
+        d = { ...d, ...f };
+        for (const [i, u] of Object.entries(m))
+          c[i] || (c[i] = {}), c[i] = { ...c[i], ...u };
       }
-  return { base: d, media: i, pseudo: r };
-}, B = (t, e, s) => O(t, e, s);
+  return { base: d, media: c, pseudo: r };
+}, B = (t, e, s) => p(t, e, s);
 export {
   A as filterAllowedDOMProps,
   B as flattenStyles,

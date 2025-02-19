@@ -1,14 +1,14 @@
-const s = (r, i) => {
-  let t = {};
-  const n = {};
-  return Object.entries(r).forEach(([f, o]) => {
-    if (f in i && o !== void 0) {
-      const e = i[f];
-      typeof e == "function" ? t = { ...t, ...e(o) } : typeof e == "string" ? typeof o != "boolean" && (t[e] = o) : typeof e == "object" && o === !0 && (t = { ...t, ...e });
+const r = (i, n) => {
+  let e = {};
+  const s = {};
+  for (const [f, o] of Object.entries(i))
+    if (f in n && o !== void 0) {
+      const t = n[f];
+      typeof t == "function" ? e = { ...e, ...t(o) } : typeof t == "string" ? typeof o != "boolean" && (e[t] = o) : typeof t == "object" && o === !0 && (e = { ...e, ...t });
     } else
-      n[f] = o;
-  }), { ...n, ...t };
+      s[f] = o;
+  return { ...s, ...e };
 };
 export {
-  s as resolveShorthandProps
+  r as resolveShorthandProps
 };
