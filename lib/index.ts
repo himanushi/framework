@@ -1,4 +1,3 @@
-import "./style.scss";
 import "modern-normalize/modern-normalize.css";
 
 export * from "./components";
