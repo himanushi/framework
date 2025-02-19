@@ -5,7 +5,7 @@ import {
 } from "~/utils/shorthand";
 import { BaseUi, type BaseUiProps } from "./BaseUi";
 
-const shortHands = {
+export const shortHands = {
   iCenter: { alignItems: "center" },
   iStart: { alignItems: "flex-start" },
   iEnd: { alignItems: "flex-end" },

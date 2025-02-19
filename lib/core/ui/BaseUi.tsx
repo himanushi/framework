@@ -112,7 +112,7 @@ const resolveValue = (
     ? colors[value]
     : value;
 
-const resolveResponsiveStyles = (
+export const resolveResponsiveStyles = (
   key: string,
   value: any,
   breakpoints: Record<string, string>,
@@ -151,7 +151,7 @@ const isAllowedDOMProp = (key: string, allowedKeys: Set<string>): boolean =>
   key.startsWith("aria-") ||
   key.startsWith("data-");
 
-const filterAllowedDOMProps = (
+export const filterAllowedDOMProps = (
   props: Record<string, any>,
   allowedKeys: Set<string>,
 ): Record<string, any> =>
@@ -164,7 +164,7 @@ const filterAllowedDOMProps = (
 
 const emptySet = new Set<string>();
 
-const flattenStyles = (
+export const flattenStyles = (
   styles: BaseUiStyleProps,
   breakpoints: Record<string, string>,
   colors: Record<string, string>,
@@ -252,9 +252,10 @@ export const BaseUi = <E extends React.ElementType = React.ElementType>(
   );
 
   const allowedProps = filterAllowedDOMProps(restProps, allowedDOMPropKeys);
-  const Component = $motion ? Motion[(as as "div") ?? "div"] : as || "div";
   const combinedStyles = { ...base, ...pseudo, ...media };
   const generatedClass = css(combinedStyles);
+
+  const Component = $motion ? Motion[(as as "div") ?? "div"] : as || "div";
 
   return (
     <Component

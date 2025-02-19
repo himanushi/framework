@@ -11,10 +11,11 @@ dist/
 
 *repomix*
 *.log
-*.stories.tsx
 
 vscode.code-workspace
 defaultValues.ts
 package-lock.json
 .gitignore
 values.ts
+Ui.stories.tsx
+Icon.stories.tsx

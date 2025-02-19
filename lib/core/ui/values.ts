@@ -305,4 +305,10 @@ export const allowedDOMPropKeys = new Set([
   "variants",
   "exit",
   "viewport",
+
+  // resize textarea
+  "minRows",
+  "maxRows",
+  "onHeightChange",
+  "cacheMeasurements",
 ]);
