@@ -1,5 +1,5 @@
 import { WithShorthandProps } from '../../utils/shorthand';
-import { BaseUiProps } from './BaseUi';
+import { BaseUiProps } from '../../utils/styleProcessor';
 export declare const shortHands: {
     readonly iCenter: {
         readonly alignItems: "center";

@@ -44,10 +44,12 @@ const d = {
       borderColor: "gray-10"
     }
   }
-}, b = (o) => {
+}, c = (o) => {
   const r = { ...p, ...o }, e = l(r, d);
   return /* @__PURE__ */ t(a, { ...e });
 };
 export {
-  b as TextField
+  c as TextField,
+  p as defaultTextProps,
+  d as textShortHands
 };

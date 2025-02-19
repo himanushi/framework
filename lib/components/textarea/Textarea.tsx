@@ -12,7 +12,7 @@ const defaultProps = {
   px: "12px",
   py: "12px",
   resize: "none",
-};
+} as const as TextareaProps;
 
 export type TextareaProps = WithShorthandProps<
   Omit<UiProps<"textarea">, "as"> & {

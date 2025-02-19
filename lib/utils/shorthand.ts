@@ -1,6 +1,6 @@
 import type * as CSS from "csstype";
 import type React from "react";
-import type { BaseUiProps, ResponsiveProp } from "~/core";
+import type { BaseUiProps, ResponsiveProp } from "./styleProcessor";
 
 type ShorthandFunctionProp<T> = T extends (value: infer U) => any ? U : boolean;
 

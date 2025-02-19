@@ -1,5 +1,5 @@
-import { jsx as o } from "react/jsx-runtime";
-import { resolveShorthandProps as i } from "../../utils/shorthand.js";
+import { jsx as i } from "react/jsx-runtime";
+import { resolveShorthandProps as o } from "../../utils/shorthand.js";
 import { BaseUi as r } from "./BaseUi.js";
 const d = {
   iCenter: { alignItems: "center" },
@@ -31,10 +31,11 @@ const d = {
   absolute: { position: "absolute" },
   relative: { position: "relative" }
 }, p = {
+  as: "div",
   display: "flex"
 }, f = (t) => {
-  const e = { ...p, ...t }, n = i(e, d);
-  return /* @__PURE__ */ o(r, { ...n });
+  const e = { ...p, ...t }, n = o(e, d);
+  return /* @__PURE__ */ i(r, { ...n });
 };
 export {
   f as Ui,

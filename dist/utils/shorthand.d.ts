@@ -1,5 +1,5 @@
 import { default as React } from 'react';
-import { BaseUiProps, ResponsiveProp } from '../core';
+import { BaseUiProps, ResponsiveProp } from './styleProcessor';
 type ShorthandFunctionProp<T> = T extends (value: infer U) => any ? U : boolean;
 type ShorthandProp<T> = T extends string ? ResponsiveProp<string | number | undefined> : ShorthandFunctionProp<T>;
 export type WithShorthandProps<P, S extends Record<string, any>> = P & {
