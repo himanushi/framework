@@ -1,9 +1,5 @@
-import { css, cx } from "@emotion/css";
-import { motion } from "motion/react";
 import TextareaAutosize from "react-textarea-autosize";
-import { shortHands as BaseShortHands, type BaseUiProps } from "~/core";
-import { filterAllowedDOMProps, flattenStyles } from "~/core/ui/BaseUi";
-import { allowedDOMPropKeys, breakpoints, colors } from "~/core/ui/values";
+import { Ui, type UiProps } from "~/core";
 import {
   type ShortHandType,
   type WithShorthandProps,
@@ -21,11 +17,14 @@ const shortHands = {
       borderColor: "red-500",
     },
   },
-  ...BaseShortHands,
 } as const satisfies ShortHandType;
 
 const defaultProps: TextareaProps = {
-  radius: "10px",
+  as: TextareaAutosize,
+  w: "100%",
+  px: "12px",
+  py: "8px",
+  radius: "6px",
   border: "1px solid",
   borderColor: "gray-200",
   backgroundColor: "white",
@@ -59,16 +58,11 @@ const defaultProps: TextareaProps = {
 };
 
 export type TextareaProps = WithShorthandProps<
-  Omit<BaseUiProps<"input">, "as"> &
-    Omit<
-      React.ComponentPropsWithoutRef<typeof TextareaAutosize>,
-      keyof BaseUiProps<"input"> | "ref"
-    > & {
-      ref?: React.Ref<HTMLTextAreaElement>;
-      minRows?: number;
-      maxRows?: number;
-      $motion?: boolean;
-    },
+  Omit<UiProps<"textarea">, "as"> & {
+    minRows?: number;
+    maxRows?: number;
+    as?: any;
+  },
   typeof shortHands
 >;
 
@@ -78,28 +72,7 @@ export type TextareaProps = WithShorthandProps<
  * error
  */
 export const Textarea = (props: TextareaProps) => {
-  const { ref, className, style, $motion, ...restProps } = props;
-  const mergedProps = { ...defaultProps, ...restProps };
-  const resolvedProps = resolveShorthandProps(mergedProps, shortHands);
-
-  const { base, media, pseudo } = flattenStyles(
-    resolvedProps,
-    breakpoints,
-    colors,
-  );
-
-  const allowedProps = filterAllowedDOMProps(resolvedProps, allowedDOMPropKeys);
-  const combinedStyles = { ...base, ...pseudo, ...media };
-  const generatedClass = css(combinedStyles);
-
-  const Component = $motion ? motion(TextareaAutosize) : TextareaAutosize;
-
-  return (
-    <Component
-      ref={ref}
-      className={cx(generatedClass, className)}
-      style={style as React.CSSProperties & { height?: number }}
-      {...allowedProps}
-    />
-  );
+  const mergedProps = { ...defaultProps, ...props };
+  const newProps = resolveShorthandProps(mergedProps, shortHands);
+  return <Ui {...newProps} />;
 };
